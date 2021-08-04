@@ -1,44 +1,34 @@
-import { NavLink } from 'react-router-dom';
 import s from './Dialogs.module.css'
+import {DialogItem} from './DialogItem/DialogItem';
+import {Message} from './Message/Message';
+import {DialogPageType} from '../../redux/state';
+import React from 'react';
 
-type DialogsPropsType = {
-    name: string
-    id: string
-}
+export function Dialogs(props: DialogPageType) {
 
-type MessagePropsType = {
-    message: string
-}
+    let dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
+    let messagesElements = props.messages.map(m => <Message id={m.id} message={m.message}/>)
 
-function DialogItem(props: DialogsPropsType) {
-    return (
-        <div className={s.dialog + ' ' + s.active}>
-            <NavLink to={'/dialogs/' + props.id}>{props.name}</NavLink>
-        </div>
-    )
-}
+    let newMessageElement: any = React.createRef<HTMLTextAreaElement>()
 
-function Message(props: MessagePropsType) {
-    return (
-        <div className={s.message}>{props.message}</div>
-    )
-}
+    let addMessage = () => {
+        let text = newMessageElement.current.value
+        alert(text)
+    }
 
-export function Dialogs() {
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
-                <DialogItem name={'Dimych'} id={'1'}/>
-                <DialogItem name={'Andrei'} id={'2'}/>
-                <DialogItem name={'Sveta'} id={'3'}/>
-                <DialogItem name={'Sasha'} id={'4'}/>
-                <DialogItem name={'Viktor'} id={'5'}/>
-                <DialogItem name={'Valera'} id={'6'}/>
+                {dialogsElements}
             </div>
             <div className={s.messages}>
-                <Message message={'Hi'}/>
-                <Message message={'How are you?'}/>
-                <Message message={'Yo!!!'}/>
+                {messagesElements}
+            </div>
+            <div>
+            <textarea ref={newMessageElement}></textarea>
+            </div>
+            <div>
+                <button onClick={addMessage}>Add message</button>
             </div>
         </div>
     );

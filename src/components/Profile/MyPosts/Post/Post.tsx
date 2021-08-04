@@ -1,12 +1,8 @@
 import React from 'react';
 import s from './Post.module.css';
+import {PostsType} from '../../../../redux/state';
 
-type PostPropsType = {
-    message: string
-    likesCount: number
-}
-
-function Post(props: PostPropsType) {
+function Post(props: PostsType) {
     return (
         <div>
             <div className={s.item}>
