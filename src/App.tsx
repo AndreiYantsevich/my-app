@@ -8,23 +8,21 @@ import {Dialogs} from './components/Dialogs/Dialogs';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
-import {RootStateType} from './redux/state';
+import {StoreType} from './redux/state';
 
 type appPropsType = {
-    state: RootStateType
-    addPost: (postMessage: string) => void
-    addMessage: (postMessage: string) => void
-    changePostText: (newText: string) => void
-    changeMessageText: (newText: string) => void
+    store: StoreType
 }
 
 export function App(props: appPropsType) {
 
-    let dialogs = props.state.dialogsPage.dialogs;
-    let messages = props.state.dialogsPage.messages;
-    let posts = props.state.profilePage.posts;
-    let newPostText = props.state.profilePage.newPostText;
-    let newMessageText = props.state.dialogsPage.newMessageText
+    const state = props.store.getState()
+
+    const dialogs = state.dialogsPage.dialogs;
+    const messages = state.dialogsPage.messages;
+    const posts = state.profilePage.posts;
+    const newPostText = state.profilePage.newPostText;
+    const newMessageText = state.dialogsPage.newMessageText
 
     return (
         <div className={'app-wrapper'}>
@@ -35,14 +33,14 @@ export function App(props: appPropsType) {
                     dialogs={dialogs}
                     messages={messages}
                     newMessageText={newMessageText}
-                    addMessage={props.addMessage}
-                    changeMessageText={props.changeMessageText}
+                    addMessage={props.store.addMessage.bind(props.store)}
+                    changeMessageText={props.store.changeMessageText.bind(props.store)}
                 />}/>
                 <Route path={'/profile'} render={() => <Profile
                     posts={posts}
                     newPostText={newPostText}
-                    addPost={props.addPost}
-                    changePostText={props.changePostText}
+                    addPost={props.store.addPost.bind(props.store)}
+                    changePostText={props.store.changePostText.bind(props.store)}
                 />}/>
                 <Route path={'/news'} component={News}/>
                 <Route path={'/music'} component={Music}/>

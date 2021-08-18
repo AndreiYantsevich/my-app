@@ -32,61 +32,71 @@ export type RootStateType = {
     dialogsPage: DialogPageType
 }
 
-export let state: RootStateType = {
-    dialogsPage: {
-        newMessageText: '',
-        dialogs: [
-            {id: 1, name: 'Andrei'},
-            {id: 2, name: 'Viktoria'},
-            {id: 3, name: 'Arseny'},
-            {id: 4, name: 'Visha'},
-            {id: 5, name: 'Tomas'}
-        ],
-        messages: [
-            {id: 1, message: 'Hello!!!'},
-            {id: 2, message: 'Mi-mi-mi'},
-            {id: 3, message: 'Agu!'},
-            {id: 4, message: 'Gav!'},
-            {id: 5, message: 'Meow!'}
-        ]
+export type StoreType = {
+    _state: RootStateType
+    changeMessageText: (newText: string) => void
+    addMessage: () => void
+    changePostText: (newText: string) => void
+    addPost: () => void
+    getState: () => RootStateType
+}
+
+export const store: StoreType = {
+    _state: {
+        dialogsPage: {
+            newMessageText: '',
+            dialogs: [
+                {id: 1, name: 'Andrei'},
+                {id: 2, name: 'Viktoria'},
+                {id: 3, name: 'Arseny'},
+                {id: 4, name: 'Visha'},
+                {id: 5, name: 'Tomas'}
+            ],
+            messages: [
+                {id: 1, message: 'Hello!!!'},
+                {id: 2, message: 'Mi-mi-mi'},
+                {id: 3, message: 'Agu!'},
+                {id: 4, message: 'Gav!'},
+                {id: 5, message: 'Meow!'}
+            ]
+        },
+        profilePage: {
+            newPostText: '',
+            posts: [
+                {id: 1, message: 'Hi, how are you?', likesCount: 25},
+                {id: 2, message: 'This is my first project', likesCount: 49}
+            ]
+        }
     },
-    profilePage: {
-        newPostText: '',
-        posts: [
-            {id: 1, message: 'Hi, how are you?', likesCount: 25},
-            {id: 2, message: 'This is my first project', likesCount: 49}
-        ]
+    changeMessageText(newText: string) {
+        this._state.dialogsPage.newMessageText = newText
+        rerenderEntireTree(store)
+    },
+    addMessage() {
+        const newMessage = {
+            id: 6,
+            message: this._state.dialogsPage.newMessageText
+        }
+        this._state.dialogsPage.messages.push(newMessage)
+        this._state.dialogsPage.newMessageText = ''
+        rerenderEntireTree(store)
+    },
+    changePostText(newText: string) {
+        this._state.profilePage.newPostText = newText
+        rerenderEntireTree(store)
+    },
+    addPost() {
+        const newPost = {
+            id: 3,
+            message: this._state.profilePage.newPostText,
+            likesCount: 0
+        }
+        this._state.profilePage.posts.push(newPost)
+        this._state.profilePage.newPostText = ''
+        rerenderEntireTree(store)
+    },
+    getState() {
+        return this._state
     }
-}
-
-export const addPost = () => {
-    const newPost = {
-        id: 3,
-        message: state.profilePage.newPostText,
-        likesCount: 0
-    }
-    state.profilePage.posts.push(newPost)
-    state.profilePage.newPostText = ''
-    rerenderEntireTree(state)
-}
-
-export const changePostText = (newText: string) => {
-    state.profilePage.newPostText = newText
-    rerenderEntireTree(state)
-}
-
-export const addMessage = () => {
-    const newMessage = {
-        id: 6,
-        message: state.dialogsPage.newMessageText
-    }
-    state.dialogsPage.messages.push(newMessage)
-    state.dialogsPage.newMessageText = ''
-    rerenderEntireTree(state)
-}
-
-export const changeMessageText = (newText: string) => {
-    state.dialogsPage.newMessageText = newText
-    rerenderEntireTree(state)
 }
 

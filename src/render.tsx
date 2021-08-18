@@ -1,17 +1,13 @@
+import React from 'react';
+import {StoreType} from './redux/state';
 import ReactDOM from 'react-dom';
-import './index.css';
-import {App} from './App';
-import {addPost, addMessage, RootStateType, changePostText, changeMessageText} from './redux/state';
 import {BrowserRouter} from 'react-router-dom';
+import {App} from './App';
 
-export let rerenderEntireTree = (state: RootStateType) => {
+
+export const rerenderEntireTree = (store: StoreType) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App
-                state={state}
-                addPost={addPost}
-                addMessage={addMessage}
-                changePostText={changePostText}
-                changeMessageText={changeMessageText}/>
+            <App store={store}/>
         </BrowserRouter>, document.getElementById('root'));
 }
