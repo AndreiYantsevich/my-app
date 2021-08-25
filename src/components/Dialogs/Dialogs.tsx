@@ -2,15 +2,16 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {DialogType, MessageType} from '../../redux/state';
+import {ActionTypes, addMessageAC, DialogType, MessageType} from '../../redux/state';
 
 
 type dialogsPropsType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageText: string
-    addMessage: (postMessage: string) => void
+    /*addMessage: (postMessage: string) => void*/
     changeMessageText: (newText: string) => void
+    addMessage: (action: ActionTypes) => void
 }
 
 export function Dialogs(props: dialogsPropsType) {
@@ -23,7 +24,8 @@ export function Dialogs(props: dialogsPropsType) {
     }
 
     const addMessage = () => {
-        props.addMessage(props.newMessageText)
+        /*props.addMessage(props.newMessageText)*/
+        props.addMessage(addMessageAC(props.newMessageText))
     }
 
     return (

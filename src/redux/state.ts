@@ -35,10 +35,25 @@ export type RootStateType = {
 export type StoreType = {
     _state: RootStateType
     changeMessageText: (newText: string) => void
-    addMessage: () => void
     changePostText: (newText: string) => void
-    addPost: () => void
     getState: () => RootStateType
+    dispatch: (action: ActionTypes) => void
+}
+
+export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof addMessageAC>
+
+export const addMessageAC = (postMessage: string) => {
+    return {
+        type: 'ADD-MESSAGE',
+        postMessage: postMessage
+    } as const
+}
+
+export const addPostAC = (postMessage: string) => {
+    return {
+        type: 'ADD-POST',
+        postMessage: postMessage
+    } as const
 }
 
 export const store: StoreType = {
@@ -72,31 +87,32 @@ export const store: StoreType = {
         this._state.dialogsPage.newMessageText = newText
         rerenderEntireTree(store)
     },
-    addMessage() {
-        const newMessage = {
-            id: 6,
-            message: this._state.dialogsPage.newMessageText
-        }
-        this._state.dialogsPage.messages.push(newMessage)
-        this._state.dialogsPage.newMessageText = ''
-        rerenderEntireTree(store)
-    },
     changePostText(newText: string) {
         this._state.profilePage.newPostText = newText
         rerenderEntireTree(store)
     },
-    addPost() {
-        const newPost = {
-            id: 3,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        rerenderEntireTree(store)
-    },
     getState() {
         return this._state
+    },
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost = {
+                id: 3,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            rerenderEntireTree(store)
+        } else if (action.type === 'ADD-MESSAGE') {
+            const newMessage = {
+                id: 6,
+                message: this._state.dialogsPage.newMessageText
+            }
+            this._state.dialogsPage.messages.push(newMessage)
+            this._state.dialogsPage.newMessageText = ''
+            rerenderEntireTree(store)
+        }
     }
 }
 

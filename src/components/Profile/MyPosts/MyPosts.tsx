@@ -1,13 +1,14 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {PostsType} from '../../../redux/state';
+import {ActionTypes, addPostAC, PostsType} from '../../../redux/state';
 
 type addPostType = {
     posts: Array<PostsType>
-    addPost: (postMessage: string) => void
+    /*addPost: (postMessage: string) => void*/
     changePostText: (newText: string) => void
     newPostText: string
+    addPost: (action: ActionTypes) => void
 }
 
 export function MyPosts(props: addPostType) {
@@ -19,7 +20,7 @@ export function MyPosts(props: addPostType) {
     }
 
     const addPost = () => {
-        props.addPost(props.newPostText)
+        props.addPost(addPostAC(props.newPostText))
     }
 
     return (
