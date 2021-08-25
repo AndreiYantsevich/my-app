@@ -22,7 +22,7 @@ export function App(props: appPropsType) {
     const messages = state.dialogsPage.messages;
     const posts = state.profilePage.posts;
     const newPostText = state.profilePage.newPostText;
-    const newMessageText = state.dialogsPage.newMessageText
+    const newMessageText = state.dialogsPage.newMessageText;
 
     return (
         <div className={'app-wrapper'}>
@@ -34,13 +34,11 @@ export function App(props: appPropsType) {
                     messages={messages}
                     newMessageText={newMessageText}
                     dispatch={props.store.dispatch.bind(props.store)}
-                    changeMessageText={props.store.changeMessageText.bind(props.store)}
                 />}/>
                 <Route path={'/profile'} render={() => <Profile
                     posts={posts}
                     newPostText={newPostText}
                     dispatch={props.store.dispatch.bind(props.store)}
-                    changePostText={props.store.changePostText.bind(props.store)}
                 />}/>
                 <Route path={'/news'} component={News}/>
                 <Route path={'/music'} component={Music}/>

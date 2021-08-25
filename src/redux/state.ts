@@ -34,25 +34,40 @@ export type RootStateType = {
 
 export type StoreType = {
     _state: RootStateType
-    changeMessageText: (newText: string) => void
-    changePostText: (newText: string) => void
     getState: () => RootStateType
     dispatch: (action: ActionTypes) => void
 }
 
-export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof addMessageAC>
+export type ActionTypes =
+    ReturnType<typeof addPostAC> |
+    ReturnType<typeof addMessageAC> |
+    ReturnType<typeof changePostAC> |
+    ReturnType<typeof changeMessageAC>
 
-export const addPostAC = (postMessage: string) => {
+
+export const addPostAC = () => {
     return {
-        type: 'ADD-POST',
-        postMessage: postMessage
+        type: 'ADD-POST'
     } as const
 }
 
-export const addMessageAC = (postMessage: string) => {
+export const addMessageAC = () => {
     return {
-        type: 'ADD-MESSAGE',
-        postMessage: postMessage
+        type: 'ADD-MESSAGE'
+    } as const
+}
+
+export const changePostAC = (newText: string) => {
+    return {
+        type: 'CHANGE-POST-TEXT',
+        newText: newText
+    } as const
+}
+
+export const changeMessageAC = (newText: string) => {
+    return {
+        type: 'CHANGE-MESSAGE-TEXT',
+        newText: newText
     } as const
 }
 
@@ -83,18 +98,11 @@ export const store: StoreType = {
             ]
         }
     },
-    changeMessageText(newText: string) {
-        this._state.dialogsPage.newMessageText = newText
-        rerenderEntireTree(store)
-    },
-    changePostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        rerenderEntireTree(store)
-    },
     getState() {
         return this._state
     },
     dispatch(action) {
+
         if (action.type === 'ADD-POST') {
             const newPost = {
                 id: 3,
@@ -111,6 +119,12 @@ export const store: StoreType = {
             }
             this._state.dialogsPage.messages.push(newMessage)
             this._state.dialogsPage.newMessageText = ''
+            rerenderEntireTree(store)
+        } else if (action.type === 'CHANGE-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            rerenderEntireTree(store)
+        } else if (action.type === 'CHANGE-MESSAGE-TEXT') {
+            this._state.dialogsPage.newMessageText = action.newText
             rerenderEntireTree(store)
         }
     }

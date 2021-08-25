@@ -2,14 +2,13 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {ActionTypes, addMessageAC, DialogType, MessageType} from '../../redux/state';
+import {ActionTypes, addMessageAC, changeMessageAC, DialogType, MessageType} from '../../redux/state';
 
 
 type dialogsPropsType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageText: string
-    changeMessageText: (newText: string) => void
     dispatch: (action: ActionTypes) => void
 }
 
@@ -17,13 +16,15 @@ export function Dialogs(props: dialogsPropsType) {
 
     const dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
     const messagesElements = props.messages.map(m => <Message id={m.id} message={m.message}/>)
+    const newMessageText = props.newMessageText
 
     const newMessageTextHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        props.changeMessageText(event.currentTarget.value)
+      let newText = event.currentTarget.value
+        props.dispatch(changeMessageAC(newText))
     }
 
-    const addMessage = () => {
-        props.dispatch(addMessageAC(props.newMessageText))
+    const onAddMessageClick = () => {
+        props.dispatch(addMessageAC())
     }
 
     return (
@@ -35,10 +36,10 @@ export function Dialogs(props: dialogsPropsType) {
                 {messagesElements}
             </div>
             <div>
-                <textarea value={props.newMessageText} onChange={newMessageTextHandler}/>
+                <textarea value={newMessageText} onChange={newMessageTextHandler}/>
             </div>
             <div>
-                <button onClick={addMessage}>Add message</button>
+                <button onClick={onAddMessageClick}>Add message</button>
             </div>
         </div>
     );
