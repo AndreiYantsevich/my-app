@@ -42,16 +42,16 @@ export type StoreType = {
 
 export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof addMessageAC>
 
-export const addMessageAC = (postMessage: string) => {
+export const addPostAC = (postMessage: string) => {
     return {
-        type: 'ADD-MESSAGE',
+        type: 'ADD-POST',
         postMessage: postMessage
     } as const
 }
 
-export const addPostAC = (postMessage: string) => {
+export const addMessageAC = (postMessage: string) => {
     return {
-        type: 'ADD-POST',
+        type: 'ADD-MESSAGE',
         postMessage: postMessage
     } as const
 }

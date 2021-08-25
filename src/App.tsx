@@ -33,13 +33,13 @@ export function App(props: appPropsType) {
                     dialogs={dialogs}
                     messages={messages}
                     newMessageText={newMessageText}
-                    addMessage={props.store.dispatch.bind(props.store)}
+                    dispatch={props.store.dispatch.bind(props.store)}
                     changeMessageText={props.store.changeMessageText.bind(props.store)}
                 />}/>
                 <Route path={'/profile'} render={() => <Profile
                     posts={posts}
                     newPostText={newPostText}
-                    addPost={props.store.dispatch.bind(props.store)}
+                    dispatch={props.store.dispatch.bind(props.store)}
                     changePostText={props.store.changePostText.bind(props.store)}
                 />}/>
                 <Route path={'/news'} component={News}/>

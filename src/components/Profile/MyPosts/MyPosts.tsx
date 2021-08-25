@@ -5,10 +5,9 @@ import {ActionTypes, addPostAC, PostsType} from '../../../redux/state';
 
 type addPostType = {
     posts: Array<PostsType>
-    /*addPost: (postMessage: string) => void*/
     changePostText: (newText: string) => void
     newPostText: string
-    addPost: (action: ActionTypes) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 export function MyPosts(props: addPostType) {
@@ -20,7 +19,7 @@ export function MyPosts(props: addPostType) {
     }
 
     const addPost = () => {
-        props.addPost(addPostAC(props.newPostText))
+        props.dispatch(addPostAC(props.newPostText))
     }
 
     return (

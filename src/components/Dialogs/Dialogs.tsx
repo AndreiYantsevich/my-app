@@ -9,9 +9,8 @@ type dialogsPropsType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageText: string
-    /*addMessage: (postMessage: string) => void*/
     changeMessageText: (newText: string) => void
-    addMessage: (action: ActionTypes) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 export function Dialogs(props: dialogsPropsType) {
@@ -24,8 +23,7 @@ export function Dialogs(props: dialogsPropsType) {
     }
 
     const addMessage = () => {
-        /*props.addMessage(props.newMessageText)*/
-        props.addMessage(addMessageAC(props.newMessageText))
+        props.dispatch(addMessageAC(props.newMessageText))
     }
 
     return (
