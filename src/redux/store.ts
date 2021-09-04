@@ -1,4 +1,5 @@
-import {rerenderEntireTree} from '../render';
+import {addPostAC, changePostAC, profileReducer} from './ProfileReducer';
+import {addMessageAC, changeMessageAC, dialogsReducer} from './DialogsReducer';
 
 export type MessageType = {
     id: number
@@ -27,14 +28,16 @@ export type DialogPageType = {
     messages: Array<MessageType>
 }
 
-export type RootStateType = {
+export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogPageType
 }
 
 export type StoreType = {
-    _state: RootStateType
-    getState: () => RootStateType
+    _state: StateType
+    getState: () => StateType
+    _callSubscriber: () => void
+    subscribe: (observer: () => void) => void
     dispatch: (action: ActionTypes) => void
 }
 
@@ -43,33 +46,6 @@ export type ActionTypes =
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof changePostAC> |
     ReturnType<typeof changeMessageAC>
-
-
-export const addPostAC = () => {
-    return {
-        type: 'ADD-POST'
-    } as const
-}
-
-export const addMessageAC = () => {
-    return {
-        type: 'ADD-MESSAGE'
-    } as const
-}
-
-export const changePostAC = (newText: string) => {
-    return {
-        type: 'CHANGE-POST-TEXT',
-        newText: newText
-    } as const
-}
-
-export const changeMessageAC = (newText: string) => {
-    return {
-        type: 'CHANGE-MESSAGE-TEXT',
-        newText: newText
-    } as const
-}
 
 export const store: StoreType = {
     _state: {
@@ -98,35 +74,23 @@ export const store: StoreType = {
             ]
         }
     },
+
     getState() {
         return this._state
     },
-    dispatch(action) {
 
-        if (action.type === 'ADD-POST') {
-            const newPost = {
-                id: 3,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            rerenderEntireTree(store)
-        } else if (action.type === 'ADD-MESSAGE') {
-            const newMessage = {
-                id: 6,
-                message: this._state.dialogsPage.newMessageText
-            }
-            this._state.dialogsPage.messages.push(newMessage)
-            this._state.dialogsPage.newMessageText = ''
-            rerenderEntireTree(store)
-        } else if (action.type === 'CHANGE-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newText
-            rerenderEntireTree(store)
-        } else if (action.type === 'CHANGE-MESSAGE-TEXT') {
-            this._state.dialogsPage.newMessageText = action.newText
-            rerenderEntireTree(store)
-        }
+    _callSubscriber() {
+        console.log('App rendering')
+    },
+
+    subscribe(observer: () => void) {
+        this._callSubscriber = observer
+    },
+
+    dispatch(action) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._callSubscriber()
     }
 }
 

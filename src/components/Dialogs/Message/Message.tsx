@@ -1,5 +1,5 @@
 import s from './../Dialogs.module.css'
-import {MessageType} from '../../../redux/state';
+import {MessageType} from '../../../redux/store';
 
 
 export function Message(props: MessageType) {
