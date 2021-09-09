@@ -1,14 +1,13 @@
-
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'CHANGE-POST-TEXT';
 
-export type ActionsProfileType = AddPostType | ChangePostTextType
+export type ActionsProfileType = AddPostTypeAC | ChangePostTextTypeAC
 
-type AddPostType = {
+type AddPostTypeAC = {
     type: typeof ADD_POST
 }
 
-type ChangePostTextType = {
+type ChangePostTextTypeAC = {
     type: typeof UPDATE_NEW_POST_TEXT,
     newPostText: string
 }
@@ -51,13 +50,13 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 
 }
 
-export const addPostAC = (): AddPostType => {
+export const addPostAC = (): AddPostTypeAC => {
     return {
         type: ADD_POST
     } as const
 }
 
-export const changePostAC = (newText: string): ChangePostTextType => {
+export const changePostAC = (newText: string): ChangePostTextTypeAC => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newPostText: newText
