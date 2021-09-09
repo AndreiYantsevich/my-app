@@ -1,32 +1,6 @@
-import {addPostAC, changePostAC, profileReducer} from './ProfileReducer';
-import {addMessageAC, changeMessageAC, dialogsReducer} from './DialogsReducer';
+import {ActionsProfileType, ProfilePageType, profileReducer} from './profile-reducer';
+import {dialogsReducer} from './dialogs-reducer';
 
-export type MessageType = {
-    id: number
-    message: string
-}
-
-export type DialogType = {
-    id: number
-    name: string
-}
-
-export type PostsType = {
-    id: number
-    message: string
-    likesCount: number
-}
-
-export type ProfilePageType = {
-    newPostText: string
-    posts: Array<PostsType>
-}
-
-export type DialogPageType = {
-    newMessageText: string
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-}
 
 export type StateType = {
     profilePage: ProfilePageType
@@ -37,15 +11,9 @@ export type StoreType = {
     _state: StateType
     getState: () => StateType
     _callSubscriber: () => void
-    subscribe: (observer: () => void) => void
-    dispatch: (action: ActionTypes) => void
+    subscribe: (observer: (state: StateType) => void) => void
+    dispatch: (action: ActionsProfileType) => void
 }
-
-export type ActionTypes =
-    ReturnType<typeof addPostAC> |
-    ReturnType<typeof addMessageAC> |
-    ReturnType<typeof changePostAC> |
-    ReturnType<typeof changeMessageAC>
 
 export const store: StoreType = {
     _state: {
