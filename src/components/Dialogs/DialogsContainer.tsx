@@ -1,8 +1,9 @@
 import React from 'react';
-import {addMessageAC, changeMessageAC} from '../../redux/DialogsReducer';
+import {addMessageAC, changeMessageAC} from '../../redux/dialogs-reducer';
 import {Dialogs} from './Dialogs';
 import {StateType} from '../../redux/store';
 import {connect} from 'react-redux';
+import { Dispatch } from 'redux';
 
 const mapStateToProps = (state: StateType) => {
     return {
@@ -10,7 +11,7 @@ const mapStateToProps = (state: StateType) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         changeMessage: (newText: string) => {
             dispatch(changeMessageAC(newText))

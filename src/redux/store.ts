@@ -1,18 +1,18 @@
 import {ActionsProfileType, ProfilePageType, profileReducer} from './profile-reducer';
-import {dialogsReducer} from './dialogs-reducer';
+import {ActionsDialogsType, DialogsPageType, dialogsReducer} from './dialogs-reducer';
 
 
 export type StateType = {
     profilePage: ProfilePageType
-    dialogsPage: DialogPageType
+    dialogsPage: DialogsPageType
 }
 
 export type StoreType = {
     _state: StateType
     getState: () => StateType
-    _callSubscriber: () => void
+    _callSubscriber: (state: StateType) => void
     subscribe: (observer: (state: StateType) => void) => void
-    dispatch: (action: ActionsProfileType) => void
+    dispatch: (action: ActionsProfileType | ActionsDialogsType) => void
 }
 
 export const store: StoreType = {
@@ -51,14 +51,14 @@ export const store: StoreType = {
         console.log('App rendering')
     },
 
-    subscribe(observer: () => void) {
+    subscribe(observer: (state: StateType) => void) {
         this._callSubscriber = observer
     },
 
     dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._callSubscriber()
+        this._callSubscriber(this._state)
     }
 }
 
