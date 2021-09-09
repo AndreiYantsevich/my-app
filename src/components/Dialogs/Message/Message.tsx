@@ -1,6 +1,9 @@
 import s from './../Dialogs.module.css'
-import {MessageType} from '../../../redux/store';
 
+type MessageType = {
+    message: string
+    id: number
+}
 
 export function Message(props: MessageType) {
     return (

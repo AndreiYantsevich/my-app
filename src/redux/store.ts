@@ -2,7 +2,7 @@ import {ActionsProfileType, ProfilePageType, profileReducer} from './profile-red
 import {ActionsDialogsType, DialogsPageType, dialogsReducer} from './dialogs-reducer';
 
 
-export type StateType = {
+type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
@@ -12,7 +12,7 @@ export type StoreType = {
     getState: () => StateType
     _callSubscriber: (state: StateType) => void
     subscribe: (observer: (state: StateType) => void) => void
-    dispatch: (action: ActionsProfileType | ActionsDialogsType) => void
+    dispatch: (action: ActionsProfileType & ActionsDialogsType) => void
 }
 
 export const store: StoreType = {

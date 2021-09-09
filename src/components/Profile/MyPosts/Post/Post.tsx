@@ -1,8 +1,13 @@
 import React from 'react';
 import s from './Post.module.css';
-import {PostsType} from '../../../../redux/store';
 
-function Post(props: PostsType) {
+export type PostType = {
+    id: number
+    message: string | undefined
+    likesCount: number
+}
+
+function Post(props: PostType) {
     return (
         <div>
             <div className={s.item}>

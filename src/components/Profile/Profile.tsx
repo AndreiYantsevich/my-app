@@ -3,11 +3,7 @@ import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 
-type profilePropsType = {
-
-}
-
-export function Profile(props: profilePropsType) {
+export function Profile() {
     return (
         <div>
             <ProfileInfo/>
