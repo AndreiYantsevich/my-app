@@ -23,21 +23,15 @@ type ActionsUsersType =
     | ActionUnfollowType
     | ActionSetUsersType
 
-type LocationType = {
-    city: string
-    country: string
-}
-
 export type UserType = {
-    id: number
+    id: number;
+    name: string;
+    status?: string;
     photos: {
-        small: string
-        large: string
+        small?: string;
+        large?: string;
     }
-    name: string
-    status: string
-    followed: boolean
-    location: LocationType
+    followed: boolean;
 }
 
 const initialState = {
@@ -77,8 +71,8 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
     }
 }
 
-export const followAC = (userID: number): ActionFollowType => ({type: FOLLOW, userID})
-export const unfollowAC = (userID: number): ActionUnfollowType => ({type: UNFOLLOW, userID})
-export const setUsersAC = (users: UserType[]): ActionSetUsersType => ({type: SET_USERS, users})
+export const followAC = (userID: number): ActionFollowType => ({type: FOLLOW, userID} as const)
+export const unfollowAC = (userID: number): ActionUnfollowType => ({type: UNFOLLOW, userID} as const)
+export const setUsersAC = (users: UserType[]): ActionSetUsersType => ({type: SET_USERS, users} as const)
 
 
