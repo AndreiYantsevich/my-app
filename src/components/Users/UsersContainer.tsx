@@ -6,16 +6,16 @@ import {StateType} from '../../redux/redux-store';
 
 const mapStateToProps = (state: StateType) => {
     return {
-        users: state.usersPage.users
+        usersState: state.usersPage.users
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        follow: (userID: number) => {
+        followUser: (userID: number) => {
             dispatch(followAC(userID))
         },
-        unfollow: (userID: number) => {
+        unfollowUser: (userID: number) => {
             dispatch(unfollowAC(userID))
         },
         setUsers: (users: Array<UserType>) => {

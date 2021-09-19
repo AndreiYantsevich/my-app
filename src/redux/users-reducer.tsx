@@ -1,3 +1,5 @@
+import {UsersStateType} from '../components/Users/Users';
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -35,12 +37,10 @@ export type UserType = {
 }
 
 const initialState = {
-    users: [] as UserType[]
+    users: []
 }
 
-export type UsersPageType = typeof initialState
-
-export const usersReducer = (state: UsersPageType = initialState, action: ActionsUsersType): UsersPageType => {
+export const usersReducer = (state: UsersStateType = initialState, action: ActionsUsersType): UsersStateType => {
 
     switch (action.type) {
         case FOLLOW:
@@ -64,7 +64,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
         case SET_USERS:
             return {
                 ...state,
-                users: action.users
+                users: [...state.users, ...action.users]
             }
         default:
             return state

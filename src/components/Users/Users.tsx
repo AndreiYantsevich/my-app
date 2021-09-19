@@ -11,10 +11,15 @@ type UsersPagePropsType = {
     setUsers: (users: Array<UserType>) => void;
 }
 
-class Users extends React.Component<UsersPagePropsType> {
+export type UsersStateType = {
+    users: Array<UserType>
+}
 
-   componentDidMount() {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+class Users extends React.Component<UsersPagePropsType, {}> {
+
+    componentDidMount() {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then(response => {
                 this.props.setUsers(response.data.items)
             })
     }
@@ -23,8 +28,8 @@ class Users extends React.Component<UsersPagePropsType> {
         return (
             <div>
                 {
-                    this.props.usersState.map(u => {
-                        return <div key={u.id}>
+                    this.props.usersState && this.props.usersState.map(u => {
+                            return <div key={u.id}>
                 <span>
                     <div className={style.avatar}>
                         <img src={u.photos.small ? u.photos.small : userPhoto}/>
@@ -39,19 +44,19 @@ class Users extends React.Component<UsersPagePropsType> {
                             }}>Follow</button>}
                     </div>
                 </span>
-                            <span>
+                                <span>
                     <span>
                         <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
-                                {/*<span>
+                                    {/*<span>
                         <div>{"u.location.country"}</div>
                         <div>{"u.location.city"}</div>
                     </span>*/}
                 </span>
-                        </div>
-                    }
-                )}
+                            </div>
+                        }
+                    )}
             </div>
         );
     }
