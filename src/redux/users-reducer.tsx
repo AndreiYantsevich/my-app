@@ -1,4 +1,3 @@
-import {UsersStateType} from '../components/Users/Users';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -6,6 +5,12 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 
+type UsersStateType = {
+    users: Array<UserType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+}
 
 type ActionFollowType = {
     type: typeof FOLLOW
@@ -53,7 +58,7 @@ export type UserType = {
 const initialState = {
     users: [],
     pageSize: 5,
-    totalUsersCount: 100,
+    totalUsersCount: 0,
     currentPage: 1,
 }
 
