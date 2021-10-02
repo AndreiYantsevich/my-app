@@ -39,7 +39,8 @@ export const store: StoreType = {
             posts: [
                 {id: 1, message: 'Hi, how are you?', likesCount: 25},
                 {id: 2, message: 'This is my first project', likesCount: 49}
-            ]
+            ],
+            profile: null,
         }
     },
 

@@ -27,7 +27,7 @@ type UsersPagePropsType = {
     toggleIsFetching: (isFetching: boolean) => void
 }
 
-class UsersContainer extends React.Component<UsersPagePropsType> {
+class UsersContainer extends React.Component<UsersPagePropsType, {}> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)

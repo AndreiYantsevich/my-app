@@ -124,6 +124,9 @@ export const setUsersTotalCount = (totalUsersCount: number): ActionSetTotalUsers
     type: SET_TOTAL_USERS_COUNT,
     totalUsersCount
 } as const)
-export const toggleIsFetching = (isFetching: boolean): ActionToggleIsFetchingType => ({type: TOGGLE_IS_FETCHING, isFetching} as const)
+export const toggleIsFetching = (isFetching: boolean): ActionToggleIsFetchingType => ({
+    type: TOGGLE_IS_FETCHING,
+    isFetching
+} as const)
 
 
