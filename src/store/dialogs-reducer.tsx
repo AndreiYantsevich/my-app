@@ -1,3 +1,4 @@
+/*
 const ADD_MESSAGE = 'ADD-MESSAGE'
 const UPDATE_NEW_MESSAGE_TEXT = 'CHANGE-MESSAGE-TEXT'
 
@@ -67,3 +68,4 @@ export const changeMessageAC = (newText: string): ChangeMessageTextTypeAC => {
         newMessageText: newText
     } as const
 }
+*/

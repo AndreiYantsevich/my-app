@@ -2,26 +2,26 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {DialogsPageType} from '../../redux/dialogs-reducer';
+import {DialogsType} from '../../store/reducers/dialogs/dialogs-reducer';
 
-type dialogsPropsType = {
-    dialogsPage: DialogsPageType
-    changeMessage: (newText: string) => void
-    sendMessage: () => void
+type PropsType = {
+    dialogs: DialogsType
+    updateNewMessageText: (payload: string) => void
+    addMessage: () => void
 }
 
-export function Dialogs(props: dialogsPropsType) {
+export function Dialogs(props: PropsType) {
 
-    const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
-    const messagesElements = props.dialogsPage.messages.map(m => <Message id={m.id} key={m.id} message={m.message}/>)
+    const dialogsElements = props.dialogs.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
+    const messagesElements = props.dialogs.messages.map(m => <Message id={m.id} key={m.id} message={m.message}/>)
 
     const onNewMessageTextHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        let newText = event.currentTarget.value
-        props.changeMessage(newText)
+        let payload = event.currentTarget.value
+        props.updateNewMessageText(payload)
     }
 
     const onAddMessageHandler = () => {
-        props.sendMessage()
+        props.addMessage()
     }
 
     return (
@@ -33,7 +33,7 @@ export function Dialogs(props: dialogsPropsType) {
                 {messagesElements}
             </div>
             <div>
-                <textarea value={props.dialogsPage.newMessageText} onChange={onNewMessageTextHandler}/>
+                <textarea value={props.dialogs.newMessageText} onChange={onNewMessageTextHandler}/>
             </div>
             <div>
                 <button onClick={onAddMessageHandler}>Add message</button>

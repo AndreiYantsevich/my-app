@@ -2,9 +2,11 @@ import React from 'react';
 import Profile from './Profile';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {StateType} from '../../redux/redux-store';
-import {ProfileType, setUserProfile} from '../../redux/profile-reducer';
+import {RootState} from '../../store/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import { ProfileType } from '../../store/reducers/profile/profile-types';
+import {ProfileActionCreators} from '../../store/reducers/profile/profile-action-creators';
+import {Dispatch} from 'redux';
 
 
 type PathParamsType = {
@@ -18,7 +20,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    setUserProfile: (profile: ProfileType) => void
+    setUserProfile: (payload: ProfileType) => void
 }
 
 type ownPropsType = MapStatePropsType & MapDispatchPropsType
@@ -43,10 +45,18 @@ class ProfileContainer extends React.Component<PropsType, {}> {
     }
 }
 
-const mapStateToProps = (state: StateType): MapStatePropsType => ({
-    profile: state.profilePage.profile
+const mapStateToProps = (state: RootState): MapStatePropsType => ({
+    profile: state.profile.profile
 })
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        setUserProfile: (payload: ProfileType) => {
+            dispatch(ProfileActionCreators.setUserProfile(payload))
+        }
+    }
+}
 
 const WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent);

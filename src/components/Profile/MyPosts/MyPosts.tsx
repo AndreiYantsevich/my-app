@@ -5,7 +5,7 @@ import Post, { PostType } from './Post/Post';
 type myPostsPropsType = {
     posts: PostType[]
     newPostText: string | undefined
-    changePostText: (newText: string) => void
+    updateNewPostText: (payload: string) => void
     addPost: () => void
 }
 
@@ -15,7 +15,7 @@ export function MyPosts(props: myPostsPropsType) {
 
     const onPostChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
        let newText = event.currentTarget.value
-        props.changePostText(newText)
+        props.updateNewPostText(newText)
     }
 
     const onAddPostHandler = () => {

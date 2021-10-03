@@ -1,25 +1,25 @@
 import React from 'react';
-import {addPostAC, changePostAC} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-import { StateType } from '../../../redux/redux-store';
+import {RootState} from '../../../store/redux-store';
+import {ProfileActionCreators} from '../../../store/reducers/profile/profile-action-creators';
 
 
-const mapStateToProps = (state: StateType) => {
+const mapStateToProps = (state: RootState) => {
     return {
-        posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText
+        posts: state.profile.posts,
+        newPostText: state.profile.newPostText
     }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        changePostText: (newText: string) => {
-            dispatch(changePostAC(newText))
+        updateNewPostText: (payload: string) => {
+            dispatch(ProfileActionCreators.updateNewPostText(payload))
         },
         addPost: () => {
-            dispatch(addPostAC())
+            dispatch(ProfileActionCreators.addPost())
         }
     }
 }

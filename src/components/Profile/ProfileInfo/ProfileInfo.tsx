@@ -15,7 +15,7 @@ export function ProfileInfo(props: ProfilePropsType) {
                 <img src="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg" alt=""/>
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large} alt=""/>
+                <img src={props.profile.photos.large} alt="avatar"/>
                 <div>
                     about me: {props.profile.aboutMe}
                 </div>
