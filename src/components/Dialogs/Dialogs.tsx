@@ -2,10 +2,10 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {DialogsType} from '../../store/reducers/dialogs/dialogs-reducer';
+import {DialogsStateType} from '../../store/reducers/dialogs/dialogs-types';
 
 type PropsType = {
-    dialogs: DialogsType
+    dialogs: DialogsStateType
     updateNewMessageText: (payload: string) => void
     addMessage: () => void
 }

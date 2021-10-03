@@ -2,9 +2,9 @@ import React from 'react';
 import Profile from './Profile';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {RootState} from '../../store/redux-store';
+import {RootState} from '../../store/store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import { ProfileType } from '../../store/reducers/profile/profile-types';
+import {ProfileType} from '../../store/reducers/profile/profile-types';
 import {ProfileActionCreators} from '../../store/reducers/profile/profile-action-creators';
 import {Dispatch} from 'redux';
 

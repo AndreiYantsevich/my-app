@@ -1,4 +1,4 @@
-import {DialogsAction, DialogsActionEnum} from './dialogs-types';
+import {DialogsAction, DialogsActionEnum, DialogsStateType} from './dialogs-types';
 
 
 const initialState = {
@@ -19,9 +19,8 @@ const initialState = {
     ]
 }
 
-export type DialogsType = typeof initialState;
 
-export default function dialogsReducer(state: DialogsType = initialState, action: DialogsAction): DialogsType {
+export default function dialogsReducer(state: DialogsStateType = initialState, action: DialogsAction): DialogsStateType {
     switch (action.type) {
         case DialogsActionEnum.ADD_MESSAGE:
             let newMessage = {

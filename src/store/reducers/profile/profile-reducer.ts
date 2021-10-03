@@ -37,5 +37,4 @@ export default function profileReducer(state: ProfilePagePropsType = initialStat
             return state
         }
     }
-
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-import {RootState} from '../../../store/redux-store';
+import {RootState} from '../../../store/store';
 import {ProfileActionCreators} from '../../../store/reducers/profile/profile-action-creators';
 
 

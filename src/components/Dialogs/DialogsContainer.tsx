@@ -2,7 +2,7 @@ import React from 'react';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
 import { Dispatch } from 'redux';
-import {RootState} from '../../store/redux-store';
+import {RootState} from '../../store/store';
 import {DialogsActionCreators} from '../../store/reducers/dialogs/dialogs-action-creators';
 
 const mapStateToProps = (state: RootState) => {
@@ -22,4 +22,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps) (Dialogs)
+export default connect(mapStateToProps, mapDispatchToProps) (Dialogs)

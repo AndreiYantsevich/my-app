@@ -23,7 +23,7 @@ export interface ProfileType {
     }
 }
 
-export type ProfilePagePropsType = {
+export interface ProfilePagePropsType {
     posts: Array<PostType>;
     newPostText: string;
     profile: null | ProfileType;
@@ -39,4 +39,4 @@ export type ProfileAction = (
     ReturnType<typeof ProfileActionCreators.addPost> |
     ReturnType<typeof ProfileActionCreators.updateNewPostText> |
     ReturnType<typeof ProfileActionCreators.setUserProfile>
-)
+    )

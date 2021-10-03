@@ -1,17 +1,17 @@
 import React from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/avatar.png';
-import {UserType} from '../../store/users-reducer';
 import {NavLink} from 'react-router-dom';
+import {UserType} from '../../store/reducers/users/users-types';
 
 type UsersPropsType = {
     users: Array<UserType>
-    followUser: (id: number) => void;
-    unfollowUser: (id: number) => void;
+    follow: (payload: number) => void;
+    unfollow: (payload: number) => void;
     pageSize: number
     totalUsersCount: number
     currentPage: number
-    onPageChanged: (pageNumber: number) => void
+    onPageChanged: (payload: number) => void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -46,10 +46,10 @@ const Users = (props: UsersPropsType) => {
                     <div>
                         {u.followed
                             ? <button onClick={() => {
-                                props.unfollowUser(u.id)
+                                props.unfollow(u.id)
                             }}>Unfollow</button>
                             : <button onClick={() => {
-                                props.followUser(u.id)
+                                props.follow(u.id)
                             }}>Follow</button>}
                     </div>
                 </span>
