@@ -1,9 +1,11 @@
 import s from './Music.module.css'
 
-export function Music() {
+const Music = () => {
     return (
         <div>
             Music
         </div>
     );
 }
+
+export default Music

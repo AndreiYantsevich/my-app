@@ -5,5 +5,5 @@ import {UsersActionCreators} from './users/users-action-creators';
 export const allActionCreators = {
     ...DialogsActionCreators,
     ...ProfileActionCreators,
-    ...UsersActionCreators
+    ...UsersActionCreators,
 }

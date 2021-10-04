@@ -8,7 +8,7 @@ import {UserType} from '../../store/reducers/users/users-types';
 import {UsersActionCreators} from '../../store/reducers/users/users-action-creators';
 import {Dispatch} from 'redux';
 
-type UsersPagePropsType = {
+interface UsersPagePropsType {
     users: Array<UserType>;
     follow: (payload: number) => void;
     unfollow: (payload: number) => void;

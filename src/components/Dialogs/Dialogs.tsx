@@ -1,16 +1,16 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, FC} from 'react';
 import s from './Dialogs.module.css'
-import {DialogItem} from './DialogItem/DialogItem';
-import {Message} from './Message/Message';
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
 import {DialogsStateType} from '../../store/reducers/dialogs/dialogs-types';
 
-type PropsType = {
+interface PropsType {
     dialogs: DialogsStateType
     updateNewMessageText: (payload: string) => void
     addMessage: () => void
 }
 
-export function Dialogs(props: PropsType) {
+const Dialogs: FC<PropsType> = (props) => {
 
     const dialogsElements = props.dialogs.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
     const messagesElements = props.dialogs.messages.map(m => <Message id={m.id} key={m.id} message={m.message}/>)
@@ -41,3 +41,5 @@ export function Dialogs(props: PropsType) {
         </div>
     );
 }
+
+export default Dialogs;

@@ -1,20 +1,20 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './Profile.module.css';
-import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {MyPostsContainer} from './MyPosts/MyPostsContainer';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 import { ProfileType } from '../../store/reducers/profile/profile-types';
 
-export type ProfilePropsType = {
+export interface ProfilePropsType {
     profile: ProfileType | null
 }
 
-const Profile = (props: ProfilePropsType) => {
+const Profile: FC<ProfilePropsType> = (props) => {
     return (
         <div>
             <ProfileInfo profile={props.profile}/>
-            {/*<MyPostsContainer/>*/}
+            <MyPostsContainer/>
         </div>
     );
 }
 
-export default Profile
+export default Profile;

@@ -9,17 +9,17 @@ import {ProfileActionCreators} from '../../store/reducers/profile/profile-action
 import {Dispatch} from 'redux';
 
 
-type PathParamsType = {
+interface PathParamsType {
     userId: string
 }
 
 type PropsType = RouteComponentProps<PathParamsType> & ownPropsType
 
-type MapStatePropsType = {
+interface MapStatePropsType {
     profile: ProfileType | null
 }
 
-type MapDispatchPropsType = {
+interface MapDispatchPropsType {
     setUserProfile: (payload: ProfileType) => void
 }
 
@@ -59,4 +59,4 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
 
 const WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent);
+export default connect(mapStateToProps, mapDispatchToProps) (WithUrlDataContainerComponent);

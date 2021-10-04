@@ -1,9 +1,12 @@
 import s from './Settings.module.css'
+import {FC} from 'react';
 
-export function Settings() {
+const Settings: FC = () => {
     return (
         <div>
             Settings
         </div>
     );
 }
+
+export default Settings;

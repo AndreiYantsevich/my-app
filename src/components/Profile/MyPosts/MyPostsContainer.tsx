@@ -1,5 +1,5 @@
 import React from 'react';
-import {MyPosts} from './MyPosts';
+import MyPosts from './MyPosts';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import {RootState} from '../../../store/store';
@@ -24,4 +24,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export default connect(mapStateToProps, mapDispatchToProps)(MyPosts)

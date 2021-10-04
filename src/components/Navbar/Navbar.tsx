@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import s from './Navbar.module.css';
 
-export function Navbar() {
+const Navbar = () => {
     return (
         <nav className={s.nav}>
             <div className={`${s.item} ${s.active}`}>
@@ -26,3 +26,5 @@ export function Navbar() {
         </nav>
     );
 }
+
+export default Navbar;

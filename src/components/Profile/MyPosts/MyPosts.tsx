@@ -1,15 +1,15 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, FC} from 'react';
 import s from './MyPosts.module.css';
 import Post, { PostType } from './Post/Post';
 
-type myPostsPropsType = {
+interface MyPostsPropsType {
     posts: PostType[]
     newPostText: string | undefined
     updateNewPostText: (payload: string) => void
     addPost: () => void
 }
 
-export function MyPosts(props: myPostsPropsType) {
+const MyPosts: FC<MyPostsPropsType> = (props) => {
 
     const postsElements = props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
@@ -40,3 +40,5 @@ export function MyPosts(props: myPostsPropsType) {
         </div>
     );
 }
+
+export default MyPosts;

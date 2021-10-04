@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {FC} from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
 import {UserType} from '../../store/reducers/users/users-types';
 
-type UsersPropsType = {
+interface PropsType {
     users: Array<UserType>
     follow: (payload: number) => void;
     unfollow: (payload: number) => void;
@@ -14,7 +14,7 @@ type UsersPropsType = {
     onPageChanged: (payload: number) => void
 }
 
-const Users = (props: UsersPropsType) => {
+const Users: FC<PropsType> = (props) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 

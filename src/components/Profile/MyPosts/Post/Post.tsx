@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import s from './Post.module.css';
 
-export type PostType = {
+export interface PostType {
     id: number
     message: string | undefined
     likesCount: number
 }
 
-function Post(props: PostType) {
+const Post: FC<PostType> = (props) => {
     return (
         <div>
             <div className={s.item}>

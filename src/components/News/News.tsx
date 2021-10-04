@@ -1,9 +1,11 @@
 import s from './News.module.css'
 
-export function News() {
+const News = () => {
     return (
         <div>
             News
         </div>
     );
 }
+
+export default News;

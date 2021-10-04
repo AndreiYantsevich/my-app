@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Route} from 'react-router-dom';
 import './App.css';
 import 'antd/dist/antd.css';
-import {Header} from './components/Header/Header';
-import {Navbar} from './components/Navbar/Navbar';
-import {News} from './components/News/News';
-import {Music} from './components/Music/Music';
-import {Settings} from './components/Settings/Settings';
+import Header from './components/Header/Header';
+import Navbar from './components/Navbar/Navbar';
+import News from './components/News/News';
+import Music from './components/Music/Music';
+import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 
-export function App() {
+const App: FC = () => {
 
     return (
         <div className={'app-wrapper'}>
@@ -28,3 +28,5 @@ export function App() {
         </div>
     );
 }
+
+export default App

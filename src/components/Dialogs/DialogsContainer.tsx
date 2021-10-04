@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dialogs} from './Dialogs';
+import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import { Dispatch } from 'redux';
 import {RootState} from '../../store/store';
@@ -22,4 +22,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Dialogs)
+export default connect(mapStateToProps, mapDispatchToProps) (Dialogs);
