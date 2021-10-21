@@ -2,16 +2,16 @@ import React, {FC} from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
-import {UserType} from '../../store/reducers/users/users-types';
+import { UserType } from '../../store/reducers/users-reducer';
 
 interface PropsType {
     users: Array<UserType>
-    follow: (payload: number) => void;
-    unfollow: (payload: number) => void;
+    follow: (userID: number) => void;
+    unfollow: (userID: number) => void;
     pageSize: number
     totalUsersCount: number
     currentPage: number
-    onPageChanged: (payload: number) => void
+    onPageChanged: (currentPage: number) => void
 }
 
 const Users: FC<PropsType> = (props) => {

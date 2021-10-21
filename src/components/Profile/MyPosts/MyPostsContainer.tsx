@@ -2,11 +2,11 @@ import React from 'react';
 import MyPosts from './MyPosts';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-import {RootState} from '../../../store/store';
-import {ProfileActionCreators} from '../../../store/reducers/profile/profile-action-creators';
+import {RootStateType} from '../../../store/store';
+import { ProfileActionCreators } from '../../../store/reducers/profile-reducer';
 
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootStateType) => {
     return {
         posts: state.profile.posts,
         newPostText: state.profile.newPostText

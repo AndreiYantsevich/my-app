@@ -2,10 +2,10 @@ import React from 'react';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import { Dispatch } from 'redux';
-import {RootState} from '../../store/store';
-import {DialogsActionCreators} from '../../store/reducers/dialogs/dialogs-action-creators';
+import {RootStateType} from '../../store/store';
+import { DialogsActionCreators } from '../../store/reducers/dialogs-reducer';
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootStateType) => {
     return {
         dialogs: state.dialogs
     }

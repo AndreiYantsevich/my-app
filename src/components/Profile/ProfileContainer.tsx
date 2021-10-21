@@ -2,11 +2,10 @@ import React from 'react';
 import Profile from './Profile';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {RootState} from '../../store/store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {ProfileType} from '../../store/reducers/profile/profile-types';
-import {ProfileActionCreators} from '../../store/reducers/profile/profile-action-creators';
 import {Dispatch} from 'redux';
+import {ProfileActionCreators, ProfileType } from '../../store/reducers/profile-reducer';
+import {RootStateType} from '../../store/store';
 
 
 interface PathParamsType {
@@ -45,7 +44,7 @@ class ProfileContainer extends React.Component<PropsType, {}> {
     }
 }
 
-const mapStateToProps = (state: RootState): MapStatePropsType => ({
+const mapStateToProps = (state: RootStateType): MapStatePropsType => ({
     profile: state.profile.profile
 })
 

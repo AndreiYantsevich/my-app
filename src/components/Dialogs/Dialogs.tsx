@@ -2,7 +2,7 @@ import React, {ChangeEvent, FC} from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {DialogsStateType} from '../../store/reducers/dialogs/dialogs-types';
+import { DialogsStateType } from '../../store/reducers/dialogs-reducer';
 
 interface PropsType {
     dialogs: DialogsStateType
