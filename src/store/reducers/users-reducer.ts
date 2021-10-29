@@ -27,12 +27,12 @@ export enum UsersEnum {
 }
 
 export type UsersAction = (
-    ReturnType<typeof UsersActionCreators.follow> |
-    ReturnType<typeof UsersActionCreators.unfollow> |
-    ReturnType<typeof UsersActionCreators.setUsers> |
-    ReturnType<typeof UsersActionCreators.setCurrentPage> |
-    ReturnType<typeof UsersActionCreators.setUsersTotalCount> |
-    ReturnType<typeof UsersActionCreators.toggleIsFetching>
+    ReturnType<typeof follow> |
+    ReturnType<typeof unfollow> |
+    ReturnType<typeof setUsers> |
+    ReturnType<typeof setCurrentPage> |
+    ReturnType<typeof setUsersTotalCount> |
+    ReturnType<typeof toggleIsFetching>
     )
 
 
@@ -88,11 +88,9 @@ export default function usersReducer(state: UsersStateType = initialState, actio
     }
 }
 
-export const UsersActionCreators = {
-    follow: (userID: number) => ({type: UsersEnum.FOLLOW, userID} as const),
-    unfollow: (userID: number) => ({type: UsersEnum.UNFOLLOW, userID} as const),
-    setUsers: (users: UserType[]) => ({type: UsersEnum.SET_USERS, users} as const),
-    setCurrentPage: (currentPage: number) => ({type: UsersEnum.SET_CURRENT_PAGE, currentPage} as const),
-    setUsersTotalCount: (totalCount: number) => ({type: UsersEnum.SET_USERS_TOTAL_COUNT, totalCount} as const),
-    toggleIsFetching: (isFetching: boolean) => ({type: UsersEnum.TOGGLE_IS_FETCHING, isFetching} as const),
-}
+export const follow = (userID: number) => ({type: UsersEnum.FOLLOW, userID} as const)
+export const unfollow = (userID: number) => ({type: UsersEnum.UNFOLLOW, userID} as const)
+export const setUsers = (users: UserType[]) => ({type: UsersEnum.SET_USERS, users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: UsersEnum.SET_CURRENT_PAGE, currentPage} as const)
+export const setUsersTotalCount = (totalCount: number) => ({type: UsersEnum.SET_USERS_TOTAL_COUNT, totalCount} as const)
+export const toggleIsFetching = (isFetching: boolean) => ({type: UsersEnum.TOGGLE_IS_FETCHING, isFetching} as const)

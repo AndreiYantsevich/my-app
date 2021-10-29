@@ -20,8 +20,8 @@ export enum DialogsEnum {
 }
 
 export type DialogsAction = (
-    ReturnType<typeof DialogsActionCreators.addMessage> |
-    ReturnType<typeof DialogsActionCreators.updateNewMessageText>
+    ReturnType<typeof addMessage> |
+    ReturnType<typeof updateNewMessageText>
     )
 
 
@@ -63,10 +63,9 @@ export default function dialogsReducer(state: DialogsStateType = initialState, a
     }
 }
 
-export const DialogsActionCreators = {
-    addMessage: () => ({type: DialogsEnum.ADD_MESSAGE} as const),
-    updateNewMessageText: (newMessageText: string) => ({
+
+export const addMessage = () => ({type: DialogsEnum.ADD_MESSAGE} as const)
+export const updateNewMessageText = (newMessageText: string) => ({
         type: DialogsEnum.UPDATE_NEW_MESSAGE_TEXT,
         newMessageText
-    } as const),
-}
+    } as const)

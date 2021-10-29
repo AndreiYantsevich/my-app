@@ -3,8 +3,7 @@ import Profile from './Profile';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Dispatch} from 'redux';
-import {ProfileActionCreators, ProfileType } from '../../store/reducers/profile-reducer';
+import {ProfileType, setUserProfile} from '../../store/reducers/profile-reducer';
 import {RootStateType} from '../../store/store';
 
 
@@ -48,14 +47,7 @@ const mapStateToProps = (state: RootStateType): MapStatePropsType => ({
     profile: state.profile.profile
 })
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-    return {
-        setUserProfile: (payload: ProfileType) => {
-            dispatch(ProfileActionCreators.setUserProfile(payload))
-        }
-    }
-}
 
 const WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, mapDispatchToProps) (WithUrlDataContainerComponent);
+export default connect(mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent);

@@ -35,9 +35,9 @@ export enum ProfileEnum {
 }
 
 export type ProfileAction = (
-    ReturnType<typeof ProfileActionCreators.addPost> |
-    ReturnType<typeof ProfileActionCreators.updateNewPostText> |
-    ReturnType<typeof ProfileActionCreators.setUserProfile>
+    ReturnType<typeof addPost> |
+    ReturnType<typeof updateNewPostText> |
+    ReturnType<typeof setUserProfile>
     )
 
 const initialState = {
@@ -79,8 +79,9 @@ export default function profileReducer(state: ProfilePagePropsType = initialStat
     }
 }
 
-export const ProfileActionCreators = {
-    addPost: () => ({type: ProfileEnum.ADD_POST} as const),
-    updateNewPostText: (newPostText: string) => ({type: ProfileEnum.UPDATE_NEW_POST_TEXT, newPostText} as const),
-    setUserProfile: (profile: ProfileType) => ({type: ProfileEnum.SET_USER_PROFILE, profile} as const),
-}
+export const addPost = () => ({type: ProfileEnum.ADD_POST} as const)
+export const updateNewPostText = (newPostText: string) => ({
+    type: ProfileEnum.UPDATE_NEW_POST_TEXT,
+    newPostText
+} as const)
+export const setUserProfile = (profile: ProfileType) => ({type: ProfileEnum.SET_USER_PROFILE, profile} as const)

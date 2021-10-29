@@ -1,9 +1,8 @@
 import React from 'react';
 import MyPosts from './MyPosts';
 import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
 import {RootStateType} from '../../../store/store';
-import { ProfileActionCreators } from '../../../store/reducers/profile-reducer';
+import {addPost, updateNewPostText} from '../../../store/reducers/profile-reducer';
 
 
 const mapStateToProps = (state: RootStateType) => {
@@ -13,15 +12,7 @@ const mapStateToProps = (state: RootStateType) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        updateNewPostText: (payload: string) => {
-            dispatch(ProfileActionCreators.updateNewPostText(payload))
-        },
-        addPost: () => {
-            dispatch(ProfileActionCreators.addPost())
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export default connect(mapStateToProps, {
+    updateNewPostText,
+    addPost,
+})(MyPosts)
