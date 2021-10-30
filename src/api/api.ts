@@ -27,19 +27,20 @@ export const followAPI = {
 };
 
 export const authAPI = {
-    userData() {
+    login() {
     return instance.get(`auth/me`)
         .then(response => response.data)
     },
-    userAvatar(id: number) {
-        return instance.get(`profile/${id}`)
-            .then(response => response.data);
-    },
+
 };
 
 export const profileAPI = {
-    profileData(userId: string) {
+    getUserProfile(userId: string) {
         return instance.get(`profile/` + userId)
+            .then(response => response.data);
+    },
+    getUserAvatar(id: number) {
+        return instance.get(`profile/${id}`)
             .then(response => response.data);
     },
 };

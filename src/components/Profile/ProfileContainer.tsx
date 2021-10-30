@@ -30,9 +30,9 @@ class ProfileContainer extends React.Component<PropsType, {}> {
         if (!userId) {
             userId = '19514'
         }
-        profileAPI.profileData(userId).then(data => {
-                this.props.setUserProfile(data)
-            })
+        profileAPI.getUserProfile(userId).then(data => {
+            this.props.setUserProfile(data)
+        })
     }
 
     render() {
@@ -49,4 +49,4 @@ const mapStateToProps = (state: RootStateType): MapStatePropsType => ({
 
 const WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent);
+export default connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent);

@@ -4,7 +4,7 @@ import {RootStateType} from '../../store/store';
 import {connect} from 'react-redux';
 import {setAuthUserAvatar, setAuthUserData} from '../../store/reducers/auth-reducer';
 import defaultAvatar from '../../assets/images/avatar.png'
-import {authAPI} from '../../api/api';
+import {authAPI, profileAPI} from '../../api/api';
 
 type HeaderContainerPropsType = {
     login: string | null;
@@ -17,12 +17,12 @@ type HeaderContainerPropsType = {
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
 
-            authAPI.userData()
+            authAPI.login()
                 .then(data => {
                 if (data.resultCode === 0) {
                     let {id, email, login} = data.data;
                     this.props.setAuthUserData(id, email, login)
-                    authAPI.userAvatar(id)
+                    profileAPI.getUserAvatar(id)
                         .then(data => {
                             if (data.photos.small) {
                                 this.props.setAuthUserAvatar(data.photos.small)
