@@ -1,18 +1,18 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {NavLink} from 'react-router-dom';
-import s from './Header.module.css';
+import style from './Header.module.css';
 
-type PropsType = {
+type PropsType =  {
     login: string | null
     isAuth: boolean
     avatar: string
 }
 
-const Header = (props: PropsType) => {
+const Header: React.FC<PropsType> = React.memo((props) => {
     return (
-        <header className={s.header}>
+        <header className={style.header}>
             <img src={props.avatar} alt="logo"/>
-            <div className={s.loginBlock}>
+            <div className={style.loginBlock}>
                 {props.isAuth
                     ? props.login
                     : <NavLink to={'/login'}>Login</NavLink>
@@ -20,6 +20,6 @@ const Header = (props: PropsType) => {
             </div>
         </header>
     );
-}
+});
 
 export default Header;

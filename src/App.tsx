@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Route} from 'react-router-dom';
 import './App.css';
 import 'antd/dist/antd.css';
@@ -11,7 +11,7 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 
-const App: FC = () => {
+const App: React.FC = React.memo(() => {
 
     return (
         <div className={'app-wrapper'}>
@@ -27,6 +27,6 @@ const App: FC = () => {
             </div>
         </div>
     );
-}
+});
 
-export default App
+export default App;

@@ -1,12 +1,11 @@
-import s from './Settings.module.css'
-import {FC} from 'react';
+import React from 'react';
 
-const Settings: FC = () => {
+const Settings: React.FC = React.memo(() => {
     return (
         <div>
             Settings
         </div>
     );
-}
+});
 
 export default Settings;

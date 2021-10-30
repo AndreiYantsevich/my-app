@@ -1,18 +1,18 @@
+import React from 'react';
 import {NavLink} from 'react-router-dom';
-import s from './../Dialogs.module.css'
-import {FC} from 'react';
+import style from './../Dialogs.module.css'
 
-interface PropsType {
+type PropsType = {
     id: number
     name: string
 }
 
-const DialogItem: FC<PropsType> = (props) => {
+const DialogItem: React.FC<PropsType> = React.memo((props) => {
     return (
-        <div className={s.dialog + ' ' + s.active}>
+        <div className={style.dialog + ' ' + style.active}>
             <NavLink to={'/dialogs/' + props.id}>{props.name}</NavLink>
         </div>
     )
-}
+});
 
 export default DialogItem;

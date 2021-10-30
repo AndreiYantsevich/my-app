@@ -1,10 +1,10 @@
-export interface UsersStateType {
+export type UsersStateType = {
     users: Array<UserType>
     pageSize: number
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
-}
+};
 
 export type UserType = {
     id: number;
@@ -15,7 +15,7 @@ export type UserType = {
         large?: string;
     }
     followed: boolean;
-}
+};
 
 export enum UsersEnum {
     FOLLOW = 'FOLLOW',
@@ -26,26 +26,23 @@ export enum UsersEnum {
     TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING',
 }
 
-export type UsersAction = (
+export type UsersAction =
     ReturnType<typeof follow> |
     ReturnType<typeof unfollow> |
     ReturnType<typeof setUsers> |
     ReturnType<typeof setCurrentPage> |
     ReturnType<typeof setUsersTotalCount> |
     ReturnType<typeof toggleIsFetching>
-    )
 
-
-const initialState = {
+const initialState: UsersStateType = {
     users: [] as UserType[],
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-}
+};
 
-
-export default function usersReducer(state: UsersStateType = initialState, action: UsersAction): UsersStateType {
+export default function usersReducer(state= initialState, action: UsersAction): UsersStateType {
 
     switch (action.type) {
         case UsersEnum.FOLLOW:
@@ -86,11 +83,11 @@ export default function usersReducer(state: UsersStateType = initialState, actio
         default:
             return state
     }
-}
+};
 
-export const follow = (userID: number) => ({type: UsersEnum.FOLLOW, userID} as const)
-export const unfollow = (userID: number) => ({type: UsersEnum.UNFOLLOW, userID} as const)
-export const setUsers = (users: UserType[]) => ({type: UsersEnum.SET_USERS, users} as const)
-export const setCurrentPage = (currentPage: number) => ({type: UsersEnum.SET_CURRENT_PAGE, currentPage} as const)
-export const setUsersTotalCount = (totalCount: number) => ({type: UsersEnum.SET_USERS_TOTAL_COUNT, totalCount} as const)
-export const toggleIsFetching = (isFetching: boolean) => ({type: UsersEnum.TOGGLE_IS_FETCHING, isFetching} as const)
+export const follow = (userID: number) => ({type: UsersEnum.FOLLOW, userID} as const);
+export const unfollow = (userID: number) => ({type: UsersEnum.UNFOLLOW, userID} as const);
+export const setUsers = (users: UserType[]) => ({type: UsersEnum.SET_USERS, users} as const);
+export const setCurrentPage = (currentPage: number) => ({type: UsersEnum.SET_CURRENT_PAGE, currentPage} as const);
+export const setUsersTotalCount = (totalCount: number) => ({type: UsersEnum.SET_USERS_TOTAL_COUNT, totalCount} as const);
+export const toggleIsFetching = (isFetching: boolean) => ({type: UsersEnum.TOGGLE_IS_FETCHING, isFetching} as const);

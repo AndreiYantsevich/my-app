@@ -1,11 +1,11 @@
-import React, {FC} from 'react';
+import React from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
 import {UserType} from '../../store/reducers/users-reducer';
-import {followUsers, unfollowUsers} from '../../api/api';
+import {followAPI} from '../../api/api';
 
-interface PropsType {
+type PropsType = {
     users: Array<UserType>
     follow: (userID: number) => void;
     unfollow: (userID: number) => void;
@@ -15,7 +15,7 @@ interface PropsType {
     onPageChanged: (currentPage: number) => void
 }
 
-const Users: FC<PropsType> = (props) => {
+const Users: React.FC<PropsType> = React.memo((props) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
@@ -47,14 +47,14 @@ const Users: FC<PropsType> = (props) => {
                     <div>
                         {u.followed
                             ? <button onClick={() => {
-                                unfollowUsers(u.id).then(data => {
+                                followAPI.unfollowUsers(u.id).then(data => {
                                     if (data.resultCode === 0) {
                                         props.unfollow(u.id);
                                     }
                                 });
                             }}>Unfollow</button>
                             : <button onClick={() => {
-                                followUsers(u.id).then(data => {
+                                followAPI.followUsers(u.id).then(data => {
                                     if (data.resultCode === 0) {
                                         props.follow(u.id);
                                     }
@@ -72,6 +72,6 @@ const Users: FC<PropsType> = (props) => {
                 )}
         </div>
     );
-};
+});
 
 export default Users;

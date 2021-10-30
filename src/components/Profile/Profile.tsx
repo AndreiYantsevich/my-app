@@ -1,20 +1,19 @@
-import React, {FC} from 'react';
-import s from './Profile.module.css';
+import React from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import { ProfileType } from '../../store/reducers/profile-reducer';
 
-export interface ProfilePropsType {
+export type ProfilePropsType = {
     profile: ProfileType | null
 }
 
-const Profile: FC<ProfilePropsType> = (props) => {
+const Profile: React.FC<ProfilePropsType> = React.memo((props) => {
     return (
         <div>
             <ProfileInfo profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     );
-}
+});
 
 export default Profile;

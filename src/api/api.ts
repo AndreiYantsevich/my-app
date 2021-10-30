@@ -1,28 +1,45 @@
 import axios from 'axios';
 
-export const getUsers = (currentPage = 1, pageSize = 10) => {
-    return axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`, {
-        withCredentials: true
-    })
-        .then(response => response.data);
-}
+const instance = axios.create({
+    withCredentials: true,
+    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+    headers: {
+        'API-KEY': '7e5b4528-2880-4677-b629-b878b7697787'
+    },
+});
 
-export const followUsers = (id: number) => {
-    return axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {}, {
-        withCredentials: true,
-        headers: {
-            'API-KEY': '7e5b4528-2880-4677-b629-b878b7697787'
-        }
-    })
-        .then(response => response.data);
-}
+export const usersAPI = {
+    getUsers(currentPage = 1, pageSize = 10) {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+            .then(response => response.data);
+    },
+};
 
-export const unfollowUsers = (id: number) => {
-    return axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {
-        withCredentials: true,
-        headers: {
-            'API-KEY': '7e5b4528-2880-4677-b629-b878b7697787'
-        }
-    })
-        .then(response => response.data);
-}
+export const followAPI = {
+    followUsers(id: number) {
+        return instance.post(`follow/${id}`, {})
+            .then(response => response.data);
+    },
+    unfollowUsers(id: number) {
+        return instance.delete(`follow/${id}`)
+            .then(response => response.data);
+    },
+};
+
+export const authAPI = {
+    userData() {
+    return instance.get(`auth/me`)
+        .then(response => response.data)
+    },
+    userAvatar(id: number) {
+        return instance.get(`profile/${id}`)
+            .then(response => response.data);
+    },
+};
+
+export const profileAPI = {
+    profileData(userId: string) {
+        return instance.get(`profile/` + userId)
+            .then(response => response.data);
+    },
+};

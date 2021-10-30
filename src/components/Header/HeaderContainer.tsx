@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from './Header';
-import axios from 'axios';
 import {RootStateType} from '../../store/store';
 import {connect} from 'react-redux';
 import {setAuthUserAvatar, setAuthUserData} from '../../store/reducers/auth-reducer';
 import defaultAvatar from '../../assets/images/avatar.png'
+import {authAPI} from '../../api/api';
 
-export type HeaderContainerPropsType = {
+type HeaderContainerPropsType = {
     login: string | null;
     isAuth: boolean;
     avatar: string;
@@ -16,17 +16,16 @@ export type HeaderContainerPropsType = {
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
-        })
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    let {id, email, login} = response.data.data;
+
+            authAPI.userData()
+                .then(data => {
+                if (data.resultCode === 0) {
+                    let {id, email, login} = data.data;
                     this.props.setAuthUserData(id, email, login)
-                    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`)
-                        .then(response => {
-                            if (response.data.photos.small) {
-                                this.props.setAuthUserAvatar(response.data.photos.small)
+                    authAPI.userAvatar(id)
+                        .then(data => {
+                            if (data.photos.small) {
+                                this.props.setAuthUserAvatar(data.photos.small)
                             } else {
                                 this.props.setAuthUserAvatar(defaultAvatar)
                             }

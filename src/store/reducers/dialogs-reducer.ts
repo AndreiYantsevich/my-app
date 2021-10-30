@@ -3,12 +3,12 @@ interface DialogsType {
     name: string
 }
 
-interface MessageType {
+type MessageType = {
     id: number,
     message: string
 }
 
-export interface DialogsStateType {
+export type DialogsStateType = {
     newMessageText: string,
     dialogs: Array<DialogsType>,
     messages: Array<MessageType>
@@ -19,13 +19,12 @@ export enum DialogsEnum {
     UPDATE_NEW_MESSAGE_TEXT = 'CHANGE_MESSAGE_TEXT'
 }
 
-export type DialogsAction = (
+export type DialogsAction =
     ReturnType<typeof addMessage> |
     ReturnType<typeof updateNewMessageText>
-    )
 
 
-const initialState = {
+const initialState: DialogsStateType = {
     newMessageText: '',
     dialogs: [
         {id: 1, name: 'Andrei'},
@@ -43,8 +42,8 @@ const initialState = {
     ]
 }
 
+export default function dialogsReducer(state= initialState, action: DialogsAction): DialogsStateType {
 
-export default function dialogsReducer(state: DialogsStateType = initialState, action: DialogsAction): DialogsStateType {
     switch (action.type) {
         case DialogsEnum.ADD_MESSAGE:
             let newMessage = {
@@ -63,9 +62,8 @@ export default function dialogsReducer(state: DialogsStateType = initialState, a
     }
 }
 
-
-export const addMessage = () => ({type: DialogsEnum.ADD_MESSAGE} as const)
+export const addMessage = () => ({type: DialogsEnum.ADD_MESSAGE} as const);
 export const updateNewMessageText = (newMessageText: string) => ({
         type: DialogsEnum.UPDATE_NEW_MESSAGE_TEXT,
         newMessageText
-    } as const)
+    } as const);

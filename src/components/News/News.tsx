@@ -1,11 +1,11 @@
-import s from './News.module.css'
+import React from 'react';
 
-const News = () => {
+const News: React.FC = React.memo(() => {
     return (
         <div>
             News
         </div>
     );
-}
+});
 
 export default News;

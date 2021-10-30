@@ -1,11 +1,11 @@
-import s from './Music.module.css'
+import React from 'react';
 
-const Music = () => {
+const Music: React.FC = React.memo(() => {
     return (
         <div>
             Music
         </div>
     );
-}
+});
 
-export default Music
+export default Music;

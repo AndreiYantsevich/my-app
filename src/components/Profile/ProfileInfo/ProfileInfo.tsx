@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
-import s from './ProfileInfo.module.css';
+import React from 'react';
+import style from './ProfileInfo.module.css';
 import {ProfilePropsType} from '../Profile';
 import Preloader from '../../common/Preloader/Preloader';
 
-const ProfileInfo: FC<ProfilePropsType> = (props) => {
+const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
 
     if (!props.profile) {
         return <Preloader/>
@@ -11,10 +11,10 @@ const ProfileInfo: FC<ProfilePropsType> = (props) => {
 
     return (
         <div>
-            <div className={s.image}>
+            <div className={style.image}>
                 <img src="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg" alt=""/>
             </div>
-            <div className={s.descriptionBlock}>
+            <div className={style.descriptionBlock}>
                 <img src={props.profile.photos.large} alt="avatar"/>
                 <div>
                     about me: {props.profile.aboutMe}

@@ -1,23 +1,23 @@
-import React, {ChangeEvent, FC} from 'react';
-import s from './Dialogs.module.css'
+import React, {ChangeEvent} from 'react';
+import style from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import { DialogsStateType } from '../../store/reducers/dialogs-reducer';
 
-interface PropsType {
+type PropsType = {
     dialogs: DialogsStateType
-    updateNewMessageText: (payload: string) => void
+    updateNewMessageText: (newMessageText: string) => void
     addMessage: () => void
 }
 
-const Dialogs: FC<PropsType> = (props) => {
+const Dialogs: React.FC<PropsType> = React.memo((props) => {
 
     const dialogsElements = props.dialogs.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
     const messagesElements = props.dialogs.messages.map(m => <Message id={m.id} key={m.id} message={m.message}/>)
 
     const onNewMessageTextHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        let payload = event.currentTarget.value
-        props.updateNewMessageText(payload)
+        let newMessageText = event.currentTarget.value
+        props.updateNewMessageText(newMessageText)
     }
 
     const onAddMessageHandler = () => {
@@ -25,11 +25,11 @@ const Dialogs: FC<PropsType> = (props) => {
     }
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogItems}>
+        <div className={style.dialogs}>
+            <div className={style.dialogItems}>
                 {dialogsElements}
             </div>
-            <div className={s.messages}>
+            <div className={style.messages}>
                 {messagesElements}
             </div>
             <div>
@@ -40,6 +40,6 @@ const Dialogs: FC<PropsType> = (props) => {
             </div>
         </div>
     );
-}
+});
 
 export default Dialogs;

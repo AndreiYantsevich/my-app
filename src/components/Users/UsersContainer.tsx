@@ -11,9 +11,9 @@ import {
     UserType
 } from '../../store/reducers/users-reducer';
 import {RootStateType} from '../../store/store';
-import {getUsers} from '../../api/api';
+import {usersAPI} from '../../api/api';
 
-interface UsersPagePropsType {
+type UsersContainerPropsType = {
     users: Array<UserType>;
     follow: (userID: number) => void;
     unfollow: (userID: number) => void;
@@ -27,11 +27,11 @@ interface UsersPagePropsType {
     toggleIsFetching: (isFetching: boolean) => void
 }
 
-class UsersContainer extends React.Component<UsersPagePropsType, {}> {
+class UsersContainer extends React.Component<UsersContainerPropsType, {}> {
     componentDidMount() {
         this.props.toggleIsFetching(true);
 
-        getUsers(this.props.currentPage, this.props.pageSize)
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
             .then(data => {
                 this.props.toggleIsFetching(false);
                 this.props.setUsers(data.items);
@@ -43,7 +43,7 @@ class UsersContainer extends React.Component<UsersPagePropsType, {}> {
         this.props.setCurrentPage(currentPage);
         this.props.toggleIsFetching(true);
 
-        getUsers(currentPage, this.props.pageSize)
+        usersAPI.getUsers(currentPage, this.props.pageSize)
             .then(data => {
                 this.props.toggleIsFetching(false);
                 this.props.setUsers(data.items);

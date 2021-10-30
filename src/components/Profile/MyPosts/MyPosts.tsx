@@ -1,15 +1,15 @@
-import React, {ChangeEvent, FC} from 'react';
-import s from './MyPosts.module.css';
+import React, {ChangeEvent} from 'react';
+import style from './MyPosts.module.css';
 import Post, { PostType } from './Post/Post';
 
-interface MyPostsPropsType {
+type MyPostsPropsType = {
     posts: PostType[]
-    newPostText: string | undefined
+    newPostText: string
     updateNewPostText: (payload: string) => void
     addPost: () => void
 }
 
-const MyPosts: FC<MyPostsPropsType> = (props) => {
+const MyPosts: React.FC<MyPostsPropsType> = React.memo((props) => {
 
     const postsElements = props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
@@ -23,7 +23,7 @@ const MyPosts: FC<MyPostsPropsType> = (props) => {
     }
 
     return (
-        <div className={s.postsBlock}>
+        <div className={style.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
@@ -34,11 +34,11 @@ const MyPosts: FC<MyPostsPropsType> = (props) => {
                     <button>Remove</button>
                 </div>
             </div>
-            <div className={s.posts}>
+            <div className={style.posts}>
                 {postsElements}
             </div>
         </div>
     );
-}
+});
 
 export default MyPosts;

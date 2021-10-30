@@ -1,15 +1,15 @@
-import s from './../Dialogs.module.css'
-import {FC} from 'react';
+import React from 'react';
+import style from './../Dialogs.module.css'
 
-interface PropsType {
+type PropsType = {
     message: string
     id: number
 }
 
-const Message: FC<PropsType> = (props) => {
+const Message: React.FC<PropsType> = React.memo((props) => {
     return (
-        <div className={s.message}>{props.message}</div>
+        <div className={style.message}>{props.message}</div>
     )
-}
+});
 
 export default Message;

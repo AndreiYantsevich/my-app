@@ -3,7 +3,7 @@ export enum AuthEnum {
     SET_USER_AVATAR = 'SET_USER_AVATAR'
 }
 
-interface AuthStateType {
+type AuthStateType = {
     id: number,
     email: string,
     login: string,
@@ -17,7 +17,7 @@ export type AuthAction =
 
 
 
-let initialState: AuthStateType = {
+const initialState: AuthStateType = {
     id: 19514,
     email: 'yantsevich92@gmail.com',
     login: 'yantsevich',
@@ -26,6 +26,7 @@ let initialState: AuthStateType = {
 }
 
 export default function authReducer(state = initialState, action: AuthAction): AuthStateType {
+
     switch (action.type) {
         case AuthEnum.SET_USER_DATA:
             return {
