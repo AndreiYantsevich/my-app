@@ -1,7 +1,6 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 import './App.css';
-import 'antd/dist/antd.css';
 import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
 import Music from './components/Music/Music';

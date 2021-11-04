@@ -2,8 +2,8 @@ import React from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
-import {toggleFollowingProgress, UserType} from '../../store/reducers/users-reducer';
 import {followAPI} from '../../api/api';
+import {UserType} from './UsersContainer';
 
 type PropsType = {
     users: Array<UserType>

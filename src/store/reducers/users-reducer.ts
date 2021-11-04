@@ -1,22 +1,6 @@
-export type UsersStateType = {
-    users: Array<UserType>;
-    pageSize: number;
-    totalUsersCount: number;
-    currentPage: number;
-    isFetching: boolean;
-    followingInProgress: Array<number>;
-};
-
-export type UserType = {
-    id: number;
-    name: string;
-    status?: string;
-    photos: {
-        small?: string;
-        large?: string;
-    }
-    followed: boolean;
-};
+import {usersAPI} from '../../api/api';
+import {Dispatch} from 'redux';
+import {UsersStateType, UserType} from '../../components/Users/UsersContainer';
 
 export enum UsersEnum {
     FOLLOW = 'FOLLOW',
@@ -37,53 +21,41 @@ export type UsersAction =
     ReturnType<typeof toggleIsFetching> |
     ReturnType<typeof toggleFollowingProgress>
 
-const initialState: UsersStateType = {
-    users: [] as UserType[],
-    pageSize: 5,
-    totalUsersCount: 0,
+const initialState = {
+    users: [],
+    pageSize: 10,
+    totalUsersCount: 100,
     currentPage: 1,
     isFetching: false,
     followingInProgress: [],
 };
 
-export default function usersReducer(state = initialState, action: UsersAction): UsersStateType {
-
+export default function usersReducer(state: UsersStateType = initialState, action: UsersAction): UsersStateType {
     switch (action.type) {
         case UsersEnum.FOLLOW:
             return {
                 ...state,
-                users: state.users
-                    .map(u => (u.id === action.userID)
-                        ? {...u, followed: true}
-                        : u
-                    )
+                users: state.users.map(u => (u.id === action.userID)
+                    ? {...u, followed: true}
+                    : u
+                )
             }
         case UsersEnum.UNFOLLOW:
             return {
                 ...state,
-                users: state.users
-                    .map(u => (u.id === action.userID)
-                        ? {...u, followed: false}
-                        : u
-                    )
+                users: state.users.map(u => (u.id === action.userID)
+                    ? {...u, followed: false}
+                    : u
+                )
             }
         case UsersEnum.SET_USERS:
             return {...state, users: action.users}
         case UsersEnum.SET_CURRENT_PAGE:
-            return {
-                ...state,
-                currentPage: action.currentPage
-            }
+            return {...state, currentPage: action.currentPage}
         case UsersEnum.SET_USERS_TOTAL_COUNT:
-            return {
-                ...state,
-                totalUsersCount: action.totalCount
-            }
+            return {...state, totalUsersCount: action.totalCount}
         case UsersEnum.TOGGLE_IS_FETCHING:
-            return {
-                ...state,
-                isFetching: action.isFetching
-            }
+            return {...state, isFetching: action.isFetching}
         case UsersEnum.TOGGLE_IS_FOLLOWING_PROGRESS:
             return {
                 ...state,
@@ -96,6 +68,7 @@ export default function usersReducer(state = initialState, action: UsersAction):
     }
 };
 
+//action creators
 export const follow = (userID: number) => ({type: UsersEnum.FOLLOW, userID} as const);
 export const unfollow = (userID: number) => ({type: UsersEnum.UNFOLLOW, userID} as const);
 export const setUsers = (users: UserType[]) => ({type: UsersEnum.SET_USERS, users} as const);
@@ -110,3 +83,16 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: number) => 
     isFetching,
     userID
 } as const);
+
+
+//thunk
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (dispatch: Dispatch<UsersAction>) => {
+    dispatch(toggleIsFetching(true));
+    usersAPI.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setUsers(data.items));
+            dispatch(setUsersTotalCount(data.totalCount));
+            dispatch(setCurrentPage(currentPage));
+        });
+};
