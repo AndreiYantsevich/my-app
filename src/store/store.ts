@@ -5,14 +5,14 @@ import usersReducer from './reducers/users-reducer';
 import authReducer from './reducers/auth-reducer';
 import thunk from 'redux-thunk';
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
     dialogs: dialogsReducer,
     profile: profileReducer,
     users: usersReducer,
     auth: authReducer
 })
 
-export const store = createStore(reducers, applyMiddleware(thunk))
+export const store = createStore(rootReducer, applyMiddleware(thunk))
 
-export type RootStateType = ReturnType<typeof reducers>
+export type RootStateType = ReturnType<typeof rootReducer>
 

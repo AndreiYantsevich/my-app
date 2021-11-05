@@ -2,6 +2,7 @@ import React from 'react';
 import style from './ProfileInfo.module.css';
 import {ProfilePropsType} from '../Profile';
 import Preloader from '../../common/Preloader/Preloader';
+import defaultAvatar from '../../../assets/images/avatar.png'
 
 const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
 
@@ -15,7 +16,11 @@ const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
                 <img src="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg" alt=""/>
             </div>
             <div className={style.descriptionBlock}>
-                <img src={props.profile.photos.large} alt="avatar"/>
+                <img src={props.profile.photos.large
+                    ? props.profile.photos.large
+                    : defaultAvatar}
+                     alt={'avatar'}
+                />
                 <div>
                     about me: {props.profile.aboutMe}
                 </div>

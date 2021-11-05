@@ -11,7 +11,6 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 
 const App: React.FC = React.memo(() => {
-
     return (
         <div className={'app-wrapper'}>
             <HeaderContainer/>

@@ -1,24 +1,26 @@
 import {PostType} from '../../components/Profile/MyPosts/Post/Post';
+import {Dispatch} from 'redux';
+import {profileAPI} from '../../api/api';
 
 export type ProfileType = {
-    aboutMe: string
+    aboutMe: string | null;
     contacts: {
-        facebook: string
-        website: string
-        vk: string
-        twitter: string
-        instagram: string
-        youtube: string
-        github: string
-        mainLink: string
+        facebook: string | null;
+        website: string | null;
+        vk: string | null;
+        twitter: string | null;
+        instagram: string | null;
+        youtube: string | null;
+        github: string | null;
+        mainLink: string | null;
     },
     lookingForAJob: boolean;
-    lookingForAJobDescription: string
+    lookingForAJobDescription: string | null;
     fullName: string;
     userId: number;
     photos: {
-        small: string;
-        large: string;
+        small: string | null;
+        large: string | null;
     }
 };
 
@@ -40,7 +42,7 @@ export type ProfileAction =
     ReturnType<typeof setUserProfile>
 
 
-const initialState: ProfileStateType = {
+const initialState = {
     newPostText: '',
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 25},
@@ -49,7 +51,7 @@ const initialState: ProfileStateType = {
     profile: null,
 };
 
-export default function profileReducer(state= initialState, action: ProfileAction): ProfileStateType {
+export default function profileReducer(state: ProfileStateType = initialState, action: ProfileAction): ProfileStateType {
 
     switch (action.type) {
         case ProfileEnum.ADD_POST: {
@@ -79,9 +81,18 @@ export default function profileReducer(state= initialState, action: ProfileActio
     }
 };
 
+//action creators
 export const addPost = () => ({type: ProfileEnum.ADD_POST} as const);
 export const updateNewPostText = (newPostText: string) => ({
     type: ProfileEnum.UPDATE_NEW_POST_TEXT,
     newPostText
 } as const);
 export const setUserProfile = (profile: ProfileType) => ({type: ProfileEnum.SET_USER_PROFILE, profile} as const);
+
+
+//thunk
+export const getUserProfile = (userID: string) => (dispatch: Dispatch<ProfileAction>) => {
+    profileAPI.getUserProfile(userID).then(data => {
+        dispatch(setUserProfile(data));
+    })
+};

@@ -1,12 +1,16 @@
+import {Dispatch} from 'redux';
+import {authAPI, profileAPI} from '../../api/api';
+import defaultAvatar from '../../assets/images/avatar.png';
+
 export enum AuthEnum {
     SET_USER_DATA = 'SET_USER_DATA',
     SET_USER_AVATAR = 'SET_USER_AVATAR'
 }
 
 type AuthStateType = {
-    id: number,
-    email: string,
-    login: string,
+    id: number | null,
+    email: string | null,
+    login: string | null,
     isAuth: boolean,
     userAvatar: string
 }
@@ -15,18 +19,15 @@ export type AuthAction =
     ReturnType<typeof setAuthUserData> |
     ReturnType<typeof setAuthUserAvatar>
 
-
-
-const initialState: AuthStateType = {
-    id: 19514,
-    email: 'yantsevich92@gmail.com',
-    login: 'yantsevich',
-    isAuth: true,
+const initialState = {
+    id: null,
+    email: null,
+    login: null,
+    isAuth: false,
     userAvatar: 'default',
 }
 
-export default function authReducer(state = initialState, action: AuthAction): AuthStateType {
-
+export default function authReducer(state: AuthStateType = initialState, action: AuthAction): AuthStateType {
     switch (action.type) {
         case AuthEnum.SET_USER_DATA:
             return {
@@ -44,8 +45,28 @@ export default function authReducer(state = initialState, action: AuthAction): A
     }
 }
 
-
+//action creators
 export const setAuthUserData = (id: number, email: string, login: string) => ({
-    type: AuthEnum.SET_USER_DATA, payload: {id, email, login}} as const);
-
+    type: AuthEnum.SET_USER_DATA, payload: {id, email, login}
+} as const);
 export const setAuthUserAvatar = (avatar: string) => ({type: AuthEnum.SET_USER_AVATAR, avatar} as const);
+
+
+//thunk
+export const getAuthUserData = () => (dispatch: Dispatch<AuthAction>) => {
+    authAPI.login()
+        .then(data => {
+            if (data.resultCode === 0) {
+                let {id, email, login} = data.data;
+                dispatch(setAuthUserData(id, email, login))
+                profileAPI.getUserAvatar(id)
+                    .then(data => {
+                        if (data.photos.small) {
+                            dispatch(setAuthUserAvatar(data.photos.small));
+                        } else {
+                            dispatch(setAuthUserAvatar(defaultAvatar));
+                        }
+                    });
+            }
+        })
+};

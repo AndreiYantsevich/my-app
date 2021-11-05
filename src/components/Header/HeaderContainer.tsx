@@ -2,36 +2,18 @@ import React from 'react';
 import Header from './Header';
 import {RootStateType} from '../../store/store';
 import {connect} from 'react-redux';
-import {setAuthUserAvatar, setAuthUserData} from '../../store/reducers/auth-reducer';
-import defaultAvatar from '../../assets/images/avatar.png'
-import {authAPI, profileAPI} from '../../api/api';
+import {getAuthUserData} from '../../store/reducers/auth-reducer';
 
 type HeaderContainerPropsType = {
     login: string | null;
     isAuth: boolean;
     avatar: string;
-    setAuthUserData: (id: number, email: string, login: string) => void;
-    setAuthUserAvatar: (avatar: string) => void;
+    getAuthUserData: () => void;
 }
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-
-            authAPI.login()
-                .then(data => {
-                if (data.resultCode === 0) {
-                    let {id, email, login} = data.data;
-                    this.props.setAuthUserData(id, email, login)
-                    profileAPI.getUserAvatar(id)
-                        .then(data => {
-                            if (data.photos.small) {
-                                this.props.setAuthUserAvatar(data.photos.small)
-                            } else {
-                                this.props.setAuthUserAvatar(defaultAvatar)
-                            }
-                        });
-                }
-            })
+        this.props.getAuthUserData();
     }
 
     render() {
@@ -46,7 +28,7 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 
 type mapStateType = {
     isAuth: boolean
-    login: string
+    login: string | null
     avatar: string
 }
 
@@ -56,4 +38,4 @@ const mapStateToProps = (state: RootStateType): mapStateType => ({
     avatar: state.auth.userAvatar,
 });
 
-export default connect(mapStateToProps, {setAuthUserData, setAuthUserAvatar})(HeaderContainer);
+export default connect(mapStateToProps, {getAuthUserData})(HeaderContainer);

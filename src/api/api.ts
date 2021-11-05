@@ -28,8 +28,8 @@ export const followAPI = {
 
 export const authAPI = {
     login() {
-    return instance.get(`auth/me`)
-        .then(response => response.data)
+        return instance.get(`auth/me`)
+            .then(response => response.data)
     },
 
 };
