@@ -1,6 +1,9 @@
 import {followAPI, usersAPI} from '../../api/api';
-import {Dispatch} from 'redux';
 import {UsersStateType, UserType} from '../../components/Users/UsersContainer';
+import {ThunkAction} from 'redux-thunk';
+import {RootStateType} from '../store';
+
+type UsersThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, UsersAction>
 
 export enum UsersEnum {
     FOLLOW = 'FOLLOW',
@@ -23,10 +26,10 @@ export type UsersAction =
 
 const initialState = {
     users: [],
-    pageSize: 10,
-    totalUsersCount: 100,
+    pageSize: 5,
+    totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false,
+    isFetching: true,
     followingInProgress: [],
 };
 
@@ -69,15 +72,30 @@ export default function usersReducer(state: UsersStateType = initialState, actio
 };
 
 //action creators
-export const followSuccess = (userID: number) => ({type: UsersEnum.FOLLOW, userID} as const);
-export const unfollowSuccess = (userID: number) => ({type: UsersEnum.UNFOLLOW, userID} as const);
-export const setUsers = (users: UserType[]) => ({type: UsersEnum.SET_USERS, users} as const);
-export const setCurrentPage = (currentPage: number) => ({type: UsersEnum.SET_CURRENT_PAGE, currentPage} as const);
+export const followSuccess = (userID: number) => ({
+    type: UsersEnum.FOLLOW,
+    userID
+} as const);
+export const unfollowSuccess = (userID: number) => ({
+    type: UsersEnum.UNFOLLOW,
+    userID
+} as const);
+export const setUsers = (users: UserType[]) => ({
+    type: UsersEnum.SET_USERS,
+    users
+} as const);
+export const setCurrentPage = (currentPage: number) => ({
+    type: UsersEnum.SET_CURRENT_PAGE,
+    currentPage
+} as const);
 export const setUsersTotalCount = (totalCount: number) => ({
     type: UsersEnum.SET_USERS_TOTAL_COUNT,
     totalCount
 } as const);
-export const toggleIsFetching = (isFetching: boolean) => ({type: UsersEnum.TOGGLE_IS_FETCHING, isFetching} as const);
+export const toggleIsFetching = (isFetching: boolean) => ({
+    type: UsersEnum.TOGGLE_IS_FETCHING,
+    isFetching
+} as const);
 export const toggleFollowingProgress = (isFetching: boolean, userID: number) => ({
     type: UsersEnum.TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching,
@@ -86,7 +104,7 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: number) => 
 
 
 //thunk
-export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch<UsersAction>) => {
+export const getUsers = (currentPage: number, pageSize: number): UsersThunk => dispatch => {
     dispatch(toggleIsFetching(true));
     usersAPI.getUsers(currentPage, pageSize)
         .then(data => {
@@ -96,7 +114,7 @@ export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Di
             dispatch(setCurrentPage(currentPage));
         });
 };
-export const follow = (userID: number) => (dispatch: Dispatch<UsersAction>) => {
+export const follow = (userID: number): UsersThunk => dispatch => {
     dispatch(toggleFollowingProgress(true, userID));
     followAPI.followUsers(userID).then(data => {
         if (data.resultCode === 0) {
@@ -105,7 +123,7 @@ export const follow = (userID: number) => (dispatch: Dispatch<UsersAction>) => {
         dispatch(toggleFollowingProgress(false, userID));
     });
 };
-export const unfollow = (userID: number) => (dispatch: Dispatch<UsersAction>) => {
+export const unfollow = (userID: number): UsersThunk => dispatch => {
     dispatch(toggleFollowingProgress(true, userID));
     followAPI.unfollowUsers(userID).then(data => {
         if (data.resultCode === 0) {

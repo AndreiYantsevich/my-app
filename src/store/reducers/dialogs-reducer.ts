@@ -1,4 +1,4 @@
-interface DialogsType {
+type DialogsType = {
     id: number,
     name: string
 }
@@ -42,7 +42,7 @@ const initialState: DialogsStateType = {
     ]
 }
 
-export default function dialogsReducer(state= initialState, action: DialogsAction): DialogsStateType {
+export default function dialogsReducer(state = initialState, action: DialogsAction): DialogsStateType {
 
     switch (action.type) {
         case DialogsEnum.ADD_MESSAGE:
@@ -64,6 +64,6 @@ export default function dialogsReducer(state= initialState, action: DialogsActio
 
 export const addMessage = () => ({type: DialogsEnum.ADD_MESSAGE} as const);
 export const updateNewMessageText = (newMessageText: string) => ({
-        type: DialogsEnum.UPDATE_NEW_MESSAGE_TEXT,
-        newMessageText
-    } as const);
+    type: DialogsEnum.UPDATE_NEW_MESSAGE_TEXT,
+    newMessageText
+} as const);

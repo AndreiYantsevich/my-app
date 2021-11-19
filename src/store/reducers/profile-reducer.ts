@@ -1,6 +1,7 @@
 import {PostType} from '../../components/Profile/MyPosts/Post/Post';
-import {Dispatch} from 'redux';
 import {profileAPI} from '../../api/api';
+import {ThunkAction} from 'redux-thunk';
+import {RootStateType} from '../store';
 
 export type ProfileType = {
     aboutMe: string | null;
@@ -30,6 +31,8 @@ export type ProfileStateType = {
     profile: null | ProfileType;
 };
 
+type ProfileThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, ProfileAction>
+
 export enum ProfileEnum {
     ADD_POST = 'ADD_POST',
     UPDATE_NEW_POST_TEXT = 'CHANGE_POST_TEXT',
@@ -43,11 +46,11 @@ export type ProfileAction =
 
 
 const initialState = {
-    newPostText: '',
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 25},
         {id: 2, message: 'This is my first project', likesCount: 49}
     ],
+    newPostText: '',
     profile: null,
 };
 
@@ -56,7 +59,7 @@ export default function profileReducer(state: ProfileStateType = initialState, a
     switch (action.type) {
         case ProfileEnum.ADD_POST: {
             const newPost = {
-                id: 3,
+                id: state.posts.length + 1,
                 message: state.newPostText,
                 likesCount: 0
             }
@@ -87,11 +90,14 @@ export const updateNewPostText = (newPostText: string) => ({
     type: ProfileEnum.UPDATE_NEW_POST_TEXT,
     newPostText
 } as const);
-export const setUserProfile = (profile: ProfileType) => ({type: ProfileEnum.SET_USER_PROFILE, profile} as const);
+export const setUserProfile = (profile: ProfileType) => ({
+    type: ProfileEnum.SET_USER_PROFILE,
+    profile
+} as const);
 
 
 //thunk
-export const getUserProfile = (userID: string) => (dispatch: Dispatch<ProfileAction>) => {
+export const getUserProfile = (userID: string): ProfileThunk => dispatch => {
     profileAPI.getUserProfile(userID).then(data => {
         dispatch(setUserProfile(data));
     })

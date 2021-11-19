@@ -3,13 +3,11 @@ import style from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import { DialogsStateType } from '../../store/reducers/dialogs-reducer';
-import {Redirect} from 'react-router-dom';
 
 type PropsType = {
     dialogs: DialogsStateType
     updateNewMessageText: (newMessageText: string) => void
     addMessage: () => void
-    isAuth: boolean
 }
 
 const Dialogs: React.FC<PropsType> = React.memo((props) => {
@@ -25,8 +23,6 @@ const Dialogs: React.FC<PropsType> = React.memo((props) => {
     const onAddMessageHandler = () => {
         props.addMessage();
     }
-
-    if (!props.isAuth) return <Redirect to={'/login'}/>
 
     return (
         <div className={style.dialogs}>

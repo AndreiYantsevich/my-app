@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import style from './ProfileInfo.module.css';
 import {ProfilePropsType} from '../Profile';
 import Preloader from '../../common/Preloader/Preloader';
-import defaultAvatar from '../../../assets/images/avatar.png'
+import defaultAvatar from '../../../assets/images/avatar.png';
+import ProfileStatus from './ProfileStatus';
 
-const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
+const ProfileInfo: FC<ProfilePropsType> = memo((props) => {
 
     if (!props.profile) {
         return <Preloader/>
@@ -12,15 +13,13 @@ const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
 
     return (
         <div>
-            <div className={style.image}>
-                <img src="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg" alt=""/>
-            </div>
             <div className={style.descriptionBlock}>
                 <img src={props.profile.photos.large
                     ? props.profile.photos.large
                     : defaultAvatar}
                      alt={'avatar'}
                 />
+                <ProfileStatus status={'Hello!'}/>
                 <div>
                     about me: {props.profile.aboutMe}
                 </div>
@@ -33,6 +32,6 @@ const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
             </div>
         </div>
     );
-}
+});
 
 export default ProfileInfo;

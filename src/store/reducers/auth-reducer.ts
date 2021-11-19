@@ -1,6 +1,7 @@
-import {Dispatch} from 'redux';
 import {authAPI, profileAPI} from '../../api/api';
 import defaultAvatar from '../../assets/images/avatar.png';
+import {ThunkAction} from 'redux-thunk';
+import {RootStateType} from '../store';
 
 export enum AuthEnum {
     SET_USER_DATA = 'SET_USER_DATA',
@@ -14,6 +15,8 @@ type AuthStateType = {
     isAuth: boolean,
     userAvatar: string
 }
+
+type AuthThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, AuthAction>
 
 export type AuthAction =
     ReturnType<typeof setAuthUserData> |
@@ -49,11 +52,14 @@ export default function authReducer(state: AuthStateType = initialState, action:
 export const setAuthUserData = (id: number, email: string, login: string) => ({
     type: AuthEnum.SET_USER_DATA, payload: {id, email, login}
 } as const);
-export const setAuthUserAvatar = (avatar: string) => ({type: AuthEnum.SET_USER_AVATAR, avatar} as const);
+export const setAuthUserAvatar = (avatar: string) => ({
+    type: AuthEnum.SET_USER_AVATAR,
+    avatar
+} as const);
 
 
 //thunk
-export const getAuthUserData = () => (dispatch: Dispatch<AuthAction>) => {
+export const getAuthUserData = (): AuthThunk => dispatch => {
     authAPI.login()
         .then(data => {
             if (data.resultCode === 0) {
