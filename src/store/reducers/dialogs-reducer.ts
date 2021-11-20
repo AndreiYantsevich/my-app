@@ -1,3 +1,5 @@
+import {InferActionsTypes} from '../store';
+
 type DialogsType = {
     id: number,
     name: string
@@ -8,23 +10,12 @@ type MessageType = {
     message: string
 }
 
-export type DialogsStateType = {
-    newMessageText: string,
-    dialogs: Array<DialogsType>,
-    messages: Array<MessageType>
-}
-
 export enum DialogsEnum {
     ADD_MESSAGE = 'ADD_MESSAGE',
     UPDATE_NEW_MESSAGE_TEXT = 'CHANGE_MESSAGE_TEXT'
 }
 
-export type DialogsAction =
-    ReturnType<typeof addMessage> |
-    ReturnType<typeof updateNewMessageText>
-
-
-const initialState: DialogsStateType = {
+const initialState = {
     newMessageText: '',
     dialogs: [
         {id: 1, name: 'Andrei'},
@@ -32,17 +23,17 @@ const initialState: DialogsStateType = {
         {id: 3, name: 'Arseny'},
         {id: 4, name: 'Visha'},
         {id: 5, name: 'Tomas'}
-    ],
+    ] as Array<DialogsType>,
     messages: [
         {id: 1, message: 'Hello!!!'},
         {id: 2, message: 'Mi-mi-mi'},
         {id: 3, message: 'Agu!'},
         {id: 4, message: 'Gav!'},
         {id: 5, message: 'Meow!'}
-    ]
+    ] as Array<MessageType>
 }
 
-export default function dialogsReducer(state = initialState, action: DialogsAction): DialogsStateType {
+export default function dialogsReducer(state = initialState, action: ActionsType): InitialStateType {
 
     switch (action.type) {
         case DialogsEnum.ADD_MESSAGE:
@@ -62,8 +53,13 @@ export default function dialogsReducer(state = initialState, action: DialogsActi
     }
 }
 
-export const addMessage = () => ({type: DialogsEnum.ADD_MESSAGE} as const);
-export const updateNewMessageText = (newMessageText: string) => ({
-    type: DialogsEnum.UPDATE_NEW_MESSAGE_TEXT,
-    newMessageText
-} as const);
+export const actions = {
+    addMessage: () => ({type: DialogsEnum.ADD_MESSAGE} as const),
+    updateNewMessageText: (newMessageText: string) => ({
+        type: DialogsEnum.UPDATE_NEW_MESSAGE_TEXT,
+        newMessageText
+    } as const),
+}
+
+export type InitialStateType = typeof initialState
+type ActionsType = InferActionsTypes<typeof actions>

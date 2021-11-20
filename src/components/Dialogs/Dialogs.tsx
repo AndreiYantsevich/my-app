@@ -1,19 +1,22 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, FC, memo} from 'react';
 import style from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { DialogsStateType } from '../../store/reducers/dialogs-reducer';
+import {InitialStateType} from '../../store/reducers/dialogs-reducer';
 
 type PropsType = {
-    dialogs: DialogsStateType
+    dialogs: InitialStateType
     updateNewMessageText: (newMessageText: string) => void
     addMessage: () => void
 }
 
-const Dialogs: React.FC<PropsType> = React.memo((props) => {
+const Dialogs: FC<PropsType> = memo((props) => {
 
-    const dialogsElements = props.dialogs.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
-    const messagesElements = props.dialogs.messages.map(m => <Message id={m.id} key={m.id} message={m.message}/>)
+    const dialogsElements = props.dialogs.dialogs.map(d => <DialogItem name={d.name}
+                                                                       key={d.id}
+                                                                       id={d.id}/>)
+    const messagesElements = props.dialogs.messages.map(m => <Message id={m.id} key={m.id}
+                                                                      message={m.message}/>)
 
     const onNewMessageTextHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
         let newMessageText = event.currentTarget.value
@@ -33,7 +36,8 @@ const Dialogs: React.FC<PropsType> = React.memo((props) => {
                 {messagesElements}
             </div>
             <div>
-                <textarea value={props.dialogs.newMessageText} onChange={onNewMessageTextHandler}/>
+                <textarea value={props.dialogs.newMessageText}
+                          onChange={onNewMessageTextHandler}/>
             </div>
             <div>
                 <button onClick={onAddMessageHandler}>Add message</button>
