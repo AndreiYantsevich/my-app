@@ -4,15 +4,17 @@ import profileReducer from './reducers/profile-reducer';
 import usersReducer from './reducers/users-reducer';
 import authReducer from './reducers/auth-reducer';
 import thunk from 'redux-thunk';
+import {reducer as formReducer} from 'redux-form';
 
 const rootReducer = combineReducers({
     dialogs: dialogsReducer,
     profile: profileReducer,
     users: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer,
 })
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export type RootStateType = ReturnType<RootReducerType>;
 type RootReducerType = typeof rootReducer;

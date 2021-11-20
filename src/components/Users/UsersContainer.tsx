@@ -6,6 +6,7 @@ import {follow, getUsers, unfollow} from '../../store/reducers/users-reducer';
 import {RootStateType} from '../../store/store';
 import WithAuthRedirect from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
+import {UserType} from '../../types/types';
 
 type UsersContainerPropsType = {
     users: Array<UserType>;
@@ -18,17 +19,6 @@ type UsersContainerPropsType = {
     follow: (userID: number) => void;
     unfollow: (userID: number) => void;
 }
-
-export type UserType = {
-    id: number;
-    name: string;
-    status?: string;
-    photos: {
-        small?: string;
-        large?: string;
-    }
-    followed: boolean;
-};
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
     componentDidMount() {

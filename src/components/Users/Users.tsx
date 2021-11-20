@@ -1,7 +1,8 @@
 import React, {FC, memo} from 'react';
 import style from './Users.module.css';
+import defaultPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
-import {UserType} from './UsersContainer';
+import {UserType} from '../../types/types';
 
 type PropsType = {
     users: Array<UserType>;
@@ -40,6 +41,11 @@ const Users: FC<PropsType> = memo((props) => {
                 <span>
                     <div>
                         <NavLink to={'/profile/' + u.id}>
+                            <img
+                                src={u.photos.small != null ? u.photos.small : defaultPhoto}
+                                className={style.avatar}
+                                alt={'avatar'}
+                            />
                         </NavLink>
                     </div>
                     <div>

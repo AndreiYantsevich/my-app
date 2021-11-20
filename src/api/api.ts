@@ -8,6 +8,11 @@ const instance = axios.create({
     },
 });
 
+export enum ResultCodesEnum {
+    Success = 0,
+    Error = 1
+}
+
 export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
@@ -27,20 +32,23 @@ export const followAPI = {
 };
 
 export const authAPI = {
-    login() {
+    me() {
         return instance.get(`auth/me`)
             .then(response => response.data)
     },
-
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post(`auth/login`, {email, password, rememberMe})
+            .then(response => response.data)
+    },
+    logout() {
+        return instance.delete(`auth/login`)
+            .then(response => response.data)
+    },
 };
 
 export const profileAPI = {
     getUserProfile(userId: string) {
         return instance.get(`profile/` + userId)
-            .then(response => response.data);
-    },
-    getUserAvatar(id: number) {
-        return instance.get(`profile/` + id)
             .then(response => response.data);
     },
     getUserStatus(userId: string) {

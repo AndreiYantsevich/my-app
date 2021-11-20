@@ -1,18 +1,17 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import {NavLink} from 'react-router-dom';
 import style from './Header.module.css';
+import {HeaderPropsType} from './HeaderContainer';
 
-type PropsType =  {
-    login: string | null
-    isAuth: boolean
-}
+const Header: FC<HeaderPropsType> = memo((props) => {
 
-const Header: React.FC<PropsType> = React.memo((props) => {
     return (
         <header className={style.header}>
             <div className={style.loginBlock}>
                 {props.isAuth
-                    ? props.login
+                    ? <div>{props.login} - <button onClick={props.logoutUser}>
+                        Log Out</button>
+                    </div>
                     : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>
