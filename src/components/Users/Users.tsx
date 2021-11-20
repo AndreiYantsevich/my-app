@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
@@ -15,7 +15,7 @@ type PropsType = {
     unfollow: (userID: number) => void;
 }
 
-const Users: React.FC<PropsType> = React.memo((props) => {
+const Users: FC<PropsType> = memo((props) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 

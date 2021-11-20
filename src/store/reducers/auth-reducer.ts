@@ -1,36 +1,19 @@
-import {authAPI, profileAPI} from '../../api/api';
-import defaultAvatar from '../../assets/images/avatar.png';
+import {authAPI} from '../../api/api';
 import {ThunkAction} from 'redux-thunk';
-import {RootStateType} from '../store';
+import {InferActionsTypes, RootStateType} from '../store';
 
 export enum AuthEnum {
     SET_USER_DATA = 'SET_USER_DATA',
-    SET_USER_AVATAR = 'SET_USER_AVATAR'
 }
-
-type AuthStateType = {
-    id: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    userAvatar: string
-}
-
-type AuthThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, AuthAction>
-
-export type AuthAction =
-    ReturnType<typeof setAuthUserData> |
-    ReturnType<typeof setAuthUserAvatar>
 
 const initialState = {
-    id: null,
-    email: null,
-    login: null,
+    id: null as (number | null),
+    email: null as string | null,
+    login: null as string | null,
     isAuth: false,
-    userAvatar: 'default',
 }
 
-export default function authReducer(state: AuthStateType = initialState, action: AuthAction): AuthStateType {
+export default function authReducer(state = initialState, action: ActionsType): InitialStateType {
     switch (action.type) {
         case AuthEnum.SET_USER_DATA:
             return {
@@ -38,25 +21,17 @@ export default function authReducer(state: AuthStateType = initialState, action:
                 ...action.payload,
                 isAuth: true
             }
-        case AuthEnum.SET_USER_AVATAR:
-            return {
-                ...state,
-                userAvatar: action.avatar
-            }
         default:
             return state;
     }
 }
 
 //action creators
-export const setAuthUserData = (id: number, email: string, login: string) => ({
-    type: AuthEnum.SET_USER_DATA, payload: {id, email, login}
-} as const);
-export const setAuthUserAvatar = (avatar: string) => ({
-    type: AuthEnum.SET_USER_AVATAR,
-    avatar
-} as const);
-
+export const actions = {
+    setAuthUserData: (id: number | null, email: string | null, login: string | null) => ({
+        type: AuthEnum.SET_USER_DATA, payload: {id, email, login}
+    } as const)
+}
 
 //thunk
 export const getAuthUserData = (): AuthThunk => dispatch => {
@@ -64,15 +39,11 @@ export const getAuthUserData = (): AuthThunk => dispatch => {
         .then(data => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data;
-                dispatch(setAuthUserData(id, email, login))
-                profileAPI.getUserAvatar(id)
-                    .then(data => {
-                        if (data.photos.small) {
-                            dispatch(setAuthUserAvatar(data.photos.small));
-                        } else {
-                            dispatch(setAuthUserAvatar(defaultAvatar));
-                        }
-                    });
+                dispatch(actions.setAuthUserData(id, email, login))
             }
         })
 };
+
+export type InitialStateType = typeof initialState;
+type ActionsType = InferActionsTypes<typeof actions>
+type AuthThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, ActionsType>

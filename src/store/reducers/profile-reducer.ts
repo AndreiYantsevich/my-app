@@ -21,10 +21,6 @@ const initialState = {
     status: '',
 };
 
-export type InitialStateType = typeof initialState;
-export type ActionsType = InferActionsTypes<typeof actions>
-type ProfileThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, ActionsType>
-
 export default function profileReducer(state = initialState, action: ActionsType): InitialStateType {
 
     switch (action.type) {
@@ -85,7 +81,6 @@ export const actions = {
     } as const),
 }
 
-
 //thunk
 export const getUserProfile = (userID: string): ProfileThunk => dispatch => {
     profileAPI.getUserProfile(userID).then(data => {
@@ -111,3 +106,7 @@ export const updateUserPhoto = (photo: File): ProfileThunk => dispatch => {
         }
     })
 }
+
+export type InitialStateType = typeof initialState;
+export type ActionsType = InferActionsTypes<typeof actions>
+type ProfileThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, ActionsType>
