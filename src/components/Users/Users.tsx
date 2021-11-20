@@ -1,6 +1,5 @@
 import React, {FC, memo} from 'react';
 import style from './Users.module.css';
-import userPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
 import {UserType} from './UsersContainer';
 
@@ -29,10 +28,11 @@ const Users: FC<PropsType> = memo((props) => {
         <div>
             <div>
                 {pages.map(p => {
-                    return <span className={props.currentPage === p ? style.selectedPage : ''}
-                                 onClick={() => {
-                                     props.onPageChanged(p)
-                                 }}>{p}</span>
+                    return <span
+                        className={props.currentPage === p ? style.selectedPage : ''}
+                        onClick={() => {
+                            props.onPageChanged(p)
+                        }}>{p}</span>
                 })}
             </div>
             {
@@ -40,18 +40,20 @@ const Users: FC<PropsType> = memo((props) => {
                 <span>
                     <div>
                         <NavLink to={'/profile/' + u.id}>
-                        <img src={u.photos.small ? u.photos.small : userPhoto}
-                             className={style.avatar} alt={'avatar'}/>
                         </NavLink>
                     </div>
                     <div>
                         {u.followed
-                            ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                props.unfollow(u.id)
-                            }}>Unfollow</button>
-                            : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                props.follow(u.id)
-                            }}>Follow</button>}
+                            ? <button
+                                disabled={props.followingInProgress.some(id => id === u.id)}
+                                onClick={() => {
+                                    props.unfollow(u.id)
+                                }}>Unfollow</button>
+                            : <button
+                                disabled={props.followingInProgress.some(id => id === u.id)}
+                                onClick={() => {
+                                    props.follow(u.id)
+                                }}>Follow</button>}
                     </div>
                 </span>
                         <span>

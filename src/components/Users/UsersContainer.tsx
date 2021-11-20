@@ -19,15 +19,6 @@ type UsersContainerPropsType = {
     unfollow: (userID: number) => void;
 }
 
-export type UsersStateType = {
-    users: Array<UserType>;
-    pageSize: number;
-    totalUsersCount: number;
-    currentPage: number;
-    isFetching: boolean;
-    followingInProgress: Array<number>;
-};
-
 export type UserType = {
     id: number;
     name: string;
@@ -39,7 +30,7 @@ export type UserType = {
     followed: boolean;
 };
 
-class UsersContainer extends React.Component<UsersContainerPropsType, {}> {
+class UsersContainer extends React.Component<UsersContainerPropsType> {
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
@@ -76,7 +67,7 @@ const mapStateToProps = (state: RootStateType) => {
 }
 
 export default compose<ComponentType>(
-    connect(mapStateToProps, {follow: follow, unfollow: unfollow, getUsers}),
+    connect(mapStateToProps, {follow, unfollow, getUsers}),
     WithAuthRedirect
 )(UsersContainer);
 
