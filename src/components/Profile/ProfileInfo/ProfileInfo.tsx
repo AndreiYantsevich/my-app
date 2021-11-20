@@ -2,8 +2,8 @@ import React, {FC, memo} from 'react';
 import style from './ProfileInfo.module.css';
 import {ProfilePropsType} from '../Profile';
 import Preloader from '../../common/Preloader/Preloader';
-import defaultAvatar from '../../../assets/images/avatar.png';
 import ProfileStatus from './ProfileStatus';
+import defaultAvatar from '../../../assets/images/avatar.png'
 
 const ProfileInfo: FC<ProfilePropsType> = memo((props) => {
 
@@ -14,12 +14,10 @@ const ProfileInfo: FC<ProfilePropsType> = memo((props) => {
     return (
         <div>
             <div className={style.descriptionBlock}>
-                <img src={props.profile.photos.large
+                <img className={style.image} src={props.profile.photos.large !== null
                     ? props.profile.photos.large
-                    : defaultAvatar}
-                     alt={'avatar'}
-                />
-                <ProfileStatus status={'Hello!'}/>
+                    : defaultAvatar} alt="Avatar" />
+                <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
                 <div>
                     about me: {props.profile.aboutMe}
                 </div>

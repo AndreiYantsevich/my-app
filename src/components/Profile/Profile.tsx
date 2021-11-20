@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import { ProfileType } from '../../store/reducers/profile-reducer';
+import {ProfileType} from '../../store/reducers/profile-reducer';
 
 export type ProfilePropsType = {
     profile: ProfileType | null
+    status: string
+    updateUserStatus: (status: string) => void
 }
 
-const Profile: React.FC<ProfilePropsType> = React.memo((props) => {
+const Profile: FC<ProfilePropsType> = memo((props) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus}/>
             <MyPostsContainer/>
         </div>
     );

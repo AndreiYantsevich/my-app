@@ -28,7 +28,8 @@ export type ProfileType = {
 export type ProfileStateType = {
     posts: Array<PostType>;
     newPostText: string;
-    profile: null | ProfileType;
+    profile: ProfileType | null;
+    status: string;
 };
 
 type ProfileThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, ProfileAction>
@@ -36,13 +37,15 @@ type ProfileThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, un
 export enum ProfileEnum {
     ADD_POST = 'ADD_POST',
     UPDATE_NEW_POST_TEXT = 'CHANGE_POST_TEXT',
-    SET_USER_PROFILE = 'SET_USER_PROFILE'
+    SET_USER_PROFILE = 'SET_USER_PROFILE',
+    SET_USER_STATUS = 'SET_USER_STATUS',
 }
 
 export type ProfileAction =
     ReturnType<typeof addPost> |
     ReturnType<typeof updateNewPostText> |
-    ReturnType<typeof setUserProfile>
+    ReturnType<typeof setUserProfile> |
+    ReturnType<typeof setUserStatus>
 
 
 const initialState = {
@@ -52,6 +55,7 @@ const initialState = {
     ],
     newPostText: '',
     profile: null,
+    status: '',
 };
 
 export default function profileReducer(state: ProfileStateType = initialState, action: ProfileAction): ProfileStateType {
@@ -78,6 +82,9 @@ export default function profileReducer(state: ProfileStateType = initialState, a
         case ProfileEnum.SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
+        case ProfileEnum.SET_USER_STATUS: {
+            return {...state, status: action.status}
+        }
         default: {
             return state
         }
@@ -94,11 +101,27 @@ export const setUserProfile = (profile: ProfileType) => ({
     type: ProfileEnum.SET_USER_PROFILE,
     profile
 } as const);
+export const setUserStatus = (status: string) => ({
+    type: ProfileEnum.SET_USER_STATUS,
+    status
+} as const);
 
 
 //thunk
 export const getUserProfile = (userID: string): ProfileThunk => dispatch => {
     profileAPI.getUserProfile(userID).then(data => {
         dispatch(setUserProfile(data));
+    })
+};
+export const getUserStatus = (userID: string): ProfileThunk => dispatch => {
+    profileAPI.getUserStatus(userID).then(data => {
+        dispatch(setUserStatus(data));
+    })
+};
+export const updateUserStatus = (status: string): ProfileThunk => dispatch => {
+    profileAPI.updateUserStatus(status).then(data => {
+        if (data.resultCode === 0) {
+            dispatch(setUserStatus(status));
+        }
     })
 };

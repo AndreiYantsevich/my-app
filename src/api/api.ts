@@ -40,7 +40,15 @@ export const profileAPI = {
             .then(response => response.data);
     },
     getUserAvatar(id: number) {
-        return instance.get(`profile/${id}`)
+        return instance.get(`profile/` + id)
+            .then(response => response.data);
+    },
+    getUserStatus(userId: string) {
+        return instance.get(`profile/status/` + userId)
+            .then(response => response.data);
+    },
+    updateUserStatus(status: string) {
+        return instance.put(`profile/status`, {status: status})
             .then(response => response.data);
     },
 };
