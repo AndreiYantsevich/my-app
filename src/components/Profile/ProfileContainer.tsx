@@ -5,32 +5,26 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {
     getUserProfile,
     getUserStatus,
-    ProfileType, updateUserStatus
+    updateUserPhoto, updateUserStatus
 } from '../../store/reducers/profile-reducer';
 import {RootStateType} from '../../store/store';
 import WithAuthRedirect from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
-
-type PathParamsType = {
-    userId: string
-}
-
-type PropsType = RouteComponentProps<PathParamsType> & ownPropsType
-
-type MapStatePropsType = {
-    profile: ProfileType | null
-    status: string
-    authorizedUserId: number
-}
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getUserProfile: (userID: string) => void
     getUserStatus: (userID: string) => void
     updateUserStatus: (status: string) => void
+    updateUserPhoto: (photo: File) => void
+}
+type PathParamsType = {
+    userId: string
 }
 
 type ownPropsType = MapStatePropsType & MapDispatchPropsType
+type PropsType = RouteComponentProps<PathParamsType> & ownPropsType
 
 class ProfileContainer extends React.Component<PropsType> {
 
@@ -45,7 +39,12 @@ class ProfileContainer extends React.Component<PropsType> {
 
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatus}/>
+            <Profile {...this.props}
+                     profile={this.props.profile}
+                     status={this.props.status}
+                     updateUserStatus={this.props.updateUserStatus}
+                     updateUserPhoto={this.props.updateUserPhoto}
+            />
         );
     }
 }
@@ -57,7 +56,12 @@ const mapStateToProps = (state: RootStateType) => ({
 })
 
 export default compose<ComponentType>(
-    connect(mapStateToProps, {getUserProfile: getUserProfile, getUserStatus: getUserStatus, updateUserStatus: updateUserStatus}),
+    connect(mapStateToProps, {
+        getUserProfile,
+        getUserStatus,
+        updateUserStatus,
+        updateUserPhoto
+    }),
     withRouter,
     WithAuthRedirect
 )(ProfileContainer);

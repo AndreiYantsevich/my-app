@@ -1,7 +1,9 @@
 import MyPosts from './MyPosts';
 import {connect} from 'react-redux';
 import {RootStateType} from '../../../store/store';
-import {addPost, updateNewPostText} from '../../../store/reducers/profile-reducer';
+import {
+    actions
+} from '../../../store/reducers/profile-reducer';
 
 
 const mapStateToProps = (state: RootStateType) => {
@@ -12,6 +14,6 @@ const mapStateToProps = (state: RootStateType) => {
 }
 
 export default connect(mapStateToProps, {
-    updateNewPostText,
-    addPost,
+    updateNewPostText: actions.updateNewPostText,
+    addPost: actions.addPost,
 })(MyPosts)

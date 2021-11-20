@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {ChangeEvent, FC, memo} from 'react';
 import style from './ProfileInfo.module.css';
 import {ProfilePropsType} from '../Profile';
 import Preloader from '../../common/Preloader/Preloader';
@@ -11,13 +11,20 @@ const ProfileInfo: FC<ProfilePropsType> = memo((props) => {
         return <Preloader/>
     }
 
+    const setMainPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length) {
+            props.updateUserPhoto(e.target.files[0]);
+        }
+    }
+
     return (
         <div>
             <div className={style.descriptionBlock}>
-                <img className={style.image} src={props.profile.photos.large !== null
-                    ? props.profile.photos.large
-                    : defaultAvatar} alt="Avatar" />
-                <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
+                <img className={style.image}
+                     src={props.profile.photos.large || defaultAvatar} alt={'avatar'}/>
+                <input type={'file'} onChange={setMainPhoto}/>
+                <ProfileStatus status={props.status}
+                               updateUserStatus={props.updateUserStatus}/>
                 <div>
                     about me: {props.profile.aboutMe}
                 </div>
