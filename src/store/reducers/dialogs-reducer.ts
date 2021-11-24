@@ -11,12 +11,10 @@ type MessageType = {
 }
 
 export enum DialogsEnum {
-    ADD_MESSAGE = 'ADD_MESSAGE',
-    UPDATE_NEW_MESSAGE_TEXT = 'CHANGE_MESSAGE_TEXT'
+    ADD_MESSAGE = 'ADD_MESSAGE'
 }
 
 const initialState = {
-    newMessageText: '',
     dialogs: [
         {id: 1, name: 'Andrei'},
         {id: 2, name: 'Viktoria'},
@@ -38,27 +36,23 @@ export default function dialogsReducer(state = initialState, action: ActionsType
     switch (action.type) {
         case DialogsEnum.ADD_MESSAGE:
             let newMessage = {
-                id: 6,
-                message: state.newMessageText
+                id: state.messages.length + 1,
+                message: action.newMessageText
             }
             return {
                 ...state,
                 messages: [...state.messages, newMessage],
-                newMessageText: ''
             }
-        case DialogsEnum.UPDATE_NEW_MESSAGE_TEXT:
-            return {...state, newMessageText: action.newMessageText}
         default:
             return state
     }
 }
 
 export const actions = {
-    addMessage: () => ({type: DialogsEnum.ADD_MESSAGE} as const),
-    updateNewMessageText: (newMessageText: string) => ({
-        type: DialogsEnum.UPDATE_NEW_MESSAGE_TEXT,
+    addMessage: (newMessageText: string) => ({
+        type: DialogsEnum.ADD_MESSAGE,
         newMessageText
-    } as const),
+    } as const)
 }
 
 export type InitialStateType = typeof initialState

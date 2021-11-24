@@ -5,7 +5,6 @@ import {PhotosType, PostType, ProfileType} from '../../types/types';
 
 export enum ProfileEnum {
     ADD_POST = 'ADD_POST',
-    UPDATE_NEW_POST_TEXT = 'CHANGE_POST_TEXT',
     SET_USER_PROFILE = 'SET_USER_PROFILE',
     SET_USER_STATUS = 'SET_USER_STATUS',
     SET_USER_PHOTO = 'SET_USER_PHOTO'
@@ -16,7 +15,6 @@ const initialState = {
         {id: 1, message: 'Hi, how are you?', likesCount: 25},
         {id: 2, message: 'This is my first project', likesCount: 49}
     ] as Array<PostType>,
-    newPostText: '',
     profile: null as ProfileType | null,
     status: '',
 };
@@ -27,19 +25,12 @@ export default function profileReducer(state = initialState, action: ActionsType
         case ProfileEnum.ADD_POST: {
             const newPost = {
                 id: state.posts.length + 1,
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: '',
-            }
-        }
-        case ProfileEnum.UPDATE_NEW_POST_TEXT: {
-            return {
-                ...state,
-                newPostText: action.newPostText
             }
         }
         case ProfileEnum.SET_USER_PROFILE: {
@@ -62,11 +53,7 @@ export default function profileReducer(state = initialState, action: ActionsType
 
 //action creators
 export const actions = {
-    addPost: () => ({type: ProfileEnum.ADD_POST} as const),
-    updateNewPostText: (newPostText: string) => ({
-        type: ProfileEnum.UPDATE_NEW_POST_TEXT,
-        newPostText
-    } as const),
+    addPost: (newPostText: string) => ({type: ProfileEnum.ADD_POST, newPostText} as const),
     setUserProfile: (profile: ProfileType) => ({
         type: ProfileEnum.SET_USER_PROFILE,
         profile

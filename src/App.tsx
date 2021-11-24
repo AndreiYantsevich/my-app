@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import {Route} from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
@@ -11,7 +11,7 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 
-const App: React.FC = React.memo(() => {
+const App: FC = memo(() => {
     return (
         <div className={'app-wrapper'}>
             <HeaderContainer/>

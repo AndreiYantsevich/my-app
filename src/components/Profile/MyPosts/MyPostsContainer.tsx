@@ -8,12 +8,10 @@ import {
 
 const mapStateToProps = (state: RootStateType) => {
     return {
-        posts: state.profile.posts,
-        newPostText: state.profile.newPostText
+        posts: state.profile.posts
     }
 }
 
 export default connect(mapStateToProps, {
-    updateNewPostText: actions.updateNewPostText,
     addPost: actions.addPost,
 })(MyPosts)

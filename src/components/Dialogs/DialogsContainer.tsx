@@ -12,6 +12,6 @@ const mapStateToProps = (state: RootStateType) => {
     }
 }
 export default compose<ComponentType>(
-    connect(mapStateToProps, {updateNewMessageText: actions.updateNewMessageText, addMessage: actions.addMessage}),
+    connect(mapStateToProps, {addMessage: actions.addMessage}),
     WithAuthRedirect
 )(Dialogs);
