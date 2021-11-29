@@ -53,15 +53,13 @@ export const loginUser = (email: string, password: string, rememberMe: boolean):
         })
 };
 
-export const logoutUser = (): AuthThunk => dispatch => {
+export const logout = (): AuthThunk => dispatch => {
     authAPI.logout()
-        .then(data => {
-            if (data.resaultCode === 0) {
-                dispatch(actions.setAuthUserData(null, null, null, false))
-            }
+        .then(() => {
+            dispatch(actions.setAuthUserData(null, null, null, false))
         })
 };
 
 export type InitialStateType = typeof initialState;
-type ActionsType = InferActionsTypes<typeof actions>
+type ActionsType = ReturnType<typeof actions.setAuthUserData>
 type AuthThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, ActionsType | FormAction>

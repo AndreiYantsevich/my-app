@@ -9,7 +9,7 @@ const Header: FC<HeaderPropsType> = memo((props) => {
         <header className={style.header}>
             <div className={style.loginBlock}>
                 {props.isAuth
-                    ? <div>{props.login} - <button onClick={props.logoutUser}>
+                    ? <div>{props.login} - <button onClick={props.logout}>
                         Log Out</button>
                     </div>
                     : <NavLink to={'/login'}>Login</NavLink>
