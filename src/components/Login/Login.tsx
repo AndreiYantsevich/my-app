@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {loginUser} from '../../store/reducers/auth-reducer';
 import {RootStateType} from '../../store/store';
 import {Redirect} from 'react-router-dom';
+import {Input} from '../common/FormsControls/FormsControls';
+import {requiredField} from '../../utils/validators/Validators';
 
 type FormDataType = {
     login: string;
@@ -25,13 +27,15 @@ const LoginForm: FC<InjectedFormProps<FormDataType>> = memo((props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={'Login'} name={'login'} component={'input'}/>
+                <Field placeholder={'Login'} name={'login'} component={Input}
+                       validate={[requiredField]}/>
             </div>
             <div>
-                <Field placeholder={'Password'} name={'password'} component={'input'}/>
+                <Field placeholder={'Password'} name={'password'} component={Input}
+                       validate={[requiredField]}/>
             </div>
             <div>
-                <Field type="checkbox" name={'rememberMe'} component={'input'}/>
+                <Field type="checkbox" name={'rememberMe'} component={Input}/>
                 remember me
             </div>
             <div>

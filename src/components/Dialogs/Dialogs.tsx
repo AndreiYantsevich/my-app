@@ -3,15 +3,11 @@ import style from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {InitialStateType} from '../../store/reducers/dialogs-reducer';
-import {reduxForm, Field, InjectedFormProps} from 'redux-form';
+import {AddMessageFormRedux, FormDataType} from './AddMessageForm/AddMessageForm';
 
 type PropsType = {
     dialogs: InitialStateType
     addMessage: (newMessageText: string) => void
-}
-
-type FormDataType = {
-    newMessageText: string
 }
 
 const Dialogs: FC<PropsType> = memo((props) => {
@@ -38,21 +34,5 @@ const Dialogs: FC<PropsType> = memo((props) => {
         </div>
     );
 });
-
-const AddMessageForm: FC<InjectedFormProps<FormDataType>> = memo((props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={'textarea'} name={'newMessageText'}
-                       placeholder={'Enter your message'}/>
-            </div>
-            <div>
-                <button>Add message</button>
-            </div>
-        </form>
-    );
-});
-
-const AddMessageFormRedux = reduxForm<FormDataType>({form: 'dialogAddMessageForm'})(AddMessageForm)
 
 export default Dialogs;
