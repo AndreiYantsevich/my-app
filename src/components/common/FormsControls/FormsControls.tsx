@@ -4,25 +4,28 @@ import styles from './FormsControls.module.css';
 type PropsType = {
     input: any
     meta: any
-    element: Element
+    Formtype: any
 }
 
-const FormControl: FC<PropsType> = ({input, meta, children, element, ...props}) => {
+const FormControl: FC<PropsType> = ({input, meta, Formtype, ...props}) => {
     const hasError = meta.touched && meta.error;
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
             <div>
-                <element {...input} {...props}/>
+                <Formtype {...input} {...props} />
             </div>
-            {hasError && <span>{meta.error}</span>}
+            <div>
+                {hasError && <span>{meta.error}</span>}
+            </div>
         </div>
+
     )
 }
 
-export const Textarea: FC<PropsType> = (props) => {
-    return <FormControl {...props} element={textarea}/>
+export const Textarea = (props: PropsType) => {
+    return <FormControl {...props} Formtype="textarea"/>
 }
 
-export const Input: FC<PropsType> = (props) => {
-    return <FormControl {...props} element={input}/>
+export const Input = (props: PropsType) => {
+    return <FormControl {...props} Formtype="input"/>
 }

@@ -1,7 +1,7 @@
 import {authAPI, ResultCodesEnum} from '../../api/api';
 import {ThunkAction} from 'redux-thunk';
-import {InferActionsTypes, RootStateType} from '../store';
-import {FormAction} from 'redux-form';
+import {RootStateType} from '../store';
+import {FormAction, stopSubmit} from 'redux-form';
 
 export enum AuthEnum {
     SET_USER_DATA = 'SET_USER_DATA',
@@ -44,11 +44,14 @@ export const getAuthUserData = (): AuthThunk => dispatch => {
         })
 };
 
-export const loginUser = (email: string, password: string, rememberMe: boolean): AuthThunk => dispatch => {
+export const login = (email: string, password: string, rememberMe: boolean): AuthThunk => dispatch => {
     authAPI.login(email, password, rememberMe)
         .then(data => {
             if (data.resultCode === ResultCodesEnum.Success) {
                 dispatch(getAuthUserData())
+            } else if (data.resultCode === ResultCodesEnum.Error) {
+                let message = data.messages.length > 0 ? data.messages[0] : 'Some error';
+                dispatch(stopSubmit('login', {_error: message}))
             }
         })
 };
