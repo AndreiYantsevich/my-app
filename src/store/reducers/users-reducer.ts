@@ -95,14 +95,14 @@ export const actions = {
 
 
 //thunk
-export const getUsers = (currentPage: number, pageSize: number): UsersThunk => dispatch => {
+export const requestUsers = (page: number, pageSize: number): UsersThunk => dispatch => {
     dispatch(actions.toggleIsFetching(true));
-    usersAPI.getUsers(currentPage, pageSize)
+    dispatch(actions.setCurrentPage(page));
+    usersAPI.getUsers(page, pageSize)
         .then(data => {
             dispatch(actions.toggleIsFetching(false));
             dispatch(actions.setUsers(data.items));
             dispatch(actions.setUsersTotalCount(data.totalCount));
-            dispatch(actions.setCurrentPage(currentPage));
         });
 };
 export const follow = (userID: number): UsersThunk => dispatch => {
