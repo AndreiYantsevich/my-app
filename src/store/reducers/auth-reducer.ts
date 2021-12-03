@@ -14,7 +14,7 @@ const initialState = {
     isAuth: false,
 }
 
-export default function authReducer(state = initialState, action: ActionsType): InitialStateType {
+export default function authReducer(state: InitialStateType, action: ActionsType): InitialStateType {
     switch (action.type) {
         case AuthEnum.SET_USER_DATA:
             return {
@@ -35,7 +35,7 @@ export const actions = {
 
 //thunk
 export const getAuthUserData = (): AuthThunk => dispatch => {
-    authAPI.me()
+    return authAPI.me()
         .then(data => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data;
