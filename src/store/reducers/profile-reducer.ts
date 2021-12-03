@@ -69,12 +69,12 @@ export const actions = {
 }
 
 //thunk
-export const getUserProfile = (userID: string): ProfileThunk => dispatch => {
+export const getUserProfile = (userID: number): ProfileThunk => dispatch => {
     profileAPI.getUserProfile(userID).then(data => {
         dispatch(actions.setUserProfile(data));
     })
 };
-export const getUserStatus = (userID: string): ProfileThunk => dispatch => {
+export const getUserStatus = (userID: number): ProfileThunk => dispatch => {
     profileAPI.getUserStatus(userID).then(data => {
         dispatch(actions.setUserStatus(data));
     })

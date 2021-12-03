@@ -15,7 +15,6 @@ import {compose} from 'redux';
 import {initializeApp} from './store/reducers/app-reducer';
 import {RootStateType} from './store/store';
 import Preloader from './components/common/Preloader/Preloader';
-import {initialize} from 'redux-form';
 
 type MapDispatchToPropsType = {
     initializeApp: () => void

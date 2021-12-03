@@ -14,7 +14,7 @@ const initialState = {
     isAuth: false,
 }
 
-export default function authReducer(state: InitialStateType, action: ActionsType): InitialStateType {
+export default function authReducer(state = initialState, action: ActionsType): InitialStateType {
     switch (action.type) {
         case AuthEnum.SET_USER_DATA:
             return {
