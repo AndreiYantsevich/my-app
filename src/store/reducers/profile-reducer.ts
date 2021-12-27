@@ -7,7 +7,8 @@ export enum ProfileEnum {
     ADD_POST = 'ADD_POST',
     SET_USER_PROFILE = 'SET_USER_PROFILE',
     SET_USER_STATUS = 'SET_USER_STATUS',
-    SET_USER_PHOTO = 'SET_USER_PHOTO'
+    SET_USER_PHOTO = 'SET_USER_PHOTO',
+    DELETE_POST = 'DELETE_POST',
 }
 
 const initialState = {
@@ -45,6 +46,12 @@ export default function profileReducer(state = initialState, action: ActionsType
                 profile: {...state.profile, photos: action.photos} as ProfileType
             }
         }
+        case ProfileEnum.DELETE_POST: {
+            return {
+                ...state, posts: state.posts.filter(p => p.id !== action.postId)
+            }
+
+        }
         default: {
             return state
         }
@@ -66,6 +73,7 @@ export const actions = {
         type: ProfileEnum.SET_USER_PHOTO,
         photos
     } as const),
+    deletePost: (postId: number) => ({type: ProfileEnum.DELETE_POST, postId} as const),
 }
 
 //thunk
