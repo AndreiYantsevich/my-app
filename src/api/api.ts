@@ -15,30 +15,25 @@ export enum ResultCodesEnum {
 
 export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => response.data);
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`);
     },
 };
 
 export const followAPI = {
     followUsers(id: number) {
-        return instance.post(`follow/${id}`, {})
-            .then(response => response.data);
+        return instance.post(`follow/${id}`, {});
     },
     unfollowUsers(id: number) {
-        return instance.delete(`follow/${id}`)
-            .then(response => response.data);
+        return instance.delete(`follow/${id}`);
     },
 };
 
 export const authAPI = {
     me() {
-        return instance.get(`auth/me`)
-            .then(response => response.data)
+        return instance.get(`auth/me`);
     },
     login(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe})
-            .then(response => response.data)
+        return instance.post(`auth/login`, {email, password, rememberMe});
     },
     logout() {
         return instance.delete(`auth/login`);
@@ -47,16 +42,16 @@ export const authAPI = {
 
 export const profileAPI = {
     getUserProfile(userId: number) {
-        return instance.get(`profile/` + userId)
-            .then(response => response.data);
+        return instance.get(`profile/` + userId);
+
     },
     getUserStatus(userId: number) {
-        return instance.get(`profile/status/` + userId)
-            .then(response => response.data);
+        return instance.get(`profile/status/` + userId);
+
     },
     updateUserStatus(status: string) {
-        return instance.put(`profile/status`, {status: status})
-            .then(response => response.data);
+        return instance.put(`profile/status`, {status: status});
+
     },
     updateUserPhoto(photo: File) {
         const formData = new FormData();
@@ -65,6 +60,6 @@ export const profileAPI = {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        }).then(response => response.data);
+        });
     }
 };

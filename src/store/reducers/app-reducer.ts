@@ -3,7 +3,7 @@ import {RootStateType} from '../store';
 import {FormAction} from 'redux-form';
 import {getAuthUserData} from './auth-reducer';
 
-const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
+const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS';
 
 const initialState = {
     initialized: false

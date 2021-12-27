@@ -4,7 +4,7 @@ import {RootStateType} from '../store';
 import {FormAction, stopSubmit} from 'redux-form';
 
 export enum AuthEnum {
-    SET_USER_DATA = 'SET_USER_DATA',
+    SET_USER_DATA = 'auth/SET_USER_DATA',
 }
 
 const initialState = {
@@ -34,33 +34,27 @@ export const actions = {
 }
 
 //thunk
-export const getAuthUserData = (): AuthThunk => dispatch => {
-    return authAPI.me()
-        .then(data => {
-            if (data.resultCode === 0) {
-                let {id, email, login} = data.data;
-                dispatch(actions.setAuthUserData(id, email, login, true))
-            }
-        })
+export const getAuthUserData = (): AuthThunk => async dispatch => {
+    let response = await authAPI.me()
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data;
+        dispatch(actions.setAuthUserData(id, email, login, true))
+    }
 };
 
-export const login = (email: string, password: string, rememberMe: boolean): AuthThunk => dispatch => {
-    authAPI.login(email, password, rememberMe)
-        .then(data => {
-            if (data.resultCode === ResultCodesEnum.Success) {
-                dispatch(getAuthUserData())
-            } else if (data.resultCode === ResultCodesEnum.Error) {
-                let message = data.messages.length > 0 ? data.messages[0] : 'Some error';
-                dispatch(stopSubmit('login', {_error: message}))
-            }
-        })
+export const login = (email: string, password: string, rememberMe: boolean): AuthThunk => async dispatch => {
+    let response = await authAPI.login(email, password, rememberMe)
+    if (response.data.resultCode === ResultCodesEnum.Success) {
+        dispatch(getAuthUserData())
+    } else if (response.data.resultCode === ResultCodesEnum.Error) {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error';
+        dispatch(stopSubmit('login', {_error: message}))
+    }
 };
 
-export const logout = (): AuthThunk => dispatch => {
-    authAPI.logout()
-        .then(() => {
-            dispatch(actions.setAuthUserData(null, null, null, false))
-        })
+export const logout = (): AuthThunk => async dispatch => {
+    await authAPI.logout()
+    dispatch(actions.setAuthUserData(null, null, null, false))
 };
 
 export type InitialStateType = typeof initialState;

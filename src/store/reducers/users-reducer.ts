@@ -4,13 +4,13 @@ import {InferActionsTypes, RootStateType} from '../store';
 import {UserType} from '../../types/types';
 
 export enum UsersEnum {
-    FOLLOW = 'FOLLOW',
-    UNFOLLOW = 'UNFOLLOW',
-    SET_USERS = 'SET_USERS',
-    SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
-    SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT',
-    TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING',
-    TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS',
+    FOLLOW = 'users/FOLLOW',
+    UNFOLLOW = 'users/UNFOLLOW',
+    SET_USERS = 'users/SET_USERS',
+    SET_CURRENT_PAGE = 'users/SET_CURRENT_PAGE',
+    SET_USERS_TOTAL_COUNT = 'users/SET_USERS_TOTAL_COUNT',
+    TOGGLE_IS_FETCHING = 'users/TOGGLE_IS_FETCHING',
+    TOGGLE_IS_FOLLOWING_PROGRESS = 'users/TOGGLE_IS_FOLLOWING_PROGRESS',
 }
 
 const initialState = {
@@ -95,33 +95,30 @@ export const actions = {
 
 
 //thunk
-export const requestUsers = (page: number, pageSize: number): UsersThunk => dispatch => {
+export const requestUsers = (page: number, pageSize: number): UsersThunk => async dispatch => {
     dispatch(actions.toggleIsFetching(true));
     dispatch(actions.setCurrentPage(page));
-    usersAPI.getUsers(page, pageSize)
-        .then(data => {
+    let response = await usersAPI.getUsers(page, pageSize)
+
             dispatch(actions.toggleIsFetching(false));
-            dispatch(actions.setUsers(data.items));
-            dispatch(actions.setUsersTotalCount(data.totalCount));
-        });
+            dispatch(actions.setUsers(response.data.items));
+            dispatch(actions.setUsersTotalCount(response.data.totalCount));
 };
-export const follow = (userID: number): UsersThunk => dispatch => {
+export const follow = (userID: number): UsersThunk => async dispatch => {
     dispatch(actions.toggleFollowingProgress(true, userID));
-    followAPI.followUsers(userID).then(data => {
-        if (data.resultCode === 0) {
+    let response = await followAPI.followUsers(userID)
+        if (response.data.resultCode === 0) {
             dispatch(actions.followSuccess(userID));
         }
         dispatch(actions.toggleFollowingProgress(false, userID));
-    });
 };
-export const unfollow = (userID: number): UsersThunk => dispatch => {
+export const unfollow = (userID: number): UsersThunk => async dispatch => {
     dispatch(actions.toggleFollowingProgress(true, userID));
-    followAPI.unfollowUsers(userID).then(data => {
-        if (data.resultCode === 0) {
+    let response = await followAPI.unfollowUsers(userID)
+        if (response.data.resultCode === 0) {
             dispatch(actions.unfollowSuccess(userID));
         }
         dispatch(actions.toggleFollowingProgress(false, userID));
-    });
 };
 
 export type InitialStateType = typeof initialState;

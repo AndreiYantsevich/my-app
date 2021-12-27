@@ -11,7 +11,7 @@ type MessageType = {
 }
 
 export enum DialogsEnum {
-    ADD_MESSAGE = 'ADD_MESSAGE'
+    ADD_MESSAGE = 'dialogs/ADD_MESSAGE'
 }
 
 const initialState = {
