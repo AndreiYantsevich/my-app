@@ -2,8 +2,8 @@ import React, {ChangeEvent, FC, memo} from 'react';
 import style from './ProfileInfo.module.css';
 import {ProfilePropsType} from '../Profile';
 import Preloader from '../../common/Preloader/Preloader';
-import ProfileStatus from './ProfileStatus';
 import defaultAvatar from '../../../assets/images/avatar.png'
+import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 
 const ProfileInfo: FC<ProfilePropsType> = memo((props) => {
 
@@ -23,7 +23,7 @@ const ProfileInfo: FC<ProfilePropsType> = memo((props) => {
                 <img className={style.image}
                      src={props.profile.photos.large || defaultAvatar} alt={'avatar'}/>
                 <input type={'file'} onChange={setMainPhoto}/>
-                <ProfileStatus status={props.status}
+                <ProfileStatusWithHooks status={props.status}
                                updateUserStatus={props.updateUserStatus}/>
                 <div>
                     about me: {props.profile.aboutMe}
