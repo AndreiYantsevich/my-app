@@ -3,7 +3,7 @@ import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import {RootStateType} from '../../store/store';
 import {Redirect} from 'react-router-dom';
-import {Input} from '../common/FormsControls/FormsControls';
+import {createField, Input} from '../common/FormsControls/FormsControls';
 import {requiredField} from '../../utils/validators/Validators';
 import {login} from '../../store/reducers/auth-reducer';
 import style from '../common/FormsControls/FormsControls.module.css';
@@ -24,24 +24,14 @@ type MapDispatchPropsType = {
 
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
-const LoginForm: FC<InjectedFormProps<FormDataType>> = memo((props) => {
+const LoginForm: FC<InjectedFormProps<FormDataType>> = memo(({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field placeholder={'Email'} name={'email'} component={Input}
-                       validate={[requiredField]}/>
-            </div>
-            <div>
-                <Field placeholder={'Password'} name={'password'} component={Input}
-                       type={'password'}
-                       validate={[requiredField]}/>
-            </div>
-            <div>
-                <Field type="checkbox" name={'rememberMe'} component={Input}/>
-                remember me
-            </div>
-            {props.error && <div className={style.formSummaryError}>
-                {props.error}
+        <form onSubmit={handleSubmit}>
+            {createField('Email', 'email', Input, [requiredField])}
+            {createField('Password', 'password', Input, [requiredField], '', {type: 'password'})}
+            {createField(null, 'rememberMe', Input, [], 'remember me', {type: 'checkbox'})}
+            {error && <div className={style.formSummaryError}>
+                {error}
             </div>}
             <div>
                 <button>Login</button>
