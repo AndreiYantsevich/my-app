@@ -8,15 +8,15 @@ type PropsType = {
     Formtype: any
 }
 
-const FormControl: FC<PropsType> = ({input, meta, Formtype, ...props}) => {
-    const hasError = meta.touched && meta.error;
+const FormControl: FC<PropsType> = ({input, meta: {touched, error}, Formtype, ...props}) => {
+    const hasError = touched && error;
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
             <div>
                 <Formtype {...input} {...props} />
             </div>
             <div>
-                {hasError && <span>{meta.error}</span>}
+                {hasError && <span>{error}</span>}
             </div>
         </div>
 

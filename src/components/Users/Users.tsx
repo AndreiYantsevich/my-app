@@ -1,8 +1,7 @@
 import React, {FC, memo} from 'react';
-import style from './Users.module.css';
-import defaultPhoto from '../../assets/images/avatar.png';
-import {NavLink} from 'react-router-dom';
 import {UserType} from '../../types/types';
+import Paginator from '../common/Paginator/Paginator';
+import User from './User';
 
 type PropsType = {
     users: Array<UserType>;
@@ -15,61 +14,30 @@ type PropsType = {
     unfollow: (userID: number) => void;
 }
 
-const Users: FC<PropsType> = memo((props) => {
-
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-
-    let pages = []
-
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
-
+const Users: FC<PropsType> = memo(({
+                                       users,
+                                       totalUsersCount,
+                                       onPageChanged,
+                                       currentPage,
+                                       pageSize,
+                                       follow,
+                                       followingInProgress,
+                                       unfollow
+                                   }) => {
     return (
         <div>
+            <Paginator pageSize={pageSize} totalUsersCount={totalUsersCount}
+                       currentPage={currentPage} onPageChanged={onPageChanged}/>
             <div>
-                {pages.map(p => {
-                    return <span
-                        className={props.currentPage === p ? style.selectedPage : ''}
-                        onClick={() => {
-                            props.onPageChanged(p)
-                        }}>{p}</span>
-                })}
+                {
+                    users.map(u => <User key={u.id}
+                                         user={u}
+                                         follow={follow}
+                                         followingInProgress={followingInProgress}
+                                         unfollow={unfollow}/>
+                    )
+                }
             </div>
-            {
-                props.users.map(u => <div key={u.id}>
-                <span>
-                    <div>
-                        <NavLink to={'/profile/' + u.id}>
-                            <img
-                                src={u.photos.small != null ? u.photos.small : defaultPhoto}
-                                className={style.avatar}
-                                alt={'avatar'}
-                            />
-                        </NavLink>
-                    </div>
-                    <div>
-                        {u.followed
-                            ? <button
-                                disabled={props.followingInProgress.some(id => id === u.id)}
-                                onClick={() => {
-                                    props.unfollow(u.id)
-                                }}>Unfollow</button>
-                            : <button
-                                disabled={props.followingInProgress.some(id => id === u.id)}
-                                onClick={() => {
-                                    props.follow(u.id)
-                                }}>Follow</button>}
-                    </div>
-                </span>
-                        <span>
-                    <span>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
-                    </span>
-                </span>
-                    </div>
-                )}
         </div>
     );
 });

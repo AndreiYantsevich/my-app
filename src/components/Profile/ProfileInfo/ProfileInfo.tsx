@@ -5,15 +5,20 @@ import Preloader from '../../common/Preloader/Preloader';
 import defaultAvatar from '../../../assets/images/avatar.png'
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 
-const ProfileInfo: FC<ProfilePropsType> = memo((props) => {
+const ProfileInfo: FC<ProfilePropsType> = memo(({
+                                                    profile,
+                                                    status,
+                                                    updateUserStatus,
+                                                    updateUserPhoto
+                                                }) => {
 
-    if (!props.profile) {
+    if (!profile) {
         return <Preloader/>
     }
 
     const setMainPhoto = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
-            props.updateUserPhoto(e.target.files[0]);
+            updateUserPhoto(e.target.files[0]);
         }
     }
 
@@ -21,18 +26,18 @@ const ProfileInfo: FC<ProfilePropsType> = memo((props) => {
         <div>
             <div className={style.descriptionBlock}>
                 <img className={style.image}
-                     src={props.profile.photos.large || defaultAvatar} alt={'avatar'}/>
+                     src={profile.photos.large || defaultAvatar} alt={'avatar'}/>
                 <input type={'file'} onChange={setMainPhoto}/>
-                <ProfileStatusWithHooks status={props.status}
-                               updateUserStatus={props.updateUserStatus}/>
+                <ProfileStatusWithHooks status={status}
+                                        updateUserStatus={updateUserStatus}/>
                 <div>
-                    about me: {props.profile.aboutMe}
+                    about me: {profile.aboutMe}
                 </div>
                 <div>
-                    fullName: {props.profile.fullName}
+                    fullName: {profile.fullName}
                 </div>
                 <div>
-                    userId: {props.profile.userId}
+                    userId: {profile.userId}
                 </div>
             </div>
         </div>
