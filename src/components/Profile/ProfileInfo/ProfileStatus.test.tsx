@@ -50,4 +50,13 @@ describe('ProfileStatus component', () => {
         let input = instance.findByType('input')
         expect(input.props.value).toBe('123');
     });
+
+    test('callback should be called', () => {
+        const mockCallback = jest.fn();
+        const component = TestRenderer.create(<ProfileStatus status={'123'}
+                                                             updateUserStatus={mockCallback}/>);
+        const instance = component.getInstance();
+        instance.deactivateEditMode();
+        expect(mockCallback.mock.calls.length).toBe(1);
+    });
 });
