@@ -1,5 +1,5 @@
 import React, {ComponentType} from 'react';
-import {Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
@@ -10,10 +10,10 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
-import {connect} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import {compose} from 'redux';
 import {initializeApp} from './store/reducers/app-reducer';
-import {RootStateType} from './store/store';
+import {RootStateType, store} from './store/store';
 import Preloader from './components/common/Preloader/Preloader';
 
 type MapDispatchToPropsType = {
@@ -56,6 +56,16 @@ class App extends React.Component<AppPropsType> {
     }
 }
 
-export default compose<ComponentType>(
+const AppContainer = compose<ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializeApp}))(App);
+
+export const SamuraiTSApp = () => {
+    return (
+        <BrowserRouter>
+            <Provider store={store}>
+                <AppContainer/>
+            </Provider>
+        </BrowserRouter>
+    )
+}
