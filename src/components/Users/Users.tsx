@@ -26,7 +26,7 @@ const Users: FC<PropsType> = memo(({
                                    }) => {
     return (
         <div>
-            <Paginator pageSize={pageSize} totalUsersCount={totalUsersCount}
+            <Paginator pageSize={pageSize} totalItemsCount={totalUsersCount}
                        currentPage={currentPage} onPageChanged={onPageChanged}/>
             <div>
                 {
