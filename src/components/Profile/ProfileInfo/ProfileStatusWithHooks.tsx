@@ -27,13 +27,15 @@ const ProfileStatusWithHooks: FC<PropsType> = (props) => {
         <div>
             {!editMode &&
                 <div>
-                        <span onDoubleClick={onChangeModeHandler}>{props.status || '---'}</span>
+                    <b>Status: </b>
+                    <span onDoubleClick={onChangeModeHandler}>{props.status || '---'}</span>
                 </div>
             }
             {editMode &&
                 <div>
-                    <input autoFocus onBlur={onChangeModeHandler} onChange={onStatusChangeHandler}
-                    value={status}/>
+                    <input autoFocus onBlur={onChangeModeHandler}
+                           onChange={onStatusChangeHandler}
+                           value={status}/>
                 </div>
             }
         </div>

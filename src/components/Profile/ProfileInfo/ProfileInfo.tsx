@@ -1,9 +1,11 @@
-import React, {ChangeEvent, FC, memo} from 'react';
+import React, {ChangeEvent, FC, memo, useState} from 'react';
 import style from './ProfileInfo.module.css';
 import {ProfilePropsType} from '../Profile';
 import Preloader from '../../common/Preloader/Preloader';
 import defaultAvatar from '../../../assets/images/avatar.png'
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
+import {ProfileData} from './ProfileData';
+import {ProfileDataForm} from './ProfileDataForm';
 
 const ProfileInfo: FC<ProfilePropsType> = memo(({
                                                     profile,
@@ -13,8 +15,14 @@ const ProfileInfo: FC<ProfilePropsType> = memo(({
                                                     isOwner
                                                 }) => {
 
+    const [editMode, setEditMode] = useState(false);
+
     if (!profile) {
         return <Preloader/>
+    }
+
+    const goToEditMode = () => {
+        setEditMode(true);
     }
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,15 +39,7 @@ const ProfileInfo: FC<ProfilePropsType> = memo(({
                 {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
                 <ProfileStatusWithHooks status={status}
                                         updateUserStatus={updateUserStatus}/>
-                <div>
-                    about me: {profile.aboutMe}
-                </div>
-                <div>
-                    fullName: {profile.fullName}
-                </div>
-                <div>
-                    userId: {profile.userId}
-                </div>
+                {editMode ? <ProfileDataForm profile={profile}/> : <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditMode}/>}
             </div>
         </div>
     );
