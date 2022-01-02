@@ -9,14 +9,15 @@ const ProfileInfo: FC<ProfilePropsType> = memo(({
                                                     profile,
                                                     status,
                                                     updateUserStatus,
-                                                    updateUserPhoto
+                                                    updateUserPhoto,
+                                                    isOwner
                                                 }) => {
 
     if (!profile) {
         return <Preloader/>
     }
 
-    const setMainPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
             updateUserPhoto(e.target.files[0]);
         }
@@ -27,7 +28,7 @@ const ProfileInfo: FC<ProfilePropsType> = memo(({
             <div className={style.descriptionBlock}>
                 <img className={style.image}
                      src={profile.photos.large || defaultAvatar} alt={'avatar'}/>
-                <input type={'file'} onChange={setMainPhoto}/>
+                {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
                 <ProfileStatusWithHooks status={status}
                                         updateUserStatus={updateUserStatus}/>
                 <div>

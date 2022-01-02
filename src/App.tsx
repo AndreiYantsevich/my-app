@@ -1,5 +1,5 @@
 import React, {ComponentType, lazy} from 'react';
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {HashRouter, Route, withRouter} from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
@@ -65,10 +65,10 @@ const AppContainer = compose<ComponentType>(
 
 export const SamuraiTSApp = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Provider store={store}>
                 <AppContainer/>
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     )
 }

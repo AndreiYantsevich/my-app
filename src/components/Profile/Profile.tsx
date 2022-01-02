@@ -4,6 +4,7 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import { ProfileType } from '../../types/types';
 
 export type ProfilePropsType = {
+    isOwner: boolean
     profile: ProfileType | null
     status: string
     updateUserStatus: (status: string) => void
@@ -13,7 +14,7 @@ export type ProfilePropsType = {
 const Profile: FC<ProfilePropsType> = memo((props) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus} updateUserPhoto={props.updateUserPhoto}/>
+            <ProfileInfo isOwner={props.isOwner} profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus} updateUserPhoto={props.updateUserPhoto}/>
             <MyPostsContainer/>
         </div>
     );
