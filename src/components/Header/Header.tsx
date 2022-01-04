@@ -1,22 +1,31 @@
-import React, {FC, memo} from 'react';
+import React from 'react';
+import styles from './Header.module.css';
 import {NavLink} from 'react-router-dom';
-import style from './Header.module.css';
-import {HeaderPropsType} from './HeaderContainer';
 
-const Header: FC<HeaderPropsType> = memo((props) => {
+export type HeaderPropsType = {
+    isAuth: boolean
+    login: any
+    logout: any
+}
+
+const Header = (props: HeaderPropsType) => {
 
     return (
-        <header className={style.header}>
-            <div className={style.loginBlock}>
+        <header className={styles.header}>
+            <h3 className={styles.title}>Social Network <span>by Andrei Yantsevich</span>
+            </h3>
+
+            <div className={styles.loginBlock}>
+
                 {props.isAuth
-                    ? <div>{props.login} - <button onClick={props.logout}>
-                        Log Out</button>
+                    ? <div>Hello, {props.login}! <br/><span onClick={props.logout}
+                                                            className={styles.logout}>Logout</span>
                     </div>
-                    : <NavLink to={'/login'}>Login</NavLink>
-                }
+                    : <NavLink className={styles.loginLink} to={'/login'}>Login</NavLink>}
+
             </div>
         </header>
-    );
-});
+    )
+}
 
 export default Header;

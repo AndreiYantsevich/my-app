@@ -1,7 +1,4 @@
-.postsBlock {
-    padding: 10px;
-}
-
-.posts {
-    margin: 10px;
+.myPosts {
+    padding: 30px;
+    background-color: #fff;
 }

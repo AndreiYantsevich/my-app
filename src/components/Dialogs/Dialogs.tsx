@@ -1,38 +1,50 @@
-import React, {FC, memo} from 'react';
-import style from './Dialogs.module.css'
-import DialogItem from './DialogItem/DialogItem';
-import Message from './Message/Message';
-import {InitialStateType} from '../../store/reducers/dialogs-reducer';
-import {AddMessageFormRedux, FormDataType} from './AddMessageForm/AddMessageForm';
+import React from 'react';
+import styles from './Dialogs.module.css';
+import DialogItem, {DialogItemType} from './DialogItem/DialogItem';
+import Message, {MessageType} from './Message/Message';
+import DialogsForm, {DialogsFormDataType} from './DialogsForm/DialogsForm';
 
-type PropsType = {
-    dialogs: InitialStateType
-    addMessage: (newMessageText: string) => void
+export type DialogsType = {
+    dialogs: Array<DialogItemType>
+    updateNewMessage: (text: string) => void
+    sendMessage: (newMessageBody: string) => void
 }
 
-const Dialogs: FC<PropsType> = memo((props) => {
+export type MessagesType = {
+    messages: Array<MessageType>
+    newMessageText: string
+}
 
-    const dialogsElements = props.dialogs.dialogs.map(d => <DialogItem name={d.name}
-                                                                       key={d.id}
-                                                                       id={d.id}/>)
-    const messagesElements = props.dialogs.messages.map(m => <Message id={m.id} key={m.id}
-                                                                      message={m.message}/>)
+const Dialogs = (props: DialogsType & MessagesType) => {
 
-    const addNewMessage = (formData: FormDataType) => {
-        props.addMessage(formData.newMessageText);
+    let dialogsElements = props.dialogs
+        .map(dialog => <DialogItem key={dialog.id} id={dialog.id} name={dialog.name}/>)
+
+    let messagesElements = props.messages
+        .map(message => <Message key={message.id} message={message.message}
+                                 id={message.id}/>)
+
+    const onSubmit = (formData: DialogsFormDataType) => {
+        props.sendMessage(formData.newMessageBody)
     }
 
     return (
-        <div className={style.dialogs}>
-            <div className={style.dialogItems}>
-                {dialogsElements}
+        <div className={styles.dialogs}>
+            <h1>Dialogs</h1>
+            <div className={styles.content}>
+
+                <div className={styles.colLeft}>
+                    {dialogsElements}
+                </div>
+
+                <div className={styles.colRight}>
+                    {messagesElements}
+
+                    <DialogsForm onSubmit={onSubmit}/>
+                </div>
             </div>
-            <div className={style.messages}>
-                {messagesElements}
-            </div>
-            <AddMessageFormRedux onSubmit={addNewMessage}/>
         </div>
-    );
-});
+    )
+}
 
 export default Dialogs;

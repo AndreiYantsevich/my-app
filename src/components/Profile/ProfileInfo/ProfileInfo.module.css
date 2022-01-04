@@ -1,7 +1,32 @@
-.descriptionBlock {
-    padding: 10px;
+.profileInfo {
+    margin-bottom: 30px;
+    background-color: #fff;
+    display: flex;
 }
 
-img {
+.banner {
     width: 300px;
+    background-color: #e4e3e1;
+}
+
+.content {
+    width: calc(100% - 300px);
+    padding: 25px;
+}
+
+.data {
+    margin: 0;
+}
+
+.contacts a {
+    display: inline-block;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #222;
+}
+
+.subtitle {
+    text-transform: capitalize;
+    margin-bottom: 10px;
 }

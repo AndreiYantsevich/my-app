@@ -1,0 +1,28 @@
+.form {
+    max-width: 100%;
+    margin-bottom: 30px;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    border: none;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 0;
+    outline: none;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 17px;
+    padding: 12px 12px;
+    background: #e4e3e1;
+    color: #201e2b;
+    font-weight: 400;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.button.active,
+.button:hover {
+    color: #fff;
+    background: #201e2b;
+}

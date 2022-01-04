@@ -1,11 +1,12 @@
 import React from 'react';
+import styles from './Music.module.css';
 
-const Music: React.FC = React.memo(() => {
+const Music = () => {
     return (
-        <div>
-            Music
+        <div className={styles.music}>
+            <h1>Music</h1>
         </div>
-    );
-});
+    )
+}
 
 export default Music;

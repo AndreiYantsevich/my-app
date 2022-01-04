@@ -1,0 +1,40 @@
+.textarea,
+.inputText {
+    display: block;
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    border: 1px solid #e4e3e1;
+    background-color: rgba(228, 227, 225, 0.2);
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 300;
+    color: #222;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.inputText {
+    height: 45px;
+}
+
+.textarea:hover,
+.textarea:focus,
+.inputText:hover,
+.inputText:focus {
+    background-color: rgba(228, 227, 225, 0.3);
+    border-color: #cccccc;
+    outline: none;
+}
+
+.formControl.error .textarea,
+.formControl.error .inputText {
+    border-color: rgb(214, 14, 14);
+}
+
+.errorMsg {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(214, 14, 14);
+}

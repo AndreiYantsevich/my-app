@@ -1,64 +1,55 @@
-import React, {FC} from 'react';
-import style from './MyPosts.module.css';
-import Post, {PostType} from './Post/Post';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {maxLengthCreator, requiredField} from '../../../utils/validators/Validators';
-import {Textarea} from '../../common/FormsControls/FormsControls';
+import React from 'react';
+import styles from './MyPosts.module.css';
+import Post from './Post/Post';
+import PostForm, {PostFormDataType} from './PostForm/PostForm';
 
-type PropsType = {
-    posts: PostType[]
-    addPost: (newPostText: string) => void
+export type PostsType = {
+    posts: Array<PostType>
+    addPost: (newPostBody: string) => void
 }
 
-type FormDataType = {
-    newPostText: string
+export type PostType = {
+    id: string
+    message: string
+    likesCounter: number
 }
 
-const maxLength10 = maxLengthCreator(10);
+// 1. example PureComponent. It can be used instead shouldComponentUpdate
+//class MyPosts extends React.PureComponent<PostsType> {
 
-class MyPosts extends React.PureComponent<PropsType> {
 
-    /*shouldComponentUpdate(nextProps: PropsType, nextState: {}): boolean {
-        return nextProps !== this.props || nextState !== this.state;
-    }*/
+// 2. example shouldComponentUpdate for class Component
+// shouldComponentUpdate(nextProps: Readonly<PostsType>, nextState: Readonly<{}>): boolean {
+// 	return nextProps != this.props || nextState != this.state
+// }
 
-    render() {
 
-        const postsElements = this.props.posts.map(p => <Post id={p.id}
-                                                              message={p.message}
-                                                              likesCount={p.likesCount}/>)
+const MyPosts = React.memo((props: PostsType) => {
+    console.log('fd')
+    let postsElements = props.posts.map(post =>
+        <Post
+            key={post.id}
+            id={post.id}
+            message={post.message}
+            likesCounter={post.likesCounter}
+        />)
 
-        const addNewPost = (formData: FormDataType) => {
-            this.props.addPost(formData.newPostText)
-        }
-
-        return (
-            <div className={style.postsBlock}>
-                <h3>My posts</h3>
-                <AddNewPostFormRedux onSubmit={addNewPost}/>
-                <div className={style.posts}>
-                    {postsElements}
-                </div>
-            </div>
-        );
+    const onSubmit = (formData: PostFormDataType) => {
+        props.addPost(formData.newPostBody)
     }
-};
 
-const AddNewPostForm: FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={Textarea} name={'newPostText'}
-                       placeholder={'Enter your post'}
-                       validate={[requiredField, maxLength10]}/>
-            </div>
-            <div>
-                <button>Add post</button>
-            </div>
-        </form>
-    );
-};
+        <div className={styles.myPosts}>
+            <h2>My Posts</h2>
 
-const AddNewPostFormRedux = reduxForm<FormDataType>({form: 'profileAddPostForm'})(AddNewPostForm)
+            <PostForm onSubmit={onSubmit}/>
+
+            <div className={styles.postsList}>
+                {postsElements}
+            </div>
+        </div>
+    )
+})
 
 export default MyPosts;
+

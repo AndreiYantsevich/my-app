@@ -1,0 +1,37 @@
+.app {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 5fr 12fr;
+    overflow: hidden;
+    background-color: #f2f1f0;;
+}
+
+.sidebar {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #201e2b;
+}
+
+.content {
+    position: relative;
+    overflow-y: scroll;
+}
+
+.contentMain {
+    min-height: calc(100vh - 110px);
+    padding: 30px;
+}
+
+.footer {
+    padding: 20px 30px;
+    box-sizing: border-box;
+    background-color: #e4e3e1;
+}

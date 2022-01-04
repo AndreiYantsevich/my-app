@@ -1,26 +1,19 @@
 import React from 'react';
-import style from './Post.module.css';
+import styles from './Post.module.css';
+import {PostType} from '../MyPosts';
 
-export type PostType = {
-    id: number
-    message: string | undefined
-    likesCount: number
-}
-
-const Post: React.FC<PostType> = React.memo((props) => {
+const Post = (props: PostType) => {
     return (
-        <div>
-            <div className={style.item}>
-                <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxLkbtTa0kfmKizxJgqECQLdlt_xq1R2jEQQ&usqp=CAU"
-                    alt=""/>
-                {props.message}
-                <div>
-                    <span>like {props.likesCount}</span>
-                </div>
+        <div className={styles.post} key={props.id}>
+            <div className={styles.imgWrap}>
+                <img src="https://placeimg.com/50/50/tech" alt="temporal"/>
+            </div>
+            <div className={styles.content}>
+                <p className={styles.text}>{props.message}</p>
+                <div className={styles.like}>{props.likesCounter} likes</div>
             </div>
         </div>
-    );
-});
+    )
+}
 
 export default Post;

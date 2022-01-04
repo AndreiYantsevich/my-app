@@ -1,0 +1,51 @@
+.data {
+    margin: 0;
+}
+
+.contacts a {
+    display: inline-block;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #222;
+}
+
+.link {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 17px;
+    color: #201e2b;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.errorMsg {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(214, 14, 14);
+}
+
+.button {
+    display: block;
+    width: 100%;
+    border: none;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 0;
+    outline: none;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 17px;
+    padding: 12px 12px;
+    background: #e4e3e1;
+    color: #201e2b;
+    font-weight: 400;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.button.active,
+.button:hover {
+    color: #fff;
+    background: #201e2b;
+}

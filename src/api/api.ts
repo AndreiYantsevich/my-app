@@ -1,65 +1,91 @@
 import axios from 'axios';
+import {ProfileType} from '../types/types';
 
+// axios general settings, axios params -> baseUrl and config
+// instance makes auto concat for baseUrl and anothers axios config
 const instance = axios.create({
+    baseURL: 'https://social-network.samuraijs.com/api/1.0',
     withCredentials: true,
-    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
         'API-KEY': '7e5b4528-2880-4677-b629-b878b7697787'
-    },
-});
-
-export enum ResultCodesEnum {
-    Success = 0,
-    Error = 1
-}
-
-export const usersAPI = {
-    getUsers(currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`);
-    },
-};
-
-export const followAPI = {
-    followUsers(id: number) {
-        return instance.post(`follow/${id}`, {});
-    },
-    unfollowUsers(id: number) {
-        return instance.delete(`follow/${id}`);
-    },
-};
+    }
+})
 
 export const authAPI = {
     me() {
-        return instance.get(`auth/me`);
+        return instance.get(`/auth/me`)
+            .then(response => response.data)
     },
-    login(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe});
+
+    login(email: string, password: string, rememberMe: boolean = false, captchaUrl: string = '') {
+        return instance.post(`/auth/login`, {email, password, rememberMe, captchaUrl})
+            .then(response => response.data)
     },
+
     logout() {
-        return instance.delete(`auth/login`);
-    },
-};
+        return instance.delete(`/auth/login`)
+            .then(response => response.data)
+    }
+}
+
+export const usersAPI = {
+    getUsers(currentPage: number = 1, pageSize: number = 10) {
+        return instance.get(`/users?page=${currentPage}&count=${pageSize}&sortOrder=asc`)
+            .then(response => response.data)
+    }
+
+}
 
 export const profileAPI = {
-    getUserProfile(userId: number) {
-        return instance.get(`profile/` + userId);
-
+    getUser(userId: string) {
+        return instance.get(`/profile/${userId}`)
     },
-    getUserStatus(userId: number) {
-        return instance.get(`profile/status/` + userId);
 
+    getStatus(userId: string) {
+        return instance.get(`/profile/status/${userId}`)
     },
-    updateUserStatus(status: string) {
-        return instance.put(`profile/status`, {status: status});
 
+    updateStatus(status: string) {
+        return instance.put(`/profile/status`, {status})
     },
-    updateUserPhoto(photo: File) {
-        const formData = new FormData();
-        formData.append('image', photo);
-        return instance.put(`profile/photo`, formData, {
+
+    savePhoto(file: File) {
+        let formData = new FormData()
+        formData.append('image', file)
+        return instance.put(`/profile/photo`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        });
+        })
+            .then(response => response.data)
+    },
+
+    saveProfile(profile: ProfileType) {
+        return instance.put(`/profile`, profile)
     }
-};
+}
+
+export const followAPI = {
+
+    unfollowUser(userId: string) {
+        return instance.delete(`/follow/${userId}`)
+    },
+
+    followUser(userId: string) {
+        return instance.post(`/follow/${userId}`)
+    }
+
+}
+
+export const securityAPI = {
+
+    getCaptchaUrl() {
+        return instance.get('/security/get-captcha-url')
+    }
+
+}
+
+
+
+
+

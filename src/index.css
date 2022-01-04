@@ -1,0 +1,55 @@
+html {
+  box-sizing: border-box;  
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 300;
+  color: #222;
+  overflow: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h5 {
+  margin-top: 0;
+  font-family: 'Crete Round', serif;
+  line-height: 1.2;
+  font-weight: 400;
+  color: #201e2b;
+}
+
+h1 {
+  font-size: 55px;
+  line-height: 1;
+}
+
+h2 {
+  font-size: 42px;
+}
+
+h3 {
+  font-size: 30px;
+}
+
+h4 {
+  font-size: 24px;
+}
+
+h5 {
+  font-size: 20px;
+}

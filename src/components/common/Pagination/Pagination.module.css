@@ -1,0 +1,41 @@
+.pagination {
+    text-align: right;
+    font-size: 0;
+}
+
+.page {
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    border: 1px solid #d9d9d9;
+    margin-left: -1px;
+    cursor: pointer;
+    text-align: center;
+    color: #201e2b;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 38px;
+}
+
+.page:hover {
+    background: #d9d9d9;
+}
+
+.currentPage,
+.currentPage:hover {
+    z-index: 1;
+    background: #201e2b;
+    color: #ffffff;
+    border-color: #201e2b;
+    cursor: default;
+}
+
+.dots {
+    cursor: default;
+}
+
+.dots:hover {
+    z-index: 1;
+    background: transparent;
+}

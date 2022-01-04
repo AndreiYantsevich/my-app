@@ -1,9 +1,28 @@
-.item {
-    color: #ffffff;
+.post {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
-.item img {
+.imgWrap {
     width: 50px;
     height: 50px;
-    border-radius: 30px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.content {
+    width: calc(100% - 50px);
+    padding-left: 10px;
+}
+
+.text {
+    margin: 0;
+    font-size: 16px;
+}
+
+.like {
+    font-size: 13px;
 }

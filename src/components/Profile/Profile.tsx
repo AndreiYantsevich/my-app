@@ -1,23 +1,32 @@
-import React, {FC, memo} from 'react';
+import React from 'react';
+import styles from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import { ProfileType } from '../../types/types';
+import {ProfileType} from '../../types/types';
 
-export type ProfilePropsType = {
+export type ProfileComponentType = {
     isOwner: boolean
-    profile: ProfileType | null
+    profile: ProfileType
     status: string
     updateUserStatus: (status: string) => void
-    updateUserPhoto: (photo: File) => void
+    savePhoto: (file: any) => void
+    saveProfile: (profile: ProfileType) => void
 }
 
-const Profile: FC<ProfilePropsType> = memo((props) => {
+const Profile = (props: ProfileComponentType) => {
     return (
-        <div>
-            <ProfileInfo isOwner={props.isOwner} profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus} updateUserPhoto={props.updateUserPhoto}/>
+        <div className={styles.profile}>
+            <h1>Profile </h1>
+            <ProfileInfo
+                isOwner={props.isOwner}
+                profile={props.profile}
+                status={props.status}
+                updateUserStatus={props.updateUserStatus}
+                savePhoto={props.savePhoto}
+                saveProfile={props.saveProfile}/>
             <MyPostsContainer/>
         </div>
-    );
-});
+    )
+}
 
 export default Profile;
