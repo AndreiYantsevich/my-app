@@ -17,8 +17,8 @@ export const authAPI = {
             .then(response => response.data)
     },
 
-    login(email: string, password: string, rememberMe: boolean = false, captchaUrl: string = '') {
-        return instance.post(`/auth/login`, {email, password, rememberMe, captchaUrl})
+    login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
+        return instance.post(`/auth/login`, {email, password, rememberMe, captcha})
             .then(response => response.data)
     },
 

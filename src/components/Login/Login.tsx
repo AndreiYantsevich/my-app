@@ -2,23 +2,19 @@ import React from 'react';
 import styles from './Login.module.css';
 import LoginForm, {LoginFormDataType} from './LoginForm/LoginForm';
 import {connect} from 'react-redux';
-import {loginTC, logoutTC} from '../../redux/authReducer';
+import {loginTC} from '../../redux/authReducer';
 import {Redirect} from 'react-router-dom';
 import {AppRootStateType} from '../../redux/redux-store';
 
 export type MDTPType = {
-    login: (email: string, password: string, rememberMe: boolean, captchaUrl: string) => void
-    logout: () => void
+    login: (email: string, password: string, rememberMe: boolean, captcha: string) => void
 }
 
-export type MSTPType = {
-    isAuth: boolean
-    captchaUrl: string
-}
+export type MSTPType = ReturnType<typeof mapStateToProps>
 
 const Login = (props: MDTPType & MSTPType) => {
     const onSubmit = (formData: LoginFormDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe, formData.captchaUrl)
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     if (props.isAuth) {
@@ -36,16 +32,15 @@ const Login = (props: MDTPType & MSTPType) => {
 }
 
 
-let mapStateToProps = (state: AppRootStateType): MSTPType => {
+let mapStateToProps = (state: AppRootStateType) => {
     return {
-        isAuth: state.auth.isAuth,
-        captchaUrl: state.auth.captchaUrl
+        captchaUrl: state.auth.captchaUrl,
+        isAuth: state.auth.isAuth
     }
 }
 
 const MapDispatchToProps: MDTPType = {
-    login: loginTC,
-    logout: logoutTC
+    login: loginTC
 }
 
 export default connect(mapStateToProps, MapDispatchToProps)(Login)

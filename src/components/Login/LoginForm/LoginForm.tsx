@@ -8,11 +8,11 @@ export type LoginFormDataType = {
     email: string
     password: string
     rememberMe: boolean
-    captchaUrl: string
+    captcha: string
 }
 
 type OwnPropsType = {
-    captchaUrl: string
+    captchaUrl: string | null
 }
 
 type ErrorType = {
@@ -37,9 +37,8 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, OwnPropsType, Err
             {captchaUrl && <Field
                 component={Input}
                 validate={[required]}
-                name={'captchaUrl'}
+                name={'captcha'}
                 placeholder={'Symbols from image'}/>}
-
 
             <div className={styles.formRow}>
                 <label htmlFor="login_login">Login</label>
