@@ -50,8 +50,7 @@ class App extends React.Component<OwnPropsType> {
                     <div className={styles.content}>
                         <div className={styles.contentMain}>
                             <Switch>
-                                <Route exact path="/"
-                                       render={() => <Redirect to="/profile"/>}/>
+                                <Redirect exact from="/" to="/profile" />
                                 <Route path="/login" render={() => <Login/>}/>
                                 <Route path="/profile/:userId?"
                                        render={() => <Suspense fallback={
