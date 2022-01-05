@@ -4,6 +4,10 @@ import {PhotosType, ProfileType, ResultCodeStatus, userProfile} from '../types/t
 import {ThunkType} from './redux-store';
 import {stopSubmit} from 'redux-form';
 
+const ADD_POST = 'profile/ADD_POST'
+const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
+const SET_STATUS = 'profile/SET_STATUS'
+const SAVE_PHOTO = 'profile/SAVE_PHOTO'
 
 const initialState = {
     posts: [
@@ -87,7 +91,7 @@ export const saveProfileTC = (profile: ProfileType): ThunkType => async (dispatc
         }
     } else {
         // get error message from server
-        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some Error'
+        const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some Error'
         // stop form submit if fields are wrong
         dispatch(stopSubmit('edit-profile', {_error: message}))
         return Promise.reject(message)
@@ -98,11 +102,6 @@ export default profileReducer;
 
 
 //Types
-export const ADD_POST = 'profile/ADD_POST'
-export const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
-export const SET_STATUS = 'profile/SET_STATUS'
-export const SAVE_PHOTO = 'profile/SAVE_PHOTO'
-
 type InitialStateType = typeof initialState;
 export type ProfileActionsType =
     ReturnType<typeof addPostAC> |

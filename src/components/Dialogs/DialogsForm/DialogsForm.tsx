@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './DialogsForm.module.css';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {Textarea} from '../../common/FormControls/FormControls';
-import {maxLengthCreator, required} from '../../../utils/validators/validators';
+import {maxLengthCreator, requiredField} from '../../../utils/validators/validators';
 
 export type DialogsFormDataType = {
     newMessageBody: string
@@ -17,7 +17,7 @@ const DialogsForm: React.FC<InjectedFormProps<DialogsFormDataType>> = (props) =>
         <form className={styles.form} onSubmit={props.handleSubmit}>
             <Field
                 component={Textarea}
-                validate={[required, maxLength]}
+                validate={[requiredField, maxLength]}
                 name={'newMessageBody'}
                 placeholder="Write your message here"/>
             <button

@@ -1,5 +1,7 @@
 import {v1} from 'uuid';
 
+const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
+
 const initialState = {
     dialogs: [
         {id: v1(), name: 'Jack'},
@@ -36,7 +38,5 @@ export default dialogsReducer;
 
 
 //Types
-export const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
-
 type InitialStateType = typeof initialState;
 export type DialogsActionsType = ReturnType<typeof addMessageAC>;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './PostForm.module.css';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {maxLengthCreator, required} from '../../../../utils/validators/validators';
+import {maxLengthCreator, requiredField} from '../../../../utils/validators/validators';
 import {Textarea} from '../../../common/FormControls/FormControls';
 
 
@@ -19,7 +19,7 @@ const PostForm: React.FC<InjectedFormProps<PostFormDataType>> = (props) => {
             <Field
                 // Textarea => custom component
                 component={Textarea}
-                validate={[required, maxLength]}
+                validate={[requiredField, maxLength]}
                 name={'newPostBody'}
                 placeholder="Write your post here"
             />

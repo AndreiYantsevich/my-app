@@ -1,8 +1,16 @@
 import {followAPI, usersAPI} from '../api/api';
-import {Dispatch} from 'redux';
 import {UsersStructureType} from '../types/types';
 import {ThunkType} from './redux-store';
+import {Dispatch} from 'react';
+import {updateObjectInArray} from '../utils/helpers/object-helpers';
 
+const FOLLOW = 'users/FOLLOW'
+const UNFOLLOW = 'users/UNFOLLOW'
+const SET_USERS = 'users/SET_USERS'
+const SET_CURRENT_PAGE = 'users/SET_CURRENT_PAGE'
+const SET_TOTAL_COUNT = 'users/SET_TOTAL_COUNT'
+const TOGGLE_IS_FETCHING = 'users/TOGGLE_IS_FETCHING'
+const TOGGLE_FOLLOWING_PROGRESS = 'users/TOGGLE_FOLLOWING_PROGRESS'
 
 const initialState = {
     users: [] as Array<UsersStructureType>,
@@ -18,22 +26,12 @@ const usersReducer = (state = initialState, action: UsersActionsType): InitialSt
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map((u: UsersStructureType) => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
+                users: updateObjectInArray(state.users, action.userId, "id", {followed: true})
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map((u: UsersStructureType) => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })
+                users: updateObjectInArray(state.users, action.userId, "id", {followed: false})
             }
         case SET_USERS:
             return {...state, users: action.users}
@@ -91,39 +89,27 @@ export const requestUsersTC = (page: number, pageSize: number): ThunkType => asy
     dispatch(setUsersAC(response.items))
     dispatch(setTotalCountAC(response.totalCount))
 }
-export const followUsersTC = (userId: string): ThunkType => async dispatch => {
+const followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId: string, apiMethod: (userId: string) => Promise<any>, actionCreator: (userID: string) => UsersActionsType) => {
     // disable btn during server response
     dispatch(toggleFollowingInProgressAC(true, +userId))
-    const response = await followAPI.followUser(userId)
+    const response = await apiMethod(userId)
     if (response.data.resultCode === 0) {
-        dispatch(followSuccessAC(userId))
+        dispatch(actionCreator(userId))
     }
     // activate btn after server response
     dispatch(toggleFollowingInProgressAC(false, +userId))
 }
+export const followUsersTC = (userId: string): ThunkType => async dispatch => {
+    await followUnfollowFlow(dispatch, userId, followAPI.followUser.bind(followAPI), followSuccessAC)
+}
 export const unfollowUsersTC = (userId: string): ThunkType => async dispatch => {
-    // disable btn during server response
-    dispatch(toggleFollowingInProgressAC(true, +userId))
-    const response = await followAPI.unfollowUser(userId)
-    if (response.data.resultCode === 0) {
-        dispatch(unFollowSuccessAC(userId))
-    }
-    // activate btn after server response
-    dispatch(toggleFollowingInProgressAC(false, +userId))
+    await followUnfollowFlow(dispatch, userId, followAPI.unfollowUser.bind(followAPI), unFollowSuccessAC)
 }
 
 export default usersReducer;
 
 
 //Types
-const FOLLOW = 'users/FOLLOW'
-const UNFOLLOW = 'users/UNFOLLOW'
-const SET_USERS = 'users/SET_USERS'
-const SET_CURRENT_PAGE = 'users/SET_CURRENT_PAGE'
-const SET_TOTAL_COUNT = 'users/SET_TOTAL_COUNT'
-const TOGGLE_IS_FETCHING = 'users/TOGGLE_IS_FETCHING'
-const TOGGLE_FOLLOWING_PROGRESS = 'users/TOGGLE_FOLLOWING_PROGRESS'
-
 type InitialStateType = typeof initialState;
 export type UsersActionsType =
     ReturnType<typeof followSuccessAC> |

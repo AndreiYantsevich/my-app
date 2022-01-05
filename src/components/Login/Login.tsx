@@ -12,12 +12,14 @@ export type MDTPType = {
 
 export type MSTPType = ReturnType<typeof mapStateToProps>
 
-const Login = (props: MDTPType & MSTPType) => {
+type PropsType = MDTPType & MSTPType
+
+const Login: React.FC<PropsType> = ({login, captchaUrl, isAuth}) => {
     const onSubmit = (formData: LoginFormDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
+        login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to={'/profile'}/>
     }
 
@@ -25,7 +27,7 @@ const Login = (props: MDTPType & MSTPType) => {
         <div className={styles.login}>
             <h1>Login</h1>
             <section className={styles.section}>
-                <LoginForm captchaUrl={props.captchaUrl} onSubmit={onSubmit}/>
+                <LoginForm captchaUrl={captchaUrl} onSubmit={onSubmit}/>
             </section>
         </div>
     )

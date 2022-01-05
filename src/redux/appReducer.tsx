@@ -1,6 +1,8 @@
 import {getAuthUserDataTC} from './authReducer';
 import {ThunkType} from './redux-store';
 
+const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS';
+
 const initialState = {
     initialized: false
 }
@@ -21,7 +23,7 @@ export const initializedSuccessAC = () => ({type: INITIALIZED_SUCCESS} as const)
 
 //Thunk
 export const initializeAppTC = (): ThunkType => async dispatch => {
-    let promise = dispatch(getAuthUserDataTC())
+    const promise = dispatch(getAuthUserDataTC())
     await Promise.all([promise])
     dispatch(initializedSuccessAC())
 }
@@ -30,6 +32,5 @@ export default appReducer;
 
 
 //Types
-export const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS';
 type InitialStateType = typeof initialState;
 export type AppActionsType = ReturnType<typeof initializedSuccessAC>;

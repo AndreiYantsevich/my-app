@@ -3,6 +3,9 @@ import {ResultCodeStatus} from '../types/types';
 import {ThunkType} from './redux-store';
 import {stopSubmit} from 'redux-form';
 
+const SET_USER_DATA = 'auth/SET_USER_DATA';
+const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
+
 const initialState = {
     userId: null as string | null,
     email: null as string | null,
@@ -34,7 +37,7 @@ export const getCaptchaUrlSuccessAC = (captchaUrl: string) =>
 export const getAuthUserDataTC = (): ThunkType => async dispatch => {
     const response = await authAPI.me()
     if (response.resultCode === ResultCodeStatus.success) {
-        let {id, login, email} = response.data
+        const {id, login, email} = response.data
         dispatch(setAuthUserDataAC(id, email, login, true))
     }
 }
@@ -68,9 +71,6 @@ export default authReducer;
 
 
 // Types
-export const SET_USER_DATA = 'auth/SET_USER_DATA';
-export const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
-
 type InitialStateType = typeof initialState;
 export type AuthActionsType =
     ReturnType<typeof setAuthUserDataAC> |

@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './LoginForm.module.css';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {Input, InputPsw} from '../../common/FormControls/FormControls';
-import {maxLengthCreator, required} from '../../../utils/validators/validators';
+import {InjectedFormProps, reduxForm} from 'redux-form';
+import {createField, Input} from '../../common/FormControls/FormControls';
+import {requiredField} from '../../../utils/validators/validators';
 
 export type LoginFormDataType = {
     email: string
@@ -19,9 +19,6 @@ type ErrorType = {
     error: string
 }
 
-// validate field max length
-const maxLength = maxLengthCreator(30)
-
 const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, OwnPropsType, ErrorType> & OwnPropsType> = ({
                                                                                                                handleSubmit,
                                                                                                                captchaUrl,
@@ -29,40 +26,25 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, OwnPropsType, Err
                                                                                                            }) => {
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
-            {/*Show error message if exists*/}
+
             {error && <p className={styles.errorMsg}>{error}</p>}
 
-            {/*CAPTCHA*/}
             {captchaUrl && <img src={captchaUrl}/>}
-            {captchaUrl && <Field
-                component={Input}
-                validate={[required]}
-                name={'captcha'}
-                placeholder={'Symbols from image'}/>}
+            {captchaUrl && createField('captcha', [requiredField], Input)}
 
             <div className={styles.formRow}>
                 <label htmlFor="login_login">Login</label>
-                <Field
-                    component={Input}
-                    validate={[required, maxLength]}
-                    name={'email'}
-                    placeholder={'email'}/>
+                {createField('email', [requiredField], Input)}
             </div>
             <div className={styles.formRow}>
                 <label htmlFor="login_psw">Password</label>
-                <Field
-                    component={InputPsw}
-                    validate={[required, maxLength]}
-                    name={'password'}
-                    placeholder={'Password'}/>
+                {createField('password', [requiredField], Input, {type: 'password'})}
             </div>
             <div className={styles.formRow}>
-                <Field
-                    component={'input'}
-                    name={'rememberMe'}
-                    type="checkbox"
-                    className={styles.inputCheckbox}/>
-                <label htmlFor="login_rememberMe">Remember me</label>
+                {createField('rememberMe', [], Input, {
+                    type: 'checkbox',
+                    className: styles.inputCheckbox
+                }, 'Remember me')}
             </div>
             <div className={styles.formRow}>
                 <button

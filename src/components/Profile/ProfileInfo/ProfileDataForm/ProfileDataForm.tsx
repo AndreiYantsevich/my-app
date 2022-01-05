@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styles from './ProfileDataForm.module.css';
 import {Input, Textarea} from '../../../common/FormControls/FormControls';
-import {maxLengthCreator, required} from '../../../../utils/validators/validators';
+import {maxLengthCreator, requiredField} from '../../../../utils/validators/validators';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {ProfileType} from '../../../../types/types';
 
@@ -21,7 +21,7 @@ const ProfileDataForm: FC<InjectedFormProps<ProfileType, OwnPropsType, ErrorType
             <div className={styles.data}><strong>Full Name: </strong>
                 <Field
                     component={Input}
-                    validate={[required, maxLength]}
+                    validate={[requiredField, maxLength]}
                     name={'fullName'}
                     placeholder={'Full Name'}/>
             </div>
