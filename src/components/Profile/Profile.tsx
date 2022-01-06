@@ -4,16 +4,16 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {ProfileType} from '../../types/types';
 
-export type ProfileComponentType = {
+export type ProfilePropsType = {
     isOwner: boolean
     profile: ProfileType
     status: string
     updateUserStatus: (status: string) => void
-    savePhoto: (file: any) => void
-    saveProfile: (profile: ProfileType) => void
+    savePhoto: (file: File) => void
+    saveProfile: (profile: ProfileType) => Promise<any>
 }
 
-const Profile = (props: ProfileComponentType) => {
+const Profile = (props: ProfilePropsType) => {
     return (
         <div className={styles.profile}>
             <h1>Profile </h1>

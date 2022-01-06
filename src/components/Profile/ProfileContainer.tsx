@@ -68,7 +68,7 @@ const MapStateToProps = (state: AppRootStateType): MapStateType => ({
 
 
 export default compose<React.ComponentType>(
-    connect<MapStateType, MapDispatchType, OwnProps, AppRootStateType>(
+    connect(
         MapStateToProps,
         {
             setUserProfile: setUserProfileTC,
@@ -97,7 +97,7 @@ type MapDispatchType = {
     getUserStatus: (userId: string) => void
     updateUserStatus: (status: string) => void
     savePhoto: (file: any) => void
-    saveProfile: (profile: ProfileType) => void
+    saveProfile: (profile: ProfileType) => Promise<any>
 }
 
 export type Props =

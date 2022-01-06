@@ -3,33 +3,39 @@ import ProfileContact from '../ProfileContact/ProfileContact';
 import styles from './ProfileData.module.css';
 import {ProfileType} from '../../../../types/types';
 
-const ProfileData = (props: ProfileDataType) => {
+type PropsType = {
+    profile: ProfileType
+    isOwner: boolean
+    goToEditMode: () => void
+}
+
+const ProfileData: React.FC<PropsType> = ({profile, isOwner, goToEditMode}) => {
     return (
         <>
-            {props.isOwner &&
-                <p className={styles.link} onClick={props.goToEditMode}>Edit Profile</p>}
+            {isOwner &&
+                <p className={styles.link} onClick={goToEditMode}>Edit Profile</p>}
 
-            <h3 className={styles.subtitle}>{props.profile.fullName}</h3>
+            <h3 className={styles.subtitle}>{profile.fullName}</h3>
 
             {/*GET EVERY KEY and VALUE FROM OBJECT*/}
             <div className={`${styles.data} ${styles.contacts}`}>
                 <strong>Contacts: </strong>
-                {Object.keys(props.profile.contacts).map(key => {
+                {Object.keys(profile.contacts).map(key => {
                         return <ProfileContact key={key} title={key}
-                                               value={(props.profile.contacts as any)[key]}/>
+                                               value={(profile.contacts as any)[key]}/>
                     }
                 )}
             </div>
 
             <p className={styles.data}><strong>About me: </strong>
-                {props.profile.aboutMe !== null ? props.profile.aboutMe : 'no info'}</p>
+                {profile.aboutMe !== null ? profile.aboutMe : 'no info'}</p>
 
             <p className={styles.data}><strong>I'm looking for a job: </strong>
-                {props.profile.lookingForAJob ? 'yes' : 'no'}</p>
+                {profile.lookingForAJob ? 'yes' : 'no'}</p>
 
-            {props.profile.lookingForAJob &&
+            {profile.lookingForAJob &&
                 <p className={styles.data}><strong>Job description: </strong>
-                    {props.profile.lookingForAJobDescription}
+                    {profile.lookingForAJobDescription}
                 </p>}
         </>
     )
@@ -37,10 +43,3 @@ const ProfileData = (props: ProfileDataType) => {
 
 export default ProfileData;
 
-
-// TYPES
-export type ProfileDataType = {
-    profile: ProfileType
-    isOwner: boolean
-    goToEditMode: () => void
-}

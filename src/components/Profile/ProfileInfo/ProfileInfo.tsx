@@ -2,14 +2,14 @@ import React, {ChangeEvent, useState} from 'react';
 import styles from './ProfileInfo.module.css';
 import noUserImage from '../../../assets/images/no_profile_image_placeholder.jpg';
 import Preloader from '../../common/Preloader/Preloader';
-import {ProfileComponentType} from '../Profile';
+import {ProfilePropsType} from '../Profile';
 import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
 import ProfileData from './ProfileData/ProfileData';
 import ProfileDataForm from './ProfileDataForm/ProfileDataForm';
 import {ProfileType} from '../../../types/types';
 
 
-const ProfileInfo = (props: ProfileComponentType) => {
+const ProfileInfo = (props: ProfilePropsType) => {
     const [editMode, setEditMode] = useState<boolean>(false)
 
     if (!props.profile) {
@@ -25,7 +25,7 @@ const ProfileInfo = (props: ProfileComponentType) => {
 
         const onSubmit = (formData: ProfileType) => {
             // TS TYPE for Promise<ProfileType>
-            (props.saveProfile(formData) as any).then(
+            props.saveProfile(formData).then(
                 () => {
                     setEditMode(false)
                 }

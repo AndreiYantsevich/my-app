@@ -7,8 +7,11 @@ type OwnPropsType = {
     text: string
 }
 
-export const Textarea = (props: WrappedFieldProps) => {
-    const {input, meta: {touched, error}, ...restProps} = props;
+export const Textarea: React.FC<WrappedFieldProps> = ({
+                                                          input,
+                                                          meta: {touched, error},
+                                                          ...restProps
+                                                      }) => {
     const hasError = touched && error
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
@@ -18,8 +21,15 @@ export const Textarea = (props: WrappedFieldProps) => {
     )
 }
 
-export const Input: React.FC<WrappedFieldProps & OwnPropsType> = (props) => {
-    const {input, meta: {touched, error}, text, ...restProps} = props;
+export const Input: React.FC<WrappedFieldProps & OwnPropsType> = ({
+                                                                      input,
+                                                                      meta: {
+                                                                          touched,
+                                                                          error
+                                                                      },
+                                                                      text,
+                                                                      ...restProps
+                                                                  }) => {
     const hasError = touched && error
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>

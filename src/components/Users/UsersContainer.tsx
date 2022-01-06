@@ -10,7 +10,6 @@ import Users from './Users';
 import {AppRootStateType} from '../../redux/redux-store';
 import {compose} from 'redux';
 import {withRouter} from 'react-router-dom';
-import {RouteComponentProps} from 'react-router';
 import {
     getCurrentPage,
     getFollowingInProgress,
@@ -22,15 +21,17 @@ import {
 import {UsersStructureType} from '../../types/types';
 
 
-class UsersContainer extends React.Component<OwnPropsType> {
+class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
+        const {pageSize} = this.props
         this.props.setCurrentPage(pageNumber)
-        this.props.getUsers(pageNumber, this.props.pageSize)
+        this.props.getUsers(pageNumber, pageSize)
     }
 
     render() {
@@ -64,7 +65,7 @@ let mapStateToProps = (state: AppRootStateType): MapStateType => {
 
 export default compose<React.ComponentType>(
     withRouter,
-    connect<MapStateType, MapDispatchType, OwnPropsType, AppRootStateType>(
+    connect(
         mapStateToProps,
         {
             setCurrentPage: setCurrentPageAC,
@@ -77,20 +78,7 @@ export default compose<React.ComponentType>(
 
 
 // Types
-export type UsersPagePropsType = {
-    users: Array<UsersStructureType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    setCurrentPage: (currentPage: number) => void
-    isFetching: boolean
-    followingInProgress: Array<number>
-    getUsers: (currentPage: number, pageSize: number) => void
-    followUsers: (userId: string) => void
-    unfollowUsers: (userId: string) => void
-}
-type PathParamsType = {}
-type OwnPropsType = RouteComponentProps<PathParamsType> & UsersPagePropsType
+type UsersContainerPropsType = MapStateType & MapDispatchType
 type MapStateType = {
     users: UsersStructureType[]
     pageSize: number

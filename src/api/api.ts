@@ -2,7 +2,7 @@ import axios from 'axios';
 import {ProfileType} from '../types/types';
 
 // axios general settings, axios params -> baseUrl and config
-// instance makes auto concat for baseUrl and anothers axios config
+// instance makes auto concat for baseUrl and another axios config
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
     withCredentials: true,
