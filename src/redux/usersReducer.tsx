@@ -26,12 +26,12 @@ const usersReducer = (state = initialState, action: UsersActionsType): InitialSt
         case FOLLOW:
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.userId, "id", {followed: true})
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.userId, "id", {followed: false})
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
             }
         case SET_USERS:
             return {...state, users: action.users}
@@ -55,53 +55,72 @@ const usersReducer = (state = initialState, action: UsersActionsType): InitialSt
 
 //Action
 export const followSuccessAC = (userId: string) => ({type: FOLLOW, userId} as const)
+
 export const unFollowSuccessAC = (userId: string) => ({type: UNFOLLOW, userId} as const)
+
 export const setUsersAC = (users: Array<UsersStructureType>) => ({
     type: SET_USERS,
     users
 } as const)
+
 export const setCurrentPageAC = (currentPage: number) => ({
     type: SET_CURRENT_PAGE,
     currentPage
 } as const)
+
 export const setTotalCountAC = (totalCount: number) => ({
     type: SET_TOTAL_COUNT,
     totalCount
 } as const)
+
 export const toggleIsFetchingAC = (isFetching: boolean) => ({
     type: TOGGLE_IS_FETCHING,
     isFetching
 } as const)
+
 export const toggleFollowingInProgressAC = (isFetching: boolean, userId: number) => ({
     type: TOGGLE_FOLLOWING_PROGRESS,
     isFetching,
     userId
 } as const)
 
+
 //Thunk
 export const requestUsersTC = (page: number, pageSize: number): ThunkType => async dispatch => {
-    // show preloader
-    dispatch(toggleIsFetchingAC(true))
-    dispatch(setCurrentPageAC(page))
-    const response = await usersAPI.getUsers(page, pageSize)
-    // hide preloader
-    dispatch(toggleIsFetchingAC(false))
-    dispatch(setUsersAC(response.items))
-    dispatch(setTotalCountAC(response.totalCount))
-}
-const followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId: string, apiMethod: (userId: string) => Promise<any>, actionCreator: (userID: string) => UsersActionsType) => {
-    // disable btn during server response
-    dispatch(toggleFollowingInProgressAC(true, +userId))
-    const response = await apiMethod(userId)
-    if (response.data.resultCode === 0) {
-        dispatch(actionCreator(userId))
+    try {
+        // show preloader
+        dispatch(toggleIsFetchingAC(true))
+        dispatch(setCurrentPageAC(page))
+        const response = await usersAPI.getUsers(page, pageSize)
+        // hide preloader
+        dispatch(toggleIsFetchingAC(false))
+        dispatch(setUsersAC(response.items))
+        dispatch(setTotalCountAC(response.totalCount))
+    } catch (error) {
+        console.log(error)
     }
-    // activate btn after server response
-    dispatch(toggleFollowingInProgressAC(false, +userId))
 }
+
+const followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId: string, apiMethod: (userId: string) => Promise<any>, actionCreator: (userID: string) => UsersActionsType) => {
+    try {
+        // disable btn during server response
+        dispatch(toggleFollowingInProgressAC(true, +userId))
+        const response = await apiMethod(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(actionCreator(userId))
+        }
+        // activate btn after server response
+        dispatch(toggleFollowingInProgressAC(false, +userId))
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 export const followUsersTC = (userId: string): ThunkType => async dispatch => {
     await followUnfollowFlow(dispatch, userId, followAPI.followUser.bind(followAPI), followSuccessAC)
 }
+
 export const unfollowUsersTC = (userId: string): ThunkType => async dispatch => {
     await followUnfollowFlow(dispatch, userId, followAPI.unfollowUser.bind(followAPI), unFollowSuccessAC)
 }

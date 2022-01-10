@@ -25,7 +25,6 @@ export type PostType = {
 
 
 const MyPosts = React.memo((props: PostsType) => {
-    console.log('fd')
     let postsElements = props.posts.map(post =>
         <Post
             key={post.id}

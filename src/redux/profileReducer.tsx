@@ -48,23 +48,38 @@ const profileReducer = (state = initialState, action: ProfileActionsType): Initi
 
 //Action
 export const addPostAC = (newPostBody: string) => ({type: ADD_POST, newPostBody} as const)
+
 export const setUserProfileAC = (profile: ProfileType) => ({
     type: SET_USER_PROFILE,
     profile
 } as const)
+
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status} as const)
+
 export const savePhotoAC = (photos: PhotosType) => ({type: SAVE_PHOTO, photos} as const)
 
 
 //Thunk
 export const setUserProfileTC = (userId: string): ThunkType => async dispatch => {
-    const response = await profileAPI.getUser(userId)
-    dispatch(setUserProfileAC(response.data))
+    try {
+        const response = await profileAPI.getUser(userId)
+        dispatch(setUserProfileAC(response.data))
+    } catch (error) {
+        console.log(error)
+    }
+
 }
+
 export const getUserStatusTC = (userId: string): ThunkType => async dispatch => {
-    const response = await profileAPI.getStatus(userId)
-    dispatch(setStatusAC(response.data))
+    try {
+        const response = await profileAPI.getStatus(userId)
+        dispatch(setStatusAC(response.data))
+    } catch (error) {
+        console.log(error)
+    }
+
 }
+
 export const updateStatusTC = (status: string): ThunkType => async dispatch => {
     try {
         const response = await profileAPI.updateStatus(status)
@@ -72,16 +87,21 @@ export const updateStatusTC = (status: string): ThunkType => async dispatch => {
             dispatch(setStatusAC(status))
         }
     } catch (error) {
-        // code to do when an error happens
         console.log(error)
     }
 }
+
 export const savePhotoTC = (file: File): ThunkType => async dispatch => {
-    const response = await profileAPI.savePhoto(file)
-    if (response.data.resultCode === ResultCodeStatus.success) {
-        dispatch(savePhotoAC(response.data.photos))
+    try {
+        const response = await profileAPI.savePhoto(file)
+        if (response.data.resultCode === ResultCodeStatus.success) {
+            dispatch(savePhotoAC(response.data.photos))
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
+
 export const saveProfileTC = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
     const response = await profileAPI.saveProfile(profile)
     const userId = getState().auth.userId

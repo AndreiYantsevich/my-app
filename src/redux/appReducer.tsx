@@ -23,9 +23,14 @@ export const initializedSuccessAC = () => ({type: INITIALIZED_SUCCESS} as const)
 
 //Thunk
 export const initializeAppTC = (): ThunkType => async dispatch => {
-    const promise = dispatch(getAuthUserDataTC())
-    await Promise.all([promise])
-    dispatch(initializedSuccessAC())
+    try {
+        const promise = dispatch(getAuthUserDataTC())
+        await Promise.all([promise])
+        dispatch(initializedSuccessAC())
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 export default appReducer;

@@ -34,7 +34,7 @@ const ProfileDataForm: FC<InjectedFormProps<ProfileType, OwnPropsType, ErrorType
                                 component={Input}
                                 validate={[]}
                                 name={`contacts.${key}`}
-                                placeholder={'key'}/>
+                                placeholder={'Enter your URL'}/>
                         </div>
                     )
                 }

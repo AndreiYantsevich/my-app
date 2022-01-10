@@ -29,18 +29,25 @@ const authReducer = (state = initialState, action: AuthActionsType): InitialStat
 //Action
 export const setAuthUserDataAC = (userId: null | string, email: null | string, login: null | string, isAuth: boolean) =>
     ({type: SET_USER_DATA, data: {userId, email, login, isAuth}} as const)
+
 export const getCaptchaUrlSuccessAC = (captchaUrl: string) =>
     ({type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}} as const)
 
 
 // Thunk
 export const getAuthUserDataTC = (): ThunkType => async dispatch => {
-    const response = await authAPI.me()
-    if (response.resultCode === ResultCodeStatus.success) {
-        const {id, login, email} = response.data
-        dispatch(setAuthUserDataAC(id, email, login, true))
+    try {
+        const response = await authAPI.me()
+        if (response.resultCode === ResultCodeStatus.success) {
+            const {id, login, email} = response.data
+            dispatch(setAuthUserDataAC(id, email, login, true))
+        }
+    } catch (error) {
+        console.log(error)
     }
+
 }
+
 export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async dispatch => {
     const response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.resultCode === ResultCodeStatus.success) {
@@ -55,16 +62,28 @@ export const loginTC = (email: string, password: string, rememberMe: boolean, ca
         dispatch(stopSubmit('login', {_error: message}))
     }
 }
+
 export const getCaptchaUrlTC = (): ThunkType => async dispatch => {
-    const response = await securityAPI.getCaptchaUrl()
-    const captchaUrl = response.data.url
-    dispatch(getCaptchaUrlSuccessAC(captchaUrl))
-}
-export const logoutTC = (): ThunkType => async dispatch => {
-    const response = await authAPI.logout()
-    if (response.resultCode === ResultCodeStatus.success) {
-        dispatch(setAuthUserDataAC(null, null, null, false))
+    try {
+        const response = await securityAPI.getCaptchaUrl()
+        const captchaUrl = response.data.url
+        dispatch(getCaptchaUrlSuccessAC(captchaUrl))
+    } catch (error) {
+        console.log(error)
     }
+
+}
+
+export const logoutTC = (): ThunkType => async dispatch => {
+    try {
+        const response = await authAPI.logout()
+        if (response.resultCode === ResultCodeStatus.success) {
+            dispatch(setAuthUserDataAC(null, null, null, false))
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 export default authReducer;
