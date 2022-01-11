@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/social/static/css/main.36a17944.chunk.css",
-    "main.js": "/social/static/js/main.a0911489.chunk.js",
-    "main.js.map": "/social/static/js/main.a0911489.chunk.js.map",
+    "main.js": "/social/static/js/main.18b841d5.chunk.js",
+    "main.js.map": "/social/static/js/main.18b841d5.chunk.js.map",
     "runtime-main.js": "/social/static/js/runtime-main.85b2dad4.js",
     "runtime-main.js.map": "/social/static/js/runtime-main.85b2dad4.js.map",
     "static/js/2.1762eac6.chunk.js": "/social/static/js/2.1762eac6.chunk.js",
@@ -17,7 +17,7 @@
     "static/js/5.2cfdfea4.chunk.js": "/social/static/js/5.2cfdfea4.chunk.js",
     "static/js/5.2cfdfea4.chunk.js.map": "/social/static/js/5.2cfdfea4.chunk.js.map",
     "index.html": "/social/index.html",
-    "precache-manifest.1c64c30cd6664dbd3950f14fad69b51a.js": "/social/precache-manifest.1c64c30cd6664dbd3950f14fad69b51a.js",
+    "precache-manifest.f4f89504cdfb0e54094bec43a5ed2d10.js": "/social/precache-manifest.f4f89504cdfb0e54094bec43a5ed2d10.js",
     "service-worker.js": "/social/service-worker.js",
     "static/css/3.f2214de9.chunk.css.map": "/social/static/css/3.f2214de9.chunk.css.map",
     "static/css/4.32cafd14.chunk.css.map": "/social/static/css/4.32cafd14.chunk.css.map",
@@ -36,6 +36,6 @@
     "static/js/runtime-main.85b2dad4.js",
     "static/js/2.1762eac6.chunk.js",
     "static/css/main.36a17944.chunk.css",
-    "static/js/main.a0911489.chunk.js"
+    "static/js/main.18b841d5.chunk.js"
   ]
 }
