@@ -1,5 +1,5 @@
-import {getAuthUserDataTC} from './authReducer';
 import {ThunkType} from './redux-store';
+import {getAuthUserDataTC} from './authReducer';
 
 const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS';
 
@@ -17,11 +17,11 @@ const appReducer = (state = initialState, action: AppActionsType): InitialStateT
 }
 
 
-//Action
+//Actions
 export const initializedSuccessAC = () => ({type: INITIALIZED_SUCCESS} as const)
 
 
-//Thunk
+//Thunks
 export const initializeAppTC = (): ThunkType => async dispatch => {
     try {
         const promise = dispatch(getAuthUserDataTC())

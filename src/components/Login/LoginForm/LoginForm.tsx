@@ -29,7 +29,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, OwnPropsType, Err
 
             {error && <p className={styles.errorMsg}>{error}</p>}
 
-            {captchaUrl && <img src={captchaUrl}/>}
+            {captchaUrl && <img src={captchaUrl} alt={'captcha'}/>}
             {captchaUrl && createField('captcha', [requiredField], Input)}
 
             <div className={styles.formRow}>

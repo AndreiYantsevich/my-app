@@ -1,7 +1,7 @@
 import {authAPI, securityAPI} from '../api/api';
 import {ResultCodeStatus} from '../types/types';
-import {ThunkType} from './redux-store';
 import {stopSubmit} from 'redux-form';
+import {ThunkType} from './redux-store';
 
 const SET_USER_DATA = 'auth/SET_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
@@ -26,15 +26,14 @@ const authReducer = (state = initialState, action: AuthActionsType): InitialStat
 }
 
 
-//Action
+//Actions
 export const setAuthUserDataAC = (userId: null | string, email: null | string, login: null | string, isAuth: boolean) =>
     ({type: SET_USER_DATA, data: {userId, email, login, isAuth}} as const)
-
 export const getCaptchaUrlSuccessAC = (captchaUrl: string) =>
     ({type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}} as const)
 
 
-// Thunk
+// Thunks
 export const getAuthUserDataTC = (): ThunkType => async dispatch => {
     try {
         const response = await authAPI.me()
@@ -47,7 +46,6 @@ export const getAuthUserDataTC = (): ThunkType => async dispatch => {
     }
 
 }
-
 export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async dispatch => {
     const response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.resultCode === ResultCodeStatus.success) {
@@ -62,7 +60,6 @@ export const loginTC = (email: string, password: string, rememberMe: boolean, ca
         dispatch(stopSubmit('login', {_error: message}))
     }
 }
-
 export const getCaptchaUrlTC = (): ThunkType => async dispatch => {
     try {
         const response = await securityAPI.getCaptchaUrl()
@@ -73,7 +70,6 @@ export const getCaptchaUrlTC = (): ThunkType => async dispatch => {
     }
 
 }
-
 export const logoutTC = (): ThunkType => async dispatch => {
     try {
         const response = await authAPI.logout()
@@ -90,7 +86,7 @@ export default authReducer;
 
 
 // Types
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 export type AuthActionsType =
     ReturnType<typeof setAuthUserDataAC> |
     ReturnType<typeof getCaptchaUrlSuccessAC>

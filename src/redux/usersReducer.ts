@@ -53,39 +53,24 @@ const usersReducer = (state = initialState, action: UsersActionsType): InitialSt
     }
 }
 
-//Action
-export const followSuccessAC = (userId: string) => ({type: FOLLOW, userId} as const)
-
-export const unFollowSuccessAC = (userId: string) => ({type: UNFOLLOW, userId} as const)
-
-export const setUsersAC = (users: Array<UsersStructureType>) => ({
-    type: SET_USERS,
-    users
-} as const)
-
-export const setCurrentPageAC = (currentPage: number) => ({
-    type: SET_CURRENT_PAGE,
-    currentPage
-} as const)
-
-export const setTotalCountAC = (totalCount: number) => ({
-    type: SET_TOTAL_COUNT,
-    totalCount
-} as const)
-
-export const toggleIsFetchingAC = (isFetching: boolean) => ({
-    type: TOGGLE_IS_FETCHING,
-    isFetching
-} as const)
-
-export const toggleFollowingInProgressAC = (isFetching: boolean, userId: number) => ({
-    type: TOGGLE_FOLLOWING_PROGRESS,
-    isFetching,
-    userId
-} as const)
+//Actions
+export const followSuccessAC = (userId: string) =>
+    ({type: FOLLOW, userId} as const)
+export const unFollowSuccessAC = (userId: string) =>
+    ({type: UNFOLLOW, userId} as const)
+export const setUsersAC = (users: Array<UsersStructureType>) =>
+    ({type: SET_USERS, users} as const)
+export const setCurrentPageAC = (currentPage: number) =>
+    ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setTotalCountAC = (totalCount: number) =>
+    ({type: SET_TOTAL_COUNT, totalCount} as const)
+export const toggleIsFetchingAC = (isFetching: boolean) =>
+    ({type: TOGGLE_IS_FETCHING, isFetching} as const)
+export const toggleFollowingInProgressAC = (isFetching: boolean, userId: number) =>
+    ({type: TOGGLE_FOLLOWING_PROGRESS, isFetching, userId} as const)
 
 
-//Thunk
+//Thunks
 export const requestUsersTC = (page: number, pageSize: number): ThunkType => async dispatch => {
     try {
         // show preloader
@@ -100,7 +85,6 @@ export const requestUsersTC = (page: number, pageSize: number): ThunkType => asy
         console.log(error)
     }
 }
-
 const followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId: string, apiMethod: (userId: string) => Promise<any>, actionCreator: (userID: string) => UsersActionsType) => {
     try {
         // disable btn during server response
@@ -116,11 +100,9 @@ const followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId: 
     }
 
 }
-
 export const followUsersTC = (userId: string): ThunkType => async dispatch => {
     await followUnfollowFlow(dispatch, userId, followAPI.followUser.bind(followAPI), followSuccessAC)
 }
-
 export const unfollowUsersTC = (userId: string): ThunkType => async dispatch => {
     await followUnfollowFlow(dispatch, userId, followAPI.unfollowUser.bind(followAPI), unFollowSuccessAC)
 }
