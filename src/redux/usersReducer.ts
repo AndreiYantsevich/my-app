@@ -86,7 +86,7 @@ export const requestUsersTC = (page: number, pageSize: number): ThunkType => asy
         console.log(error)
     }
 }
-const followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId: string, apiMethod: (userId: string) => Promise<any>, actionCreator: (userID: string) => UsersActionsType) => {
+const _followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId: string, apiMethod: (userId: string) => Promise<any>, actionCreator: (userID: string) => UsersActionsType) => {
     try {
         // disable btn during server response
         dispatch(toggleFollowingInProgressAC(true, +userId))
@@ -102,10 +102,10 @@ const followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId: 
 
 }
 export const followUsersTC = (userId: string): ThunkType => async dispatch => {
-    await followUnfollowFlow(dispatch, userId, followAPI.followUser.bind(followAPI), followSuccessAC)
+    await _followUnfollowFlow(dispatch, userId, followAPI.followUser.bind(followAPI), followSuccessAC)
 }
 export const unfollowUsersTC = (userId: string): ThunkType => async dispatch => {
-    await followUnfollowFlow(dispatch, userId, followAPI.unfollowUser.bind(followAPI), unFollowSuccessAC)
+    await _followUnfollowFlow(dispatch, userId, followAPI.unfollowUser.bind(followAPI), unFollowSuccessAC)
 }
 
 export default usersReducer;

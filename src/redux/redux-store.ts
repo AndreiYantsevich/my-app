@@ -26,7 +26,7 @@ export type AppRootActionsType =
     DialogsActionsType |
     ProfileActionsType |
     UsersActionsType
-export type ThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppRootActionsType>;
+export type ThunkType = ThunkAction<Promise<void>, AppRootStateType, unknown, AppRootActionsType>;
 export default store;
 
 // dev debugger store
