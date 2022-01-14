@@ -2,18 +2,18 @@ import React, {ChangeEvent} from 'react';
 import styles from './ProfileStatus.module.css';
 
 
-type ProfileStatusType = {
+type PropsType = {
     status: string
     updateStatus: (status: string) => void
 }
-type localStateType = {
+type StateType = {
     editMode: boolean
     status: string
 }
 
-class ProfileStatus extends React.Component<ProfileStatusType> {
+class ProfileStatus extends React.Component<PropsType> {
 
-    state: localStateType = {
+    state: StateType = {
         editMode: false,
         status: this.props.status
     }
@@ -39,7 +39,7 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
         })
     }
 
-    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>) {
+    componentDidUpdate(prevProps: PropsType, prevState: StateType) {
         if (prevProps.status !== this.props.status) {
             this.setState({
                 status: this.props.status

@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './Users.module.css';
 import {NavLink} from 'react-router-dom';
 import userPhoto from '../../assets/images/no_profile_image_placeholder.jpg';
-import {UsersStructureType} from '../../types/types';
+import {UserType} from '../../types/types';
 
 type PropsType = {
-    user: UsersStructureType
+    user: UserType
     followingInProgress: Array<number>
     followUsers: (userId: string) => void
     unfollowUsers: (userId: string) => void

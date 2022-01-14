@@ -1,5 +1,5 @@
 import {followAPI, usersAPI} from '../api/api';
-import {UsersStructureType} from '../types/types';
+import {UserType} from '../types/types';
 import {ThunkType} from './redux-store';
 import {Dispatch} from 'react';
 import {updateObjectInArray} from '../utils/helpers/object-helpers';
@@ -13,7 +13,7 @@ const TOGGLE_IS_FETCHING = 'users/TOGGLE_IS_FETCHING'
 const TOGGLE_FOLLOWING_PROGRESS = 'users/TOGGLE_FOLLOWING_PROGRESS'
 
 const initialState = {
-    users: [] as Array<UsersStructureType>,
+    users: [] as Array<UserType>,
     pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
@@ -53,12 +53,13 @@ const usersReducer = (state = initialState, action: UsersActionsType): InitialSt
     }
 }
 
+
 //Actions
 export const followSuccessAC = (userId: string) =>
     ({type: FOLLOW, userId} as const)
 export const unFollowSuccessAC = (userId: string) =>
     ({type: UNFOLLOW, userId} as const)
-export const setUsersAC = (users: Array<UsersStructureType>) =>
+export const setUsersAC = (users: Array<UserType>) =>
     ({type: SET_USERS, users} as const)
 export const setCurrentPageAC = (currentPage: number) =>
     ({type: SET_CURRENT_PAGE, currentPage} as const)

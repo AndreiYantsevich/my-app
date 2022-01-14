@@ -6,10 +6,10 @@ import usersReducer, {
     toggleIsFetchingAC,
     unFollowSuccessAC
 } from './usersReducer';
-import {UsersPageType, UsersStructureType} from '../types/types';
+import {UsersPageType, UserType} from '../types/types';
 
 
-let users: Array<UsersStructureType> = []
+let users: Array<UserType> = []
 let startState: UsersPageType;
 
 beforeEach(() => {

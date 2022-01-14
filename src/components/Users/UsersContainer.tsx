@@ -18,10 +18,10 @@ import {
     getTotalUsersCount,
     getUsers
 } from '../../redux/user-seletors';
-import {UsersStructureType} from '../../types/types';
+import {UserType} from '../../types/types';
 
 
-class UsersContainer extends React.Component<UsersContainerPropsType> {
+class UsersContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         const {currentPage, pageSize} = this.props
@@ -78,9 +78,9 @@ export default compose<React.ComponentType>(
 
 
 // Types
-type UsersContainerPropsType = MapStateType & MapDispatchType
+type PropsType = MapStateType & MapDispatchType
 type MapStateType = {
-    users: UsersStructureType[]
+    users: UserType[]
     pageSize: number
     totalUsersCount: number
     currentPage: number

@@ -59,7 +59,7 @@ class ProfileContainer extends React.Component<Props> {
 }
 
 
-const MapStateToProps = (state: AppRootStateType): MapStateType => ({
+const mapStateToProps = (state: AppRootStateType): MapStateType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,
@@ -69,7 +69,7 @@ const MapStateToProps = (state: AppRootStateType): MapStateType => ({
 
 export default compose<React.ComponentType>(
     connect(
-        MapStateToProps,
+        mapStateToProps,
         {
             setUserProfile: setUserProfileTC,
             getUserStatus: getUserStatusTC,
@@ -83,7 +83,6 @@ export default compose<React.ComponentType>(
 
 
 // TYPES
-type OwnProps = {}
 
 type MapStateType = {
     profile: ProfileType
@@ -101,8 +100,7 @@ type MapDispatchType = {
 }
 
 export type Props =
-    OwnProps
-    & MapDispatchType
+    MapDispatchType
     & MapStateType
     & RouteComponentProps<{ userId: string }>
 

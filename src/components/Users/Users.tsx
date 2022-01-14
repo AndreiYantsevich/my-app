@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './Users.module.css';
 import Pagination from '../common/Pagination/Pagination';
 import Preloader from '../common/Preloader/Preloader';
-import {UsersStructureType} from '../../types/types';
+import {UserType} from '../../types/types';
 import {User} from './User';
 
 type PropsType = {
-    users: Array<UsersStructureType>
+    users: Array<UserType>
     pageSize: number
     totalUsersCount: number
     currentPage: number

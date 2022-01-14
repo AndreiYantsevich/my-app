@@ -40,7 +40,7 @@ export type ProfileType = {
 	lookingForAJob: boolean
 	lookingForAJobDescription: null | string
 	fullName: string
-	contacts: ProfileContactsType
+	contacts: ContactsType
 	photos: PhotosType
 }
 
@@ -49,7 +49,7 @@ export type PhotosType = {
 	large: null | string
 }
 
-export type ProfileContactsType = {
+export type ContactsType = {
 	github: null | string
 	vk: null | string
 	facebook: null | string
@@ -68,7 +68,7 @@ export type ProfilePageType = {
 
 //UsersTypes
 export type UsersPageType = {
-	users: Array<UsersStructureType>
+	users: Array<UserType>
 	pageSize: number
 	totalUsersCount: number
 	currentPage: number
@@ -76,7 +76,7 @@ export type UsersPageType = {
 	followingInProgress: Array<number>
 }
 
-export type UsersStructureType = {
+export type UserType = {
 	name: string
 	id: string
 	photos: {

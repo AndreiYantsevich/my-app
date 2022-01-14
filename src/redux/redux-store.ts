@@ -8,7 +8,7 @@ import {reducer as formReducer} from 'redux-form'
 import authReducer, {AuthActionsType} from './authReducer';
 import usersReducer, {UsersActionsType} from './usersReducer';
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
     profilePage: profileReducer,
     messagesPage: dialogsReducer,
     usersPage: usersReducer,
@@ -17,9 +17,9 @@ const reducers = combineReducers({
     app: appReducer
 });
 
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunkMiddleware)));
 
-export type AppRootStateType = ReturnType<typeof reducers>;
+export type AppRootStateType = ReturnType<typeof rootReducer>;
 export type AppRootActionsType =
     AppActionsType |
     AuthActionsType |

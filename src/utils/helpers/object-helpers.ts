@@ -1,6 +1,6 @@
-import {UsersStructureType} from '../../types/types';
+import {UserType} from '../../types/types';
 
-export const updateObjectInArray = (items: Array<UsersStructureType>, itemId: string, objPropName: keyof UsersStructureType, newObjProps: Object) => {
+export const updateObjectInArray = (items: Array<UserType>, itemId: string, objPropName: keyof UserType, newObjProps: Object) => {
     return items.map(u => {
         if (u[objPropName] === itemId) {
             return {...u, ...newObjProps}
