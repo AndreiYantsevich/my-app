@@ -1,5 +1,5 @@
 import {followAPI, usersAPI} from '../api/api';
-import {APIResponseType, UserType} from '../types/types';
+import {APIResponseType, ResultCodeStatus, UserType} from '../types/types';
 import {ThunkType} from './redux-store';
 import {Dispatch} from 'react';
 import {updateObjectInArray} from '../utils/helpers/object-helpers';
@@ -91,7 +91,7 @@ const _followUnfollowFlow = async (dispatch: Dispatch<UsersActionsType>, userId:
         // disable btn during server response
         dispatch(toggleFollowingInProgressAC(true, +userId))
         const response = await apiMethod(userId)
-        if (response.resultCode === 0) {
+        if (response.resultCode === ResultCodeStatus.success) {
             dispatch(actionCreator(userId))
         }
         // activate btn after server response

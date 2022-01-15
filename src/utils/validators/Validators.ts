@@ -1,12 +1,12 @@
-export const requiredField = (value: string) => {
-	if (value) return undefined
-	return 'Field is required'
-}
-
 export type RequiredFieldType = typeof requiredField
 
+export const requiredField = (value: string) => {
+    if (value) return undefined
+    return 'Field is required'
+}
+
 export const maxLengthCreator = (maxLength: number) => (value: string) => {
-	if (value.length > maxLength) return `Max length is ${maxLength} symbols`
-	return undefined
+    if (value.length > maxLength) return `Max length is ${maxLength} symbols`
+    return undefined
 }
 

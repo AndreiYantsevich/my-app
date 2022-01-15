@@ -39,14 +39,16 @@ export const Input: React.FC<WrappedFieldProps & OwnPropsType> = ({
     )
 }
 
-export const createField = (name: string, validators: RequiredFieldType[], component: React.FC<WrappedFieldProps & OwnPropsType>, props: any = {}, text?: string) =>
-    <>
+
+export function createField<FormKeysType extends string>(name: FormKeysType, validators: RequiredFieldType[], component: React.FC<WrappedFieldProps & OwnPropsType>, props = {}, text?: string) {
+    return <>
         <Field
             name={name}
             validate={validators}
             component={component}
             {...props}
         />{text}
-    </>
+    </>;
+}
 
 

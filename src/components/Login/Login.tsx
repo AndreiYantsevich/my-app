@@ -6,13 +6,13 @@ import {loginTC} from '../../redux/authReducer';
 import {Redirect} from 'react-router-dom';
 import {AppRootStateType} from '../../redux/redux-store';
 
-export type MDTPType = {
+export type MapDispatchType = {
     login: (email: string, password: string, rememberMe: boolean, captcha: string) => void
 }
 
-export type MSTPType = ReturnType<typeof mapStateToProps>
+export type MapStateType = ReturnType<typeof mapStateToProps>
 
-type PropsType = MDTPType & MSTPType
+type PropsType = MapDispatchType & MapStateType
 
 const Login: React.FC<PropsType> = ({login, captchaUrl, isAuth}) => {
     const onSubmit = (formData: LoginFormDataType) => {
@@ -41,7 +41,7 @@ let mapStateToProps = (state: AppRootStateType) => {
     }
 }
 
-const MapDispatchToProps: MDTPType = {
+const MapDispatchToProps: MapDispatchType = {
     login: loginTC
 }
 

@@ -11,6 +11,8 @@ export type LoginFormDataType = {
     captcha: string
 }
 
+type LoginFormValuesTypeKeys = Extract<keyof LoginFormDataType, string>
+
 type OwnPropsType = {
     captchaUrl: string | null
 }
@@ -30,18 +32,18 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, OwnPropsType, Err
             {error && <p className={styles.errorMsg}>{error}</p>}
 
             {captchaUrl && <img src={captchaUrl} alt={'captcha'}/>}
-            {captchaUrl && createField('captcha', [requiredField], Input)}
+            {captchaUrl && createField<LoginFormValuesTypeKeys>('captcha', [requiredField], Input)}
 
             <div className={styles.formRow}>
                 <label htmlFor="login_login">Login</label>
-                {createField('email', [requiredField], Input)}
+                {createField<LoginFormValuesTypeKeys>('email', [requiredField], Input)}
             </div>
             <div className={styles.formRow}>
                 <label htmlFor="login_psw">Password</label>
-                {createField('password', [requiredField], Input, {type: 'password'})}
+                {createField<LoginFormValuesTypeKeys>('password', [requiredField], Input, {type: 'password'})}
             </div>
             <div className={styles.formRow}>
-                {createField('rememberMe', [], Input, {
+                {createField<LoginFormValuesTypeKeys>('rememberMe', [], Input, {
                     type: 'checkbox',
                     className: styles.inputCheckbox
                 }, 'Remember me')}
