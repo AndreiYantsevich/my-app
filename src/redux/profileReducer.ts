@@ -14,7 +14,7 @@ const initialState = {
         {id: v1(), message: 'Hi World! How are you?', likesCounter: 75},
         {id: v1(), message: 'Today is a good day!', likesCounter: 57},
     ],
-    profile: userProfile,
+    profile: null as ProfileType | null,
     status: ''
 }
 
@@ -37,10 +37,7 @@ const profileReducer = (state = initialState, action: ProfileActionsType): Initi
                 status: action.status
             }
         case SAVE_PHOTO:
-            return {
-                ...state,
-                profile: {...state.profile, photos: action.photos}
-            }
+            return {...state, profile: {...state.profile, photos: action.photos} as ProfileType}
         default:
             return state
     }
@@ -62,7 +59,7 @@ export const savePhotoAC = (photos: PhotosType) =>
 export const setUserProfileTC = (userId: string): ThunkType => async dispatch => {
     try {
         const response = await profileAPI.getUser(userId)
-        dispatch(setUserProfileAC(response.data))
+        dispatch(setUserProfileAC(response))
     } catch (error) {
         console.log(error)
     }
@@ -71,7 +68,7 @@ export const setUserProfileTC = (userId: string): ThunkType => async dispatch =>
 export const getUserStatusTC = (userId: string): ThunkType => async dispatch => {
     try {
         const response = await profileAPI.getStatus(userId)
-        dispatch(setStatusAC(response.data))
+        dispatch(setStatusAC(response))
     } catch (error) {
         console.log(error)
     }
@@ -80,7 +77,7 @@ export const getUserStatusTC = (userId: string): ThunkType => async dispatch => 
 export const updateStatusTC = (status: string): ThunkType => async dispatch => {
     try {
         const response = await profileAPI.updateStatus(status)
-        if (response.data.resultCode === ResultCodeStatus.success) {
+        if (response.resultCode === ResultCodeStatus.success) {
             dispatch(setStatusAC(status))
         }
     } catch (error) {
@@ -90,7 +87,7 @@ export const updateStatusTC = (status: string): ThunkType => async dispatch => {
 export const savePhotoTC = (file: File): ThunkType => async dispatch => {
     try {
         const response = await profileAPI.savePhoto(file)
-        if (response.data.resultCode === ResultCodeStatus.success) {
+        if (response.resultCode === ResultCodeStatus.success) {
             dispatch(savePhotoAC(response.data.photos))
         }
     } catch (error) {
@@ -100,13 +97,13 @@ export const savePhotoTC = (file: File): ThunkType => async dispatch => {
 export const saveProfileTC = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
     const response = await profileAPI.saveProfile(profile)
     const userId = getState().auth.userId
-    if (response.data.resultCode === ResultCodeStatus.success) {
+    if (response.resultCode === ResultCodeStatus.success) {
         if (userId) {
             dispatch(setUserProfileTC(userId))
         }
     } else {
         // get error message from server
-        const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some Error'
+        const message = response.messages.length > 0 ? response.messages[0] : 'Some Error'
         // stop form submit if fields are wrong
         dispatch(stopSubmit('edit-profile', {_error: message}))
         return Promise.reject(message)

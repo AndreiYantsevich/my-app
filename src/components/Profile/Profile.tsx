@@ -6,7 +6,7 @@ import {ProfileType} from '../../types/types';
 
 export type ProfilePropsType = {
     isOwner: boolean
-    profile: ProfileType
+    profile: ProfileType | null
     status: string
     updateUserStatus: (status: string) => void
     savePhoto: (file: File) => void

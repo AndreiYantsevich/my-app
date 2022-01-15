@@ -59,7 +59,7 @@ class ProfileContainer extends React.Component<Props> {
 }
 
 
-const mapStateToProps = (state: AppRootStateType): MapStateType => ({
+const mapStateToProps = (state: AppRootStateType) => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,
@@ -84,12 +84,7 @@ export default compose<React.ComponentType>(
 
 // TYPES
 
-type MapStateType = {
-    profile: ProfileType
-    status: string
-    authorizedUserId: string | null
-    isAuth: boolean
-}
+type MapStateType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchType = {
     setUserProfile: (userId: string) => void

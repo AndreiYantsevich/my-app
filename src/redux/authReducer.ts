@@ -51,7 +51,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean, ca
     if (response.resultCode === ResultCodeStatus.success) {
         dispatch(getAuthUserDataTC())
     } else {
-        if (response.resultCode === 10) {
+        if (response.resultCode === ResultCodeStatus.captchaIsRequired) {
             dispatch(getCaptchaUrlTC())
         }
         // get error message from server
@@ -63,7 +63,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean, ca
 export const getCaptchaUrlTC = (): ThunkType => async dispatch => {
     try {
         const response = await securityAPI.getCaptchaUrl()
-        const captchaUrl = response.data.url
+        const captchaUrl = response.url
         dispatch(getCaptchaUrlSuccessAC(captchaUrl))
     } catch (error) {
         console.log(error)
