@@ -12,7 +12,7 @@ const Header = (props: HeaderPropsType) => {
 
     return (
         <header className={styles.header}>
-            <h3 className={styles.title}>Social Network <span>by Andrei Yantsevich</span>
+            <h3 className={styles.title}>Social Network <span>by Andrey Yantsevich</span>
             </h3>
 
             <div className={styles.loginBlock}>

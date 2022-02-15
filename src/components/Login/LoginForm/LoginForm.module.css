@@ -1,3 +1,7 @@
+.settings {
+    text-align: center;
+}
+
 .formRow:not(:last-child) {
     margin-bottom: 20px;
 }
