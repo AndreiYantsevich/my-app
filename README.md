@@ -14,9 +14,8 @@
 ### Used libs:  
 1. material-ui - https://material-ui.com/
 2. axios - https://github.com/axios/axios
-3. formik - https://formik.org/
-4. redux-form - https://redux-form.com/
-5. reselect - https://github.com/reduxjs/reselect
+3. redux-form - https://redux-form.com/
+4. reselect - https://github.com/reduxjs/reselect
 
 # Getting Started with Create React App
 
