@@ -1,9 +1,10 @@
-import {followAPI} from '../api/api';
-import {APIResponseType, ResultCodeStatus, UserType} from '../types/types';
+import {UserType} from '../types/types';
 import {InferActionsTypes, ThunkType} from './redux-store';
 import {Dispatch} from 'react';
 import {updateObjectInArray} from '../utils/helpers/object-helpers';
 import {usersAPI} from '../api/usersAPI';
+import {followAPI} from '../api/followAPI';
+import {APIResponseType, ResultCodeStatus} from '../api/api';
 
 
 const initialState = {

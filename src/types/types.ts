@@ -1,10 +1,5 @@
 import {PostType} from '../components/Profile/MyPosts/MyPosts';
 
-export type APIResponseType<D = {}, RC = ResultCodeStatus> = {
-    data: D
-    messages: Array<string>
-    resultCode: RC
-}
 
 export type MapDispatchToPropsPostsType = (
     args: {
@@ -12,11 +7,6 @@ export type MapDispatchToPropsPostsType = (
         newText?: string;
     }) => void
 
-export enum ResultCodeStatus {
-    'success' = 0,
-    'error' = 1,
-    'captchaIsRequired' = 10
-}
 
 //ProfileTypes
 export const userProfile: ProfileType = {

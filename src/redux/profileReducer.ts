@@ -1,8 +1,9 @@
 import {v1} from 'uuid'
-import {profileAPI} from '../api/api';
-import {PhotosType, ProfileType, ResultCodeStatus, userProfile} from '../types/types';
+import {PhotosType, ProfileType} from '../types/types';
 import {stopSubmit} from 'redux-form';
 import {ThunkType} from './redux-store';
+import {profileAPI} from '../api/profileAPI';
+import {ResultCodeStatus} from '../api/api';
 
 const ADD_POST = 'profile/ADD_POST'
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {APIResponseType, PhotosType, ProfileType, UserType} from '../types/types';
 
 // axios general settings, axios params -> baseUrl and config
 // instance makes auto concat for baseUrl and another axios config
@@ -12,91 +11,13 @@ export const instance = axios.create({
 })
 
 
-export const authAPI = {
-    me() {
-        return instance.get<APIResponseType<{ id: string, email: string, login: string }>>(`/auth/me`)
-            .then(response => response.data)
-    },
-
-    login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
-        return instance.post<APIResponseType<{ userId: string }>>(`/auth/login`, {
-            email,
-            password,
-            rememberMe,
-            captcha
-        })
-            .then(response => response.data)
-    },
-
-    logout() {
-        return instance.delete<APIResponseType>(`/auth/login`)
-            .then(response => response.data)
-    }
+export type APIResponseType<D = {}, RC = ResultCodeStatus> = {
+    data: D
+    messages: Array<string>
+    resultCode: RC
 }
-
-export const profileAPI = {
-    getUser(userId: string) {
-        return instance.get<ProfileType>(`/profile/${userId}`)
-            .then(response => response.data)
-    },
-
-    getStatus(userId: string) {
-        return instance.get<string>(`/profile/status/${userId}`)
-            .then(response => response.data)
-    },
-
-    updateStatus(status: string) {
-        return instance.put<APIResponseType>(`/profile/status`, {status})
-            .then(response => response.data)
-    },
-
-    savePhoto(file: File) {
-        let formData = new FormData()
-        formData.append('image', file)
-        return instance.put<APIResponseType<{ photos: PhotosType }>>(`/profile/photo`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(response => response.data)
-    },
-
-    saveProfile(profile: ProfileType) {
-        return instance.put<APIResponseType>(`/profile`, profile)
-            .then(response => response.data)
-    }
+export enum ResultCodeStatus {
+    'success' = 0,
+    'error' = 1,
+    'captchaIsRequired' = 10
 }
-
-export const followAPI = {
-    unfollowUser(userId: string) {
-        return instance.delete<APIResponseType>(`/follow/${userId}`)
-            .then(response => response.data)
-    },
-
-    followUser(userId: string) {
-        return instance.post<APIResponseType>(`/follow/${userId}`)
-            .then(response => response.data)
-    }
-
-}
-
-export const securityAPI = {
-    getCaptchaUrl() {
-        return instance.get<{ url: string }>('/security/get-captcha-url')
-            .then(response => response.data)
-    }
-
-}
-
-
-//Types
-export type GetUsersResponseType = {
-    items: Array<UserType>
-    totalCount: number
-    error: string
-}
-
-
-
-
-
