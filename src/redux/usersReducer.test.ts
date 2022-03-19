@@ -1,10 +1,10 @@
 import usersReducer, {
-    followSuccessAC,
-    setCurrentPageAC,
-    setTotalCountAC,
-    setUsersAC, toggleFollowingInProgressAC,
-    toggleIsFetchingAC,
-    unFollowSuccessAC
+    followSuccess,
+    setCurrentPage,
+    setTotalCount,
+    setUsers, toggleFollowingInProgress,
+    toggleIsFetching,
+    unFollowSuccess
 } from './usersReducer';
 import {UsersPageType, UserType} from '../types/types';
 
@@ -47,7 +47,7 @@ beforeEach(() => {
 })
 
 test('User should be followed', () => {
-    const action = followSuccessAC('1')
+    const action = followSuccess('1')
     const endState = usersReducer(startState, action)
 
     expect(endState.users[0].followed).toBe(true)
@@ -56,7 +56,7 @@ test('User should be followed', () => {
 
 
 test('User should be unfollowed', () => {
-    const action = unFollowSuccessAC('1')
+    const action = unFollowSuccess('1')
     const endState = usersReducer(startState, action)
 
     expect(endState.users[0].followed).toBe(false)
@@ -74,7 +74,7 @@ test('Users should be set', () => {
         followingInProgress: []
     }
 
-    const action = setUsersAC(users)
+    const action = setUsers(users)
     const endState = usersReducer(startState, action)
 
     expect(endState.users.length).toBe(2)
@@ -84,7 +84,7 @@ test('Users should be set', () => {
 
 
 test('Current page should be set', () => {
-    const action = setCurrentPageAC(3)
+    const action = setCurrentPage(3)
     const endState = usersReducer(startState, action)
 
     expect(endState.currentPage).toBe(3)
@@ -92,21 +92,21 @@ test('Current page should be set', () => {
 
 
 test('Total users count should be set', () => {
-    const endState = usersReducer(startState, setTotalCountAC(200))
+    const endState = usersReducer(startState, setTotalCount(200))
 
     expect(endState.totalUsersCount).toEqual(200)
 })
 
 
 test('isFetching works correctly', () => {
-    const endState = usersReducer(startState, toggleIsFetchingAC(true))
+    const endState = usersReducer(startState, toggleIsFetching(true))
 
     expect(endState.isFetching).toEqual(true)
 })
 
 
 test('follow/unfollow button is disabled while waiting server response', () => {
-    const endState = usersReducer(startState, toggleFollowingInProgressAC(true, 5))
+    const endState = usersReducer(startState, toggleFollowingInProgress(true, 5))
 
     expect(endState.followingInProgress).toEqual([1, 2, 3, 4, 5])
 })

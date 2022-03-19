@@ -1,14 +1,9 @@
 import axios from 'axios';
-import {
-    APIResponseType,
-    PhotosType,
-    ProfileType,
-    UserType
-} from '../types/types';
+import {APIResponseType, PhotosType, ProfileType, UserType} from '../types/types';
 
 // axios general settings, axios params -> baseUrl and config
 // instance makes auto concat for baseUrl and another axios config
-const instance = axios.create({
+export const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
     withCredentials: true,
     headers: {
@@ -37,14 +32,6 @@ export const authAPI = {
         return instance.delete<APIResponseType>(`/auth/login`)
             .then(response => response.data)
     }
-}
-
-export const usersAPI = {
-    getUsers(currentPage: number = 1, pageSize: number = 10) {
-        return instance.get<GetUsersResponseType>(`/users?page=${currentPage}&count=${pageSize}&sortOrder=asc`)
-            .then(response => response.data)
-    }
-
 }
 
 export const profileAPI = {
@@ -103,7 +90,7 @@ export const securityAPI = {
 
 
 //Types
-type GetUsersResponseType = {
+export type GetUsersResponseType = {
     items: Array<UserType>
     totalCount: number
     error: string
