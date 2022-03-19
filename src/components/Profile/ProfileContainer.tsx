@@ -3,11 +3,11 @@ import Profile from './Profile';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux-store';
 import {
-    getUserStatusTC,
-    savePhotoTC,
-    saveProfileTC,
-    setUserProfileTC,
-    updateStatusTC
+    getUserStatus,
+    savePhoto,
+    saveProfile,
+    getUserProfile,
+    updateStatus
 } from '../../redux/profileReducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
@@ -71,11 +71,11 @@ export default compose<React.ComponentType>(
     connect(
         mapStateToProps,
         {
-            setUserProfile: setUserProfileTC,
-            getUserStatus: getUserStatusTC,
-            updateUserStatus: updateStatusTC,
-            savePhoto: savePhotoTC,
-            saveProfile: saveProfileTC
+            setUserProfile: getUserProfile,
+            getUserStatus: getUserStatus,
+            updateUserStatus: updateStatus,
+            savePhoto: savePhoto,
+            saveProfile: saveProfile
         }),
     withRouter,
     withAuthRedirect

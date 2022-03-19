@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Login.module.css';
 import LoginForm, {LoginFormDataType} from './LoginForm/LoginForm';
 import {connect} from 'react-redux';
-import {loginTC} from '../../redux/authReducer';
+import {login} from '../../redux/authReducer';
 import {Redirect} from 'react-router-dom';
 import {AppRootStateType} from '../../redux/redux-store';
 
@@ -42,7 +42,7 @@ let mapStateToProps = (state: AppRootStateType) => {
 }
 
 const MapDispatchToProps: MapDispatchType = {
-    login: loginTC
+    login: login
 }
 
 export default connect(mapStateToProps, MapDispatchToProps)(Login)

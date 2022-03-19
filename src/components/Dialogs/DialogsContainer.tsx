@@ -1,4 +1,5 @@
-import {addMessageAC} from '../../redux/dialogsReducer';
+import React from 'react';
+import {actions} from '../../redux/dialogsReducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux-store';
@@ -18,7 +19,7 @@ export default compose<React.ComponentType>(
     connect<MapStateType, MapDispatchToPropsType, null, AppRootStateType>(
         mapStateToProps,
         {
-            sendMessage: addMessageAC
+            sendMessage: actions.addMessage
         }),
     withAuthRedirect
 )(Dialogs)

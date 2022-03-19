@@ -10,7 +10,7 @@ import Friends from '../Friends/Friends';
 import Login from '../Login/Login';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {initializeAppTC} from '../../redux/appReducer';
+import {initializeApp} from '../../redux/appReducer';
 import {AppRootStateType} from '../../redux/redux-store';
 import Preloader from '../common/Preloader/Preloader';
 
@@ -83,7 +83,7 @@ const MapStateToProps = (state: AppRootStateType): MSTPType => ({
 
 export default compose<React.ComponentType>(
     withRouter,
-    connect<MSTPType, MDTPType, null, AppRootStateType>(MapStateToProps, {initializeApp: initializeAppTC}))(App)
+    connect<MSTPType, MDTPType, null, AppRootStateType>(MapStateToProps, {initializeApp: initializeApp}))(App)
 
 
 // TYPES

@@ -1,6 +1,12 @@
-import appReducer, {InitialStateType, setAuthUserDataAC} from './authReducer';
+import appReducer, {actions} from './authReducer';
 
-let startState: InitialStateType;
+let startState = {
+    userId: null as string | null,
+    email: null as string | null,
+    login: null as string | null,
+    isAuth: false,
+    captchaUrl: null as string | null
+};
 
 beforeEach(() => {
     startState = {
@@ -13,7 +19,7 @@ beforeEach(() => {
 })
 
 test('User data should be set', () => {
-    const action = setAuthUserDataAC('1', 'test@test.com', 'username', true)
+    const action = actions.setAuthUserData('1', 'test@test.com', 'username', true)
     const endState = appReducer(startState, action)
 
     expect(endState.isAuth).toBeTruthy();

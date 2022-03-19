@@ -1,11 +1,8 @@
-import {stopSubmit} from 'redux-form';
-import {ThunkType} from './redux-store';
+import {FormAction, stopSubmit} from 'redux-form';
+import {BaseThunkType, InferActionsTypes} from './redux-store';
 import {securityAPI} from '../api/securityAPI';
 import {authAPI} from '../api/authAPI';
 import {ResultCodeStatus} from '../api/api';
-
-const SET_USER_DATA = 'auth/SET_USER_DATA';
-const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
 
 const initialState = {
     userId: null as string | null,
@@ -17,9 +14,9 @@ const initialState = {
 
 const authReducer = (state = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
-        case SET_USER_DATA:
+        case 'auth/SET_USER_DATA':
             return {...state, ...action.data}
-        case GET_CAPTCHA_URL_SUCCESS:
+        case 'auth/GET_CAPTCHA_URL_SUCCESS':
             return {...state, ...action.payload}
         default:
             return state
@@ -28,32 +25,33 @@ const authReducer = (state = initialState, action: AuthActionsType): InitialStat
 
 
 //Actions
-export const setAuthUserDataAC = (userId: null | string, email: null | string, login: null | string, isAuth: boolean) =>
-    ({type: SET_USER_DATA, data: {userId, email, login, isAuth}} as const)
-export const getCaptchaUrlSuccessAC = (captchaUrl: string) =>
-    ({type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}} as const)
-
+export const actions = {
+    setAuthUserData: (userId: null | string, email: null | string, login: null | string, isAuth: boolean) =>
+        ({type: 'auth/SET_USER_DATA', data: {userId, email, login, isAuth}} as const),
+    getCaptchaUrlSuccess: (captchaUrl: string) =>
+        ({type: 'auth/GET_CAPTCHA_URL_SUCCESS', payload: {captchaUrl}} as const),
+}
 
 // Thunks
-export const getAuthUserDataTC = (): ThunkType => async dispatch => {
+export const getAuthUserData = (): ThunkType => async dispatch => {
     try {
         const response = await authAPI.me()
         if (response.resultCode === ResultCodeStatus.success) {
             const {id, login, email} = response.data
-            dispatch(setAuthUserDataAC(id, email, login, true))
+            dispatch(actions.setAuthUserData(id, email, login, true))
         }
     } catch (error) {
         console.log(error)
     }
 
 }
-export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async dispatch => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async dispatch => {
     const response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.resultCode === ResultCodeStatus.success) {
-        dispatch(getAuthUserDataTC())
+        dispatch(getAuthUserData())
     } else {
         if (response.resultCode === ResultCodeStatus.captchaIsRequired) {
-            dispatch(getCaptchaUrlTC())
+            dispatch(getCaptchaUrl())
         }
         // get error message from server
         const message = response.messages.length > 0 ? response.messages[0] : 'Some Error'
@@ -61,21 +59,21 @@ export const loginTC = (email: string, password: string, rememberMe: boolean, ca
         dispatch(stopSubmit('login', {_error: message}))
     }
 }
-export const getCaptchaUrlTC = (): ThunkType => async dispatch => {
+export const getCaptchaUrl = (): ThunkType => async dispatch => {
     try {
         const response = await securityAPI.getCaptchaUrl()
         const captchaUrl = response.url
-        dispatch(getCaptchaUrlSuccessAC(captchaUrl))
+        dispatch(actions.getCaptchaUrlSuccess(captchaUrl))
     } catch (error) {
         console.log(error)
     }
 
 }
-export const logoutTC = (): ThunkType => async dispatch => {
+export const logout = (): ThunkType => async dispatch => {
     try {
         const response = await authAPI.logout()
         if (response.resultCode === ResultCodeStatus.success) {
-            dispatch(setAuthUserDataAC(null, null, null, false))
+            dispatch(actions.setAuthUserData(null, null, null, false))
         }
     } catch (error) {
         console.log(error)
@@ -87,9 +85,8 @@ export default authReducer;
 
 
 // Types
-export type InitialStateType = typeof initialState;
-export type AuthActionsType =
-    ReturnType<typeof setAuthUserDataAC> |
-    ReturnType<typeof getCaptchaUrlSuccessAC>
+type InitialStateType = typeof initialState;
+type AuthActionsType = InferActionsTypes<typeof actions>;
+type ThunkType = BaseThunkType<AuthActionsType | FormAction>;
 
 

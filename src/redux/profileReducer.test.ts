@@ -1,7 +1,5 @@
 import {v1} from 'uuid';
-import profileReducer, {
-    addPostAC, setUserProfileAC,
-} from './profileReducer';
+import profileReducer, {actions} from './profileReducer';
 import {ProfilePageType} from '../types/types';
 
 
@@ -39,18 +37,8 @@ beforeEach(() => {
 })
 
 test('Post should be added', () => {
-    const action = addPostAC('newPostBody')
+    const action = actions.addPost('newPostBody')
     const endState = profileReducer(startState, action)
 
     expect(endState['posts'].length).toBe(3)
-})
-
-
-test('User Profile should be set', () => {
-    const action = setUserProfileAC(startState.profile)
-    const endState = profileReducer(startState, action)
-
-    expect(endState.profile.userId).toBe(1)
-    expect(endState.profile.aboutMe).toBe(':)')
-    expect(endState.profile.photos.small).toBe(null)
 })

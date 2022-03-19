@@ -1,5 +1,5 @@
 import {UserType} from '../types/types';
-import {InferActionsTypes, ThunkType} from './redux-store';
+import {BaseThunkType, InferActionsTypes} from './redux-store';
 import {Dispatch} from 'react';
 import {updateObjectInArray} from '../utils/helpers/object-helpers';
 import {usersAPI} from '../api/usersAPI';
@@ -18,25 +18,25 @@ const initialState = {
 
 const usersReducer = (state = initialState, action: UsersActionsType): InitialStateType => {
     switch (action.type) {
-        case 'FOLLOW':
+        case 'users/FOLLOW':
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
             }
-        case 'UNFOLLOW':
+        case 'users/UNFOLLOW':
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
             }
-        case 'SET_USERS':
+        case 'users/SET_USERS':
             return {...state, users: action.users}
-        case 'SET_CURRENT_PAGE':
+        case 'users/SET_CURRENT_PAGE':
             return {...state, currentPage: action.currentPage}
-        case 'SET_TOTAL_COUNT':
+        case 'users/SET_TOTAL_COUNT':
             return {...state, totalUsersCount: action.totalCount}
-        case 'TOGGLE_IS_FETCHING':
+        case 'users/TOGGLE_IS_FETCHING':
             return {...state, isFetching: action.isFetching}
-        case 'TOGGLE_FOLLOWING_PROGRESS':
+        case 'users/TOGGLE_FOLLOWING_PROGRESS':
             return {
                 ...state,
                 followingInProgress: action.isFetching
@@ -52,19 +52,19 @@ const usersReducer = (state = initialState, action: UsersActionsType): InitialSt
 //Actions
 export const actions = {
     followSuccess: (userId: string) =>
-        ({type: 'FOLLOW', userId} as const),
+        ({type: 'users/FOLLOW', userId} as const),
     unFollowSuccess: (userId: string) =>
-        ({type: 'UNFOLLOW', userId} as const),
+        ({type: 'users/UNFOLLOW', userId} as const),
     setUsers: (users: Array<UserType>) =>
-        ({type: 'SET_USERS', users} as const),
+        ({type: 'users/SET_USERS', users} as const),
     setCurrentPage: (currentPage: number) =>
-        ({type: 'SET_CURRENT_PAGE', currentPage} as const),
+        ({type: 'users/SET_CURRENT_PAGE', currentPage} as const),
     setTotalCount: (totalCount: number) =>
-        ({type: 'SET_TOTAL_COUNT', totalCount} as const),
+        ({type: 'users/SET_TOTAL_COUNT', totalCount} as const),
     toggleIsFetching: (isFetching: boolean) =>
-        ({type: 'TOGGLE_IS_FETCHING', isFetching} as const),
+        ({type: 'users/TOGGLE_IS_FETCHING', isFetching} as const),
     toggleFollowingInProgress: (isFetching: boolean, userId: number) =>
-        ({type: 'TOGGLE_FOLLOWING_PROGRESS', isFetching, userId} as const),
+        ({type: 'users/TOGGLE_FOLLOWING_PROGRESS', isFetching, userId} as const),
 }
 
 //Thunks
@@ -109,4 +109,5 @@ export default usersReducer;
 
 //Types
 type InitialStateType = typeof initialState;
-export type UsersActionsType = InferActionsTypes<typeof actions>
+type UsersActionsType = InferActionsTypes<typeof actions>;
+type ThunkType = BaseThunkType<UsersActionsType>;

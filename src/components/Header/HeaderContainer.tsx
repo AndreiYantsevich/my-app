@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux-store';
-import {logoutTC} from '../../redux/authReducer';
+import {logout} from '../../redux/authReducer';
 
 
 type MSTPType = {
@@ -32,4 +32,4 @@ const MapStateToProps = (state: AppRootStateType): MSTPType => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login
 })
-export default connect(MapStateToProps, {logout: logoutTC})(HeaderContainer);
+export default connect(MapStateToProps, {logout: logout})(HeaderContainer);

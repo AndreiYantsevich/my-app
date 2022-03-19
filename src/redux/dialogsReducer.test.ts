@@ -1,5 +1,5 @@
 import {v1} from 'uuid';
-import dialogsReducer, {addMessageAC} from './dialogsReducer';
+import dialogsReducer, {actions} from './dialogsReducer';
 import {DialogItemType} from '../components/Dialogs/DialogItem/DialogItem';
 import {MessageType} from '../components/Dialogs/Message/Message';
 
@@ -25,7 +25,7 @@ beforeEach(() => {
 })
 
 test('Message should be added', () => {
-    const action = addMessageAC('test');
+    const action = actions.addMessage('test');
     const endState = dialogsReducer(startState, action)
 
     expect(endState['dialogs'].length).toBe(3)
