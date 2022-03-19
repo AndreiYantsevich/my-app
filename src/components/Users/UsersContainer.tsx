@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {
+    actions,
     followUsersTC,
     requestUsersTC,
-    setCurrentPageAC,
     unfollowUsersTC
 } from '../../redux/usersReducer';
 import Users from './Users';
@@ -68,7 +68,7 @@ export default compose<React.ComponentType>(
     connect(
         mapStateToProps,
         {
-            setCurrentPage: setCurrentPageAC,
+            setCurrentPage: actions.setCurrentPage,
             getUsers: requestUsersTC,
             followUsers: followUsersTC,
             unfollowUsers: unfollowUsersTC

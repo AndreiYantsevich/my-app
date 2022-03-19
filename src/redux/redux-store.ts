@@ -26,9 +26,10 @@ export type AppRootActionsType =
     DialogsActionsType |
     ProfileActionsType |
     UsersActionsType
+type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
+export type InferActionsTypes<T extends {[key: string]: (...args: any[]) => any}> = ReturnType<PropertiesTypes<T>>
 export type ThunkType = ThunkAction<Promise<void>, AppRootStateType, unknown, AppRootActionsType>;
 export default store;
 
-// dev debugger store
 // @ts-ignore
 window.store = store;
