@@ -2,13 +2,12 @@ import {actions} from '../../../redux/profileReducer';
 import MyPosts, {PostType} from './MyPosts';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../../redux/redux-store';
-import {MapDispatchToPropsPostsType} from '../../../types/types';
 
-type MapStateToPropsType = {
+export type MapStateToPropsType = {
     posts: PostType[]
 }
 
-type MapDispatchToPropsType = {
+export type MapDispatchToPropsType = {
     addPost: (newPostBody: string) => void
 }
 
@@ -18,12 +17,4 @@ let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     }
 }
 
-let mapDispatchToProps = (dispatch: MapDispatchToPropsPostsType): MapDispatchToPropsType => {
-    return {
-        addPost: (newPostBody: string) => {
-            dispatch(actions.addPost(newPostBody))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {addPost: actions.addPost})(MyPosts);

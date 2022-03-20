@@ -16,7 +16,7 @@ let mapStateToProps = (state: AppRootStateType) => {
 }
 
 export default compose<React.ComponentType>(
-    connect<MapStateType, MapDispatchToPropsType, null, AppRootStateType>(
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppRootStateType>(
         mapStateToProps,
         {
             sendMessage: actions.addMessage
@@ -26,7 +26,7 @@ export default compose<React.ComponentType>(
 
 
 // Types
-type MapStateType = {
+type MapStateToPropsType = {
     dialogs: Array<DialogItemType>
     messages: Array<MessageType>
 }

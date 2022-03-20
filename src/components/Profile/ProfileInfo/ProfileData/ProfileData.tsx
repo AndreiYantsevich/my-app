@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileContact from '../ProfileContact/ProfileContact';
 import styles from './ProfileData.module.css';
-import {ProfileType} from '../../../../types/types';
+import {ContactsType, ProfileType} from '../../../../types/types';
 
 type PropsType = {
     profile: ProfileType
@@ -22,7 +22,7 @@ const ProfileData: React.FC<PropsType> = ({profile, isOwner, goToEditMode}) => {
                 <strong>Contacts: </strong>
                 {Object.keys(profile.contacts).map(key => {
                         return <ProfileContact key={key} title={key}
-                                               value={(profile.contacts as any)[key]}/>
+                                               value={profile.contacts[key as keyof ContactsType]}/>
                     }
                 )}
             </div>

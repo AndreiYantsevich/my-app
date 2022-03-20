@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './LoginForm.module.css';
 import {InjectedFormProps, reduxForm} from 'redux-form';
-import {createField, Input} from '../../common/FormControls/FormControls';
+import {createField, GetStringKeys, Input} from '../../common/FormControls/FormControls';
 import {requiredField} from '../../../utils/validators/validators';
 
 export type LoginFormDataType = {
@@ -11,7 +11,7 @@ export type LoginFormDataType = {
     captcha: string
 }
 
-type LoginFormValuesTypeKeys = Extract<keyof LoginFormDataType, string>
+type LoginFormValuesTypeKeys = GetStringKeys<LoginFormDataType>
 
 type OwnPropsType = {
     captchaUrl: string | null
@@ -30,8 +30,9 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, OwnPropsType, Err
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.settings}>
                 <p>
-                    To log in get registered <a href={'https://social-network.samuraijs.com/'}
-                                                target={'_blank'}>here</a>
+                    To log in get registered <a
+                    href={'https://social-network.samuraijs.com/'}
+                    target={'_blank'}>here</a>
                 </p>
                 <p>
                     or use common test account credentials:
@@ -46,18 +47,18 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, OwnPropsType, Err
             {error && <p className={styles.errorMsg}>{error}</p>}
 
             {captchaUrl && <img src={captchaUrl} alt={'captcha'}/>}
-            {captchaUrl && createField<LoginFormValuesTypeKeys>('','captcha', [requiredField], Input)}
+            {captchaUrl && createField<LoginFormValuesTypeKeys>('', 'captcha', [requiredField], Input)}
 
             <div className={styles.formRow}>
                 <label htmlFor="login_login">Login</label>
-                {createField<LoginFormValuesTypeKeys>('','email', [requiredField], Input)}
+                {createField<LoginFormValuesTypeKeys>('', 'email', [requiredField], Input)}
             </div>
             <div className={styles.formRow}>
                 <label htmlFor="login_psw">Password</label>
-                {createField<LoginFormValuesTypeKeys>('','password', [requiredField], Input, {type: 'password'})}
+                {createField<LoginFormValuesTypeKeys>('', 'password', [requiredField], Input, {type: 'password'})}
             </div>
             <div className={styles.formRow}>
-                {createField<LoginFormValuesTypeKeys>('','rememberMe', [], Input, {
+                {createField<LoginFormValuesTypeKeys>('', 'rememberMe', [], Input, {
                     type: 'checkbox',
                     className: styles.inputCheckbox
                 }, 'Remember me')}

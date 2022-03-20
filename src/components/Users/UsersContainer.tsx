@@ -51,7 +51,6 @@ class UsersContainer extends React.Component<PropsType> {
     }
 }
 
-
 let mapStateToProps = (state: AppRootStateType): MapStateType => {
     return {
         users: getUsers(state),
@@ -65,7 +64,7 @@ let mapStateToProps = (state: AppRootStateType): MapStateType => {
 
 export default compose<React.ComponentType>(
     withRouter,
-    connect(
+    connect<MapStateType, MapDispatchType, {}, AppRootStateType>(
         mapStateToProps,
         {
             setCurrentPage: actions.setCurrentPage,
@@ -79,6 +78,7 @@ export default compose<React.ComponentType>(
 
 // Types
 type PropsType = MapStateType & MapDispatchType
+
 type MapStateType = {
     users: UserType[]
     pageSize: number
@@ -87,6 +87,7 @@ type MapStateType = {
     isFetching: boolean
     followingInProgress: number[]
 }
+
 type MapDispatchType = {
     setCurrentPage: (currentPage: number) => void
     getUsers: (page: number, pageSize: number) => void

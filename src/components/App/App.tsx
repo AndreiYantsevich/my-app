@@ -77,25 +77,25 @@ class App extends React.Component<OwnPropsType> {
     }
 }
 
-const MapStateToProps = (state: AppRootStateType): MSTPType => ({
+const MapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     initialized: state.app.initialized
 })
 
 export default compose<React.ComponentType>(
     withRouter,
-    connect<MSTPType, MDTPType, null, AppRootStateType>(MapStateToProps, {initializeApp: initializeApp}))(App)
+    connect<MapStateToPropsType, MapDispatchToPropsType, null, AppRootStateType>(MapStateToProps, {initializeApp: initializeApp}))(App)
 
 
 // TYPES
-type MDTPType = {
+type MapDispatchToPropsType = {
     initializeApp: () => void
 }
 
-type MSTPType = {
+type MapStateToPropsType = {
     initialized: boolean
 }
 
-type AppPropsType = MDTPType & MSTPType
+type AppPropsType = MapDispatchToPropsType & MapStateToPropsType
 
 type PathParamsType = {}
 
