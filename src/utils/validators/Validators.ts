@@ -1,6 +1,6 @@
-export type RequiredFieldType = typeof requiredField
+export type RequiredFieldType = (value: string) => string | undefined
 
-export const requiredField = (value: string) => {
+export const requiredField: RequiredFieldType = (value: string) => {
     if (value) return undefined
     return 'Field is required'
 }

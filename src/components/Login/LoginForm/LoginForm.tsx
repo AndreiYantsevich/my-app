@@ -46,18 +46,18 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, OwnPropsType, Err
             {error && <p className={styles.errorMsg}>{error}</p>}
 
             {captchaUrl && <img src={captchaUrl} alt={'captcha'}/>}
-            {captchaUrl && createField<LoginFormValuesTypeKeys>('captcha', [requiredField], Input)}
+            {captchaUrl && createField<LoginFormValuesTypeKeys>('','captcha', [requiredField], Input)}
 
             <div className={styles.formRow}>
                 <label htmlFor="login_login">Login</label>
-                {createField<LoginFormValuesTypeKeys>('email', [requiredField], Input)}
+                {createField<LoginFormValuesTypeKeys>('','email', [requiredField], Input)}
             </div>
             <div className={styles.formRow}>
                 <label htmlFor="login_psw">Password</label>
-                {createField<LoginFormValuesTypeKeys>('password', [requiredField], Input, {type: 'password'})}
+                {createField<LoginFormValuesTypeKeys>('','password', [requiredField], Input, {type: 'password'})}
             </div>
             <div className={styles.formRow}>
-                {createField<LoginFormValuesTypeKeys>('rememberMe', [], Input, {
+                {createField<LoginFormValuesTypeKeys>('','rememberMe', [], Input, {
                     type: 'checkbox',
                     className: styles.inputCheckbox
                 }, 'Remember me')}
